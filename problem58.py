@@ -1,0 +1,72 @@
+ar = [i for i in range(1000000)]
+for i in range(2, 1000) :
+    for j in range(2, 1000000//i+1000) :
+        try :
+            ar[i*j] = 0
+        except :
+            pass
+ar[1] = 0
+ar = [i for i in ar if i != 0]
+
+def fill (n) : #  нечетное
+    tab = [[0 for i in range(n)] for j in range(n)]
+    c = n // 2
+    tab[c][c] = 1
+    num = 2
+    for i in range (2, n, 2) :
+        for j in range(i) :
+            tab[c+1-i//2+j][c+i//2] = num
+            num += 1
+        for j in range(i) :
+            tab[c+i//2][c+i//2-1-j] = num
+            num += 1
+        for j in range(i) :
+            tab[c-j+i//2-1][c-i//2] = num
+            num += 1
+        for j in range(i) :
+            tab[c-i//2][c+j-i//2+1] = num
+            num += 1
+    return tab
+
+def is_prime(n) :
+    q = n**0.5
+    for k in ar :
+        if k > q :
+            return True
+        if n % k == 0 :
+            return False
+    return True
+
+d = 2
+pr = 3
+al = 5
+c = pr/al
+temp = 9
+while c >= 0.1 :
+    d += 2
+    temp += d
+    if is_prime(temp) :
+        pr += 1
+    temp += d
+    if is_prime(temp) :
+        pr += 1
+    temp += d
+    if is_prime(temp) :
+        pr += 1
+    temp += d
+    al += 4
+    c = pr/al
+print(d+1)
+
+
+
+
+
+
+
+
+
+
+
+        
+    
