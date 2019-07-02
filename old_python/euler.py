@@ -48,6 +48,7 @@ def sum_divisors(n):
 
 def isprime(n, prime_list):
     sq = int(n ** 0.5)
+    i = 0
     for pr in prime_list:
         if pr > sq:
             return True
@@ -56,7 +57,7 @@ def isprime(n, prime_list):
 
 
 def prime_list(n):
-    index = array.array('L', (1 for _ in range(n)))
+    index = array.array('L', (1 for i in range(n)))
     result = array.array('L')
     i = 2
     while i < n:
@@ -80,6 +81,7 @@ def totientlist(n):
 
 
 def gcd1(a, b):
+    ''' a > 1 '''
     if a == 1:
         return True
     if not a:
@@ -119,7 +121,7 @@ def parsefraction(lst):
 def squarefraction(nn, leng):
     sq = nn ** 0.5
     tr = int(sq)
-    add = -tr
+    start = add = -tr
     d = 1
     l = 0
     lst = []
@@ -136,7 +138,7 @@ def squarefraction(nn, leng):
 
 
 def notdivisible(num, ar, ind):
-    # ind = len(ar)
+    ''' ind = len(ar)'''
     res = num
     for i in range(ind):
         r = num // ar[i]
@@ -147,7 +149,7 @@ def notdivisible(num, ar, ind):
 
 
 def pandigital(n):
-    ar = [False for _ in range(10)]
+    ar = [False for i in range(10)]
     while n:
         r = n % 10
         if ar[r]:
@@ -157,17 +159,5 @@ def pandigital(n):
     return True
 
 
-def list_of_prime_factors(n):
-    factors = []
-    pr = 2
-    while pr <= n:
-        if not n % pr:
-            factors.append(pr)
-            n //= pr
-            pr -= 1
-        pr += 1
-    return factors
-
-
 if __name__ == '__main__':
-    print(list_of_prime_factors(600851475143))
+    print(int_sqrt(123))
