@@ -22,11 +22,11 @@ LIMIT = 10**8
 def gpal (b):
     bb = b*(b+1)*(2*b+1)
     for a in range(b-2, -1, -1):
-        res = (bb-a*(a+1)*(2*a+1))//6
-        if res > LIMIT:
+        result = (bb-a*(a+1)*(2*a+1))//6
+        if result > LIMIT:
             break
-        if is_palindrom(res):
-            pal.add(res)
+        if is_palindrom(result):
+            pal.add(result)
 
 for i in range(1, 10000):
     gpal(i)

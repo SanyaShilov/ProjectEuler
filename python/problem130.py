@@ -12,21 +12,21 @@ l= 30000
 
 prime_list = euler.prime_list(l)
 
-ar = [i for i in range(l)]
-ar[1] = 0
+lst = [i for i in range(l)]
+lst[1] = 0
 
 for pr in prime_list:
-    ar[pr] = 0
+    lst[pr] = 0
 
 for i in range(2, l, 2):
-    ar[i] = 0
+    lst[i] = 0
 
 for i in range(5, l, 5):
-    ar[i] = 0
+    lst[i] = 0
 
 s = 0
 i = 0
-for k in ar:
+for k in lst:
     if k:
         f = find(k)
         if (k-1) % f == 0:

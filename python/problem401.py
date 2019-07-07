@@ -1,17 +1,17 @@
-res = 0
+result = 0
 l = 1000000
 rest = 10000
 for i in range(1, l+1):
-    res += (l//i)*i*i
-print(res%rest)
+    result += (l//i)*i*i
+print(result%rest)
 
 
 # best code:
 
-res = 0
+result = 0
 for i in range(1, l+1):
-    res += (l%i)*(i%rest)
-print((-res)%rest)
+    result += (l%i)*(i%rest)
+print((-result)%rest)
 
 '''
 ten = 10
@@ -28,19 +28,19 @@ def SumSquarsBeforeN (n):
     return n*(n+1)*(2*n+1)//6
 
 def calc (n):
-    res = 0
+    result = 0
     for i in range(1, n+1):
-        res += (n//i)*i*i
-    return res
+        result += (n//i)*i*i
+    return result
 
 def newcalc (n):
-    res = SumSquarsBeforeN(n)
+    result = SumSquarsBeforeN(n)
     for i in range(1, n):
-        res += (n//i)*i*i
-    return res
+        result += (n//i)*i*i
+    return result
 
 def calcdel (n, d):
-    res = 0
+    result = 0
     for i in range():
         pass
 

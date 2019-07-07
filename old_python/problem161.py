@@ -40,16 +40,16 @@ l = len(figures)
 
 
 s = 0
-ar = [0]
+lst = [0]
 ind = [-1]
-while ar:
-    n = ar.pop()
+while lst:
+    n = lst.pop()
     i = ind.pop()
     if n == 324518553658426726783156020576255:
         s += 1
         continue
     for j in range(i+1, l):
         if not n & figures[j]:
-            ar.append(n | figures[j])
+            lst.append(n | figures[j])
             ind.append(j)
 print(s)

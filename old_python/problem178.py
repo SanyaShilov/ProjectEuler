@@ -19,7 +19,7 @@ for i in range(lensets):
 for i in range(1, 10):
     arnums[allsets.index({i})][i] = 1
 
-res = 0
+result = 0
 count = 40 - 1
 ind = allsets.index({0, 1, 2, 3, 4, 5, 6, 7, 8, 9})
 for _ in range(count):
@@ -31,5 +31,5 @@ for _ in range(count):
     arnums = newar
     s = sum(arnums[ind])
     print(s)
-    res += s
-print(res)
+    result += s
+print(result)

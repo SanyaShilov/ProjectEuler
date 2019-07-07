@@ -1,10 +1,10 @@
 import itertools
 
-def check (ar):
-    prev_max = ar[0]
-    for i in range(2, len(ar)):
+def check (lst):
+    prev_max = lst[0]
+    for i in range(2, len(lst)):
         s = set()
-        for comb in itertools.combinations(ar, i):
+        for comb in itertools.combinations(lst, i):
             sm = sum(comb)
             if sm <= prev_max:
                 return False
@@ -14,11 +14,11 @@ def check (ar):
         prev_max = max(s)
     return True
 
-ar = [sorted([int(k) for k in l.split(',')], reverse = True)
+lst = [sorted([int(k) for k in l.split(',')], reverse = True)
       for l in open('../txt/problem105.txt').readlines()]
-print(ar)
+print(lst)
 s = 0
-for a in ar:
+for a in lst:
     if check(a):
         print(a)
         s += sum(a)

@@ -14,21 +14,21 @@ for a in range(2, 1000000):
             print(big)
             if big == last:
                 print('big', big)
-    ar = [True for i in range(a)]
+    lst = [True for i in range(a)]
     i = 0
     pr = prime_list[0]
     stop = int(a**0.5)
     while pr <= stop:
         if not a % pr:
             for j in range(pr, a, pr):
-                ar[j] = False
+                lst[j] = False
             n = a//pr
             for j in range(n, a, n):
-                ar[j] = False
+                lst[j] = False
         i += 1
         pr = prime_list[i]
     for b in range(1, a):
-        if ar[b]:
+        if lst[b]:
             q = a*b + 1
             w = a-b
             if not q % w:
@@ -75,6 +75,6 @@ for d in range(1, 1000000):
         start += d
     
     
-ar = sorted(list(s))
-print(len(ar))
-print(ar[:12])
+lst = sorted(list(s))
+print(len(lst))
+print(lst[:12])

@@ -1,7 +1,18 @@
-ANSWER =
+ANSWER = 5537376230
+DIGITS = 10
 
 
-print(str(sum((int(l.split()[0]) for l in open('../txt/problem013.txt').readlines())))[:10])
+def main():
+    return int(
+        str(
+            sum(
+                (
+                    int(line)
+                    for line in open('../txt/problem013.txt').readlines()
+                )
+            )
+        )[:DIGITS]
+    )
 
 
 if __name__ == '__main__':

@@ -1,13 +1,13 @@
-ar = [i for i in range(11243250)]
+lst = [i for i in range(11243250)]
 for i in range(2, 3360):
     for j in range(2, 11243250//i+3360):
         try:
-            ar[i*j] = 0
+            lst[i*j] = 0
         except:
             pass
-ar[1] = 0
-print('ar')
-sq = [i**2 for i in ar if i != 0]
+lst[1] = 0
+print('lst')
+sq = [i**2 for i in lst if i != 0]
 print(sq[:10])
         
 pascal = [[0 for i in range(51)] for j in range(51)]

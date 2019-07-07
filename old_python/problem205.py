@@ -2,10 +2,10 @@ a = [[1], [2], [3], [4]]
 for i in range(8):
     a = [k+[i] for k in a for i in range(1, 5)]
 la = len(a)
-ar = [0 for i in range(40)]
+lst = [0 for i in range(40)]
 for i in range(la):
-    ar[sum(a[i])] += 1
-print(ar)
+    lst[sum(a[i])] += 1
+print(lst)
 b = [[1], [2], [3], [4], [5], [6]]
 for i in range(5):
     b = [k+[i] for k in b for i in range(1, 7)]
@@ -16,8 +16,8 @@ for i in range(lb):
 print(br)
 s = 0
 for i in range(40):
-    ss = sum(br[:i])*ar[i]
+    ss = sum(br[:i])*lst[i]
     print(ss)
     s += ss
 print(s)
-print(s / (sum(ar)*sum(br)))
+print(s / (sum(lst)*sum(br)))

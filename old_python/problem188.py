@@ -3,13 +3,13 @@ prime_list = primes.prime_list(10**4)
 
 def fi (n):
     nn = (n+1)//2
-    res = n-1
+    result = n-1
     for pr in prime_list:
         if pr > nn:
             break
         if not n % pr:
-            res -= res//pr
-    return res
+            result -= result//pr
+    return result
 
 def hyperpower (a, b, c):
     r = 1
@@ -24,9 +24,9 @@ def hyper (a, b, c):
         return a%c
     if c == 2:
         return a%2
-    res = hyperpower(a, (hyper(a, b-1, fi(c))), c)
-    print('returned' ,res)
-    return res
+    result = hyperpower(a, (hyper(a, b-1, fi(c))), c)
+    print('returned' ,result)
+    return result
 
 
 print(hyper(1777, 1855, 10**8))

@@ -1,21 +1,21 @@
 import itertools
 
-ar = [6, 9, 8, 7, 10]
+lst = [6, 9, 8, 7, 10]
 
-def calc (ar):
-    res = [0, 0, 0, 0, 0]
-    res[2] = ar[0]-ar[1]
-    res[3] = ar[4]-ar[3]
-    res[1] = res[3]+ar[2]-ar[1]
-    res[4] = res[1]+ar[0]-ar[4]
-    if len(set(res)) < 5:
+def calc (lst):
+    result = [0, 0, 0, 0, 0]
+    result[2] = lst[0]-lst[1]
+    result[3] = lst[4]-lst[3]
+    result[1] = result[3]+lst[2]-lst[1]
+    result[4] = result[1]+lst[0]-lst[4]
+    if len(set(result)) < 5:
         return None
-    if max(res)-min(res) != 4:
+    if max(result)-min(result) != 4:
         return None
-    return res, 5-max(res)
+    return result, 5-max(result)
 
 m = 0
-for a in itertools.permutations(ar, 5):
+for a in itertools.permutations(lst, 5):
     if a[0] == 6:
         c = calc(a)
         if c:

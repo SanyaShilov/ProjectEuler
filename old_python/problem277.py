@@ -1,32 +1,32 @@
 def backward (st):
-    res = 1
+    result = 1
     for k in st[::-1]:
         if k == 'D':
-            res *= 3
+            result *= 3
         if k == 'd':
-            res = (res*3+1)//2
+            result = (result*3+1)//2
         if k == 'U':
-            res = (res*3-2)//4
-    return res
+            result = (result*3-2)//4
+    return result
 
 def forward (n):
-    res = ''
+    result = ''
     while n > 1:
         if n % 3 == 0:
-            res += 'D'
+            result += 'D'
             n //= 3
             continue
         if n % 3 == 1:
-            res += 'U'
+            result += 'U'
             n = (4*n+2)//3
             continue
         if n % 3 == 2:
-            res += 'd'
+            result += 'd'
             n = (2*n-1)//3
-    return res
+    return result
 
 def forward_eq (n, st):
-    res = ''
+    result = ''
     for i in range(len(st)):
         if not n % 3:
             if st[i] != 'D':

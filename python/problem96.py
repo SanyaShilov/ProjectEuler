@@ -77,12 +77,12 @@ def SolveN (n, canbe, m):
 def Deduct (m):
     solved = 0
     
-    ar = [WhereCanBe(i, m) for i in range(1, 10)]
+    lst = [WhereCanBe(i, m) for i in range(1, 10)]
     for i in r:
         for j in r:
             num = -1
             for nn in r:
-                if ar[nn][i][j]:
+                if lst[nn][i][j]:
                     if num == -1:
                         num = nn+1
                     else:
@@ -198,12 +198,12 @@ def Correct (m):
             
     return True
 
-res = 0
+result = 0
 for n in range(50):
     m = load(n, read)
     s = Solve(m)
-    res += 100*s[1][0][0] + 10*s[1][0][1] + s[1][0][2]
-print(res)
+    result += 100*s[1][0][0] + 10*s[1][0][1] + s[1][0][2]
+print(result)
 
 
 if __name__ == '__main__':

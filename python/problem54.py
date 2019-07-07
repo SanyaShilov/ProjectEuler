@@ -3,7 +3,7 @@ ANSWER =
 
 f = open('../txt/problem054.txt')
 r = f.readlines()
-ar = [k for k in r]
+lst = [k for k in r]
 
 def checkFlush (strhand):
     m = strhand[0][1]
@@ -28,9 +28,9 @@ def Player1Win (str1, str2):
 
 
 s = 0
-for k in range(len(ar)):
-    hand1 = ar[k][:14].split()
-    hand2 = ar[k][15:][:-1].split()
+for k in range(len(lst)):
+    hand1 = lst[k][:14].split()
+    hand2 = lst[k][15:][:-1].split()
     nhand1 = []
     for j in hand1:
         n = j[0]

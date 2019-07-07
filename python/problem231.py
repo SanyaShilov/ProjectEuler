@@ -31,27 +31,27 @@ for i in r:
             else:
                 break
 print('second')
-res = 0
+result = 0
 for n in r1:
-    res -= n
+    result -= n
 
 for n in r2:
-    res += n
+    result += n
 
-print(res)
+print(result)
 '''
 g1 = 1
 g2 = 5000000
 g3 = 15000001
 g4 = 20000000
 g = 15000000
-res = 0
+result = 0
 for pr in prime_list:
     temp = pr
     while temp <= g4:
-        res += pr * (g4//temp - g//temp - g2//temp)
+        result += pr * (g4//temp - g//temp - g2//temp)
         temp *= pr
-print(res)
+print(result)
 
 
 if __name__ == '__main__':

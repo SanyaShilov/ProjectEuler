@@ -1,10 +1,10 @@
 import itertools
 
-def check (ar):
-    prev_max = ar[0]
-    for i in range(2, len(ar)):
+def check (lst):
+    prev_max = lst[0]
+    for i in range(2, len(lst)):
         s = set()
-        for comb in itertools.combinations(ar, i):
+        for comb in itertools.combinations(lst, i):
             sm = sum(comb)
             if sm <= prev_max:
                 return False
@@ -16,34 +16,34 @@ def check (ar):
 
 def build (n):
     if n < 5:
-        ar = tuple(i for i in reversed(range(1, n + 1)))
+        lst = tuple(i for i in reversed(range(1, n + 1)))
     else:
         b = build(n - 1)
-        ar = (b[0] + 1,) + b
-        ar = tuple(a + b[-1]//2 for a in ar)
-        print('started from', ar)
-    ars = {ar}
+        lst = (b[0] + 1,) + b
+        lst = tuple(a + b[-1]//2 for a in lst)
+        print('started from', lst)
+    ars = {lst}
     it = 0
     while True:
         if n == 7:
             print(it, len(ars))
             it += 1
         newars = set()
-        for ar in ars:
-            if check(ar):
-                print('return', ar)
-                return ar
+        for lst in ars:
+            if check(lst):
+                print('return', lst)
+                return lst
             add = True
             if n > 5:
                 for i in range(1, n):
-                    if ar[i - 1] - ar[i] >= ar[-1]:
+                    if lst[i - 1] - lst[i] >= lst[-1]:
                         add = False
                         break
             if add:
-                newars.add((ar[0] + 1,) + ar[1:])
+                newars.add((lst[0] + 1,) + lst[1:])
                 for i in range(1, n):
-                    if ar[i - 1] - ar[i] > 1:
-                        newars.add(ar[:i] + (ar[i] + 1,) + ar[i + 1:])
+                    if lst[i - 1] - lst[i] > 1:
+                        newars.add(lst[:i] + (lst[i] + 1,) + lst[i + 1:])
         ars = newars
 
 print(build(7))

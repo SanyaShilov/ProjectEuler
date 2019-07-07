@@ -14,11 +14,11 @@ for i in range(2, 3163):
         lst[j] += 2
     lst[i*i] -= 1
 
-res = 0
+result = 0
 for i in range(2, 10000000):
     if lst[i] == lst[i+1]:
-        res += 1
-print(res)
+        result += 1
+print(result)
 
 
 if __name__ == '__main__':

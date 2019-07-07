@@ -2,18 +2,18 @@ import array
 
 LIMIT = 64000000
 
-ar = array.array('Q', (1 for i in range(LIMIT)))
+lst = array.array('Q', (1 for i in range(LIMIT)))
 
 print('done')
-ar[0] = 0
+lst[0] = 0
 for i in range(2, LIMIT):
     sq = i*i
     for j in range(i, LIMIT, i):
-        ar[j] += sq
+        lst[j] += sq
 print('done')
 s = 0
 for i in range(LIMIT):
-    n = ar[i]
+    n = lst[i]
     sq = n**0.5
     if sq == int(sq):
         #print(i, n)

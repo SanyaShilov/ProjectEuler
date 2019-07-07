@@ -4,22 +4,22 @@ def transform (n, base):
     power = base
     while power < n:
         power *= base
-    res = ''
+    result = ''
     while power:
-        res += table[n//power]
+        result += table[n//power]
         n %= power
         power //= base
-    if res[0] != '0':
-        return res
-    return res[1:]
+    if result[0] != '0':
+        return result
+    return result[1:]
 
 
 def digsum (n):
-    res = 0
+    result = 0
     while n:
-        res += n % 10
+        result += n % 10
         n //= 10
-    return res
+    return result
 
 for i in range(10000):
     if i % 9 == 0:

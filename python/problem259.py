@@ -58,20 +58,20 @@ def two_comb (a, b):
         return {(a+b), (a-b), (a*b), (a/b)}
     return {(a), MyFraction(0)}
 
-def multi_comb (ar):
-    l = len(ar)
+def multi_comb (lst):
+    l = len(lst)
     if l == 1:
-        return {ar[0]}
+        return {lst[0]}
     if l == 2:
-        return two_comb(ar[0], ar[1])
-    res = set()
+        return two_comb(lst[0], lst[1])
+    result = set()
     for i in range(1, l):
-        m1 = multi_comb(ar[:i])
-        m2 = multi_comb(ar[i:])
+        m1 = multi_comb(lst[:i])
+        m2 = multi_comb(lst[i:])
         for a in m1:
             for b in m2:
-                res.update(two_comb(a, b))
-    return res
+                result.update(two_comb(a, b))
+    return result
 
 m = multi_comb([str(i) for i in range(1, 9+1)])
 print('len', len(m))

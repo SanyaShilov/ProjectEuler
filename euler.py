@@ -4,6 +4,11 @@ import array
 sqrt_LIMIT = 10**16
 
 
+factorials = [1]
+for i in range(1, 10001):
+    factorials.append(factorials[-1]*i)
+
+
 def int_sqrt(n):
     if n < sqrt_LIMIT:
         return int(n ** 0.5)
@@ -135,24 +140,24 @@ def squarefraction(nn, leng):
     return lst
 
 
-def notdivisible(num, ar, ind):
-    # ind = len(ar)
-    res = num
+def notdivisible(num, lst, ind):
+    # ind = len(lst)
+    result = num
     for i in range(ind):
-        r = num // ar[i]
+        r = num // lst[i]
         if not r:
             break
-        res -= notdivisible(r, ar, i)
-    return res
+        result -= notdivisible(r, lst, i)
+    return result
 
 
 def pandigital(n):
-    ar = [False for _ in range(10)]
+    lst = [False for _ in range(10)]
     while n:
         r = n % 10
-        if ar[r]:
+        if lst[r]:
             return False
-        ar[r] = True
+        lst[r] = True
         n //= 10
     return True
 

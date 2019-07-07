@@ -23,61 +23,61 @@ def number (s):
         return 1
 
 def RomanToTen (s):
-    res = 0
+    result = 0
     last = number(s[0])
     for i in range(1, len(s)):
         temp = number(s[i])
         if temp <= last:
-            res += last
+            result += last
         else:
-            res -= last
+            result -= last
         last = temp
-    res += last
-    return res
+    result += last
+    return result
 
 def TenToRoman (n):
-    res = ''
-    res += 'M'*(n//1000)
+    result = ''
+    result += 'M'*(n//1000)
     n %= 1000
     r = n//100
     if r == 9:
-        res += 'CM'
+        result += 'CM'
     elif r == 4:
-        res += 'CD'
+        result += 'CD'
     else:
         if r >= 5:
-            res += 'D'
-        res += (r%5)*'C'
+            result += 'D'
+        result += (r%5)*'C'
     n %= 100
     r = n//10
     if r == 9:
-        res += 'XC'
+        result += 'XC'
     elif r == 4:
-        res += 'XL'
+        result += 'XL'
     else:
         if r >= 5:
-            res += 'L'
-        res += (r%5)*'X'
+            result += 'L'
+        result += (r%5)*'X'
     r = n%10
     if r == 9:
-        res += 'IX'
+        result += 'IX'
     elif r == 4:
-        res += 'IV'
+        result += 'IV'
     else:
         if r >= 5:
-            res += 'V'
-        res += (r%5)*'I'
-    return res
+            result += 'V'
+        result += (r%5)*'I'
+    return result
 
 
 
 
 
-res = 0   
+result = 0
 for i in range(len(r)):
     s = clean(r[i])
     n = RomanToTen(s)
     s2 = TenToRoman(n)
-    res = res + len(s) - len(s2)
-print(res)
+    result = result + len(s) - len(s2)
+print(result)
 

@@ -6,10 +6,10 @@ ANSWER =
 
 prime_list = euler.prime_list(10000)
 
-def add (ar, num):
+def add (lst, num):
     newar = []
     j = prime_list.index(num)
-    for i in ar[:]:
+    for i in lst[:]:
         c = i[:]
         c[j] += 1
         newar.append(c)
@@ -43,22 +43,22 @@ def sumcount (n, count, ind = 0):
     i = ind
     pr = prime_list[i]
     smallest = n//count
-    res = []
+    result = []
     while pr <= smallest:
-        res += add(sumcount(n-pr, count-1, i), pr)
+        result += add(sumcount(n-pr, count-1, i), pr)
         i += 1
         pr = prime_list[i]
-    return res
+    return result
 
 def sumall (n):
     c = 2
     temp = sumcount(n, c)
-    res = []
+    result = []
     while n > 2*c:
-        res += temp
+        result += temp
         c += 1
         temp = sumcount(n, c)
-    return res
+    return result
 
 i = 1
 while True:

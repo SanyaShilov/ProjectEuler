@@ -11,19 +11,19 @@ class point ():
         b = point.length(p1, p3)
         c = point.length(p2, p3)
         half_per = (a+b+c)/2
-        res = half_per*(half_per-a)*(half_per-b)*(half_per-c)
+        result = half_per*(half_per-a)*(half_per-b)*(half_per-c)
 # из-за плавающих вычислений half_per может оказаться меньше одной из сторон
 # на величину погрешности (когда точки на одной прямой)
-        if res < 0:
-            res = 0
-        return res**0.5
+        if result < 0:
+            result = 0
+        return result**0.5
 
-ar = open('../txt/problem102.txt').readlines()
-ar = [k.split(',') for k in ar]
-ar = [[int(c) for c in k] for k in ar]
+lst = open('../txt/problem102.txt').readlines()
+lst = [k.split(',') for k in lst]
+lst = [[int(c) for c in k] for k in lst]
 s = 0
 p = point(0, 0)
-for k in ar:
+for k in lst:
     p1, p2, p3 = point(k[0], k[1]), point(k[2], k[3]), point(k[4], k[5])
     if abs(point.sq(p1, p2, p3)-point.sq(p1, p2, p)-point.sq(p1, p3, p)-
            point.sq(p2, p3, p)) < 1e-5:

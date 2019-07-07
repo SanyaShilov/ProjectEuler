@@ -13,28 +13,28 @@ def is_prime (n):
             return False
     return True
 
-ar = [i for i in range(10000)]
+lst = [i for i in range(10000)]
 for i in range(2, 100):
     for j in range(2, 10000 // i + 100):
         try:
-            ar[i*j] = 0
+            lst[i*j] = 0
         except:
             pass
 
 
 
 for i in range(3, 10000):
-    if ar[i] != 0:
+    if lst[i] != 0:
         li = len(str(i))
         li10 = 10**li
         for j in range(i, 10000):
-            if ar[j] != 0:
+            if lst[j] != 0:
                 if euler.isprime(j*li10+i, prime_list):
                     lj = len(str(j))
                     lj10 = 10**lj
                     if euler.isprime(i*lj10+j, prime_list):
                         for k in range(j, 10000):
-                            if ar[k] != 0:
+                            if lst[k] != 0:
                                 if euler.isprime(k*li10+i, prime_list):
                                     if euler.isprime(k*lj10+j, prime_list):
                                         lk = len(str(k))
@@ -42,7 +42,7 @@ for i in range(3, 10000):
                                         if euler.isprime(i*lk10+k, prime_list):
                                             if euler.isprime(j*lk10+k, prime_list):
                                                 for q in range(k, 10000):
-                                                    if ar[q] != 0:
+                                                    if lst[q] != 0:
                                                         if euler.isprime(q*li10+i, prime_list):
                                                             if euler.isprime(q*lj10+j, prime_list):
                                                                 if euler.isprime(q*lk10+k, prime_list):
@@ -52,7 +52,7 @@ for i in range(3, 10000):
                                                                         if euler.isprime(j*lq10+q, prime_list):
                                                                             if euler.isprime(k*lq10+q, prime_list):
                                                                                 for w in range(q, 10000):
-                                                                                    if ar[w] != 0:
+                                                                                    if lst[w] != 0:
                                                                                         if euler.isprime(w*li10+i, prime_list):
                                                                                             if euler.isprime(w*lj10+j, prime_list):
                                                                                                 if euler.isprime(w*lk10+k, prime_list):

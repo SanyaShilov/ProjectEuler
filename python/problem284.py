@@ -6,14 +6,14 @@ def transform (n, base):
     power = base
     while power < n:
         power *= base
-    res = ''
+    result = ''
     while power:
-        res += table[n//power]
+        result += table[n//power]
         n %= power
         power //= base
-    if res[0] != '0':
-        return res
-    return res[1:]
+    if result[0] != '0':
+        return result
+    return result[1:]
 
 s = 16
 last = [7, 8]

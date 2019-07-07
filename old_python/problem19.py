@@ -23,7 +23,7 @@ def is_leap (year):
 temp = 1
 year = 1901
 mon = 0
-res = 0
+result = 0
 
 while year != 2001:
     if is_leap(year):
@@ -33,6 +33,6 @@ while year != 2001:
     for i in range(12):
         temp = (temp+months[i])%7
         if temp == 6:
-            res += 1
+            result += 1
     year += 1
-print(res)
+print(result)

@@ -8,8 +8,8 @@ d = [[k for k in (i*(3*i-2) for i in range(200)) if condition(k)],
      [k for k in (i*i for i in range(200)) if condition(k)],
      [k for k in (i*(i+1)//2 for i in range(200)) if condition(k)]]
 
-starts = [[str(n)[:2] for n in ar] for ar in d]
-ends = [[str(n)[2:] for n in ar] for ar in d]
+starts = [[str(n)[:2] for n in lst] for lst in d]
+ends = [[str(n)[2:] for n in lst] for lst in d]
 
 nums = [[i] for i in range(len(d[0]))]
 used = [[0] for n in d[0]]

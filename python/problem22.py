@@ -1,9 +1,9 @@
 ANSWER =
 
 
-ar = open('../txt/problem022.txt').readlines()
-ar = ar[0][1:-1].split('\",\"')
-ar.sort()
+lst = open('../txt/problem022.txt').readlines()
+lst = lst[0][1:-1].split('\",\"')
+lst.sort()
 def s (w):
     r = 0
     l = len(w)
@@ -11,8 +11,8 @@ def s (w):
         r += ord(w[i])
     return r - l*64
 total = 0
-for i in range(len(ar)):
-    total += (i+1)*s(ar[i])
+for i in range(len(lst)):
+    total += (i+1)*s(lst[i])
 print(total)
 
 

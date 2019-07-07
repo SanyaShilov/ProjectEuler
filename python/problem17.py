@@ -1,7 +1,8 @@
-ANSWER =
+ANSWER = 21124
+# LIMIT
 
 
-ones = [
+ONES = [
     'zero',
     'one',
     'two',
@@ -14,7 +15,7 @@ ones = [
     'nine',
     ]
 
-tens = [
+TENS = [
     'ten',
     'eleven',
     'twelve',
@@ -27,7 +28,7 @@ tens = [
     'nineteen',
     ]
 
-bigtens = [
+BIG_TENS = [
     '',
     '',
     'twenty',
@@ -40,64 +41,35 @@ bigtens = [
     'ninety',
     ]
 
-# one
-# two
-# three
-# four
-# five
-# six
-# seven
-# eight
-# nine
-# ten
-# eleven
-# twelve
-# thirteen
-# fourteen
-# fifteen
-# sixteen
-# seventeen
-# eighteen
-# nineteen
-# twenty
-# thirty
-# forty
-# fifty
-# sixty
-# seventy
-# eighty
-# ninety
-# hundred
-# one thousand
 
-def count (i):
-    res = 0
-    if (i // 100) and (i % 100):
-        res += len('and')
-    
-    r = i // 100
-    if r:
-        res += len(ones[r])+len('hundred')
+def count(num):
+    result = 0
+    if (num // 100) and (num % 100):
+        result += len('and')
 
-    r = (i // 10) % 10
-    if r:
-        if r == 1:
-            r2 = i % 10
-            res += len(tens[r2])
-            return res
-        else:
-            res += len(bigtens[r])
+    rest = num // 100
+    if rest:
+        result += len(ONES[rest]) + len('hundred')
 
-    r2 = i % 10
-    if r2:
-        res += len(ones[r2])
-    return res
+    rest = (num // 10) % 10
+    if rest:
+        if rest == 1:
+            rest2 = num % 10
+            result += len(TENS[rest2])
+            return result
+        result += len(BIG_TENS[rest])
+
+    rest = num % 10
+    if rest:
+        result += len(ONES[rest])
+    return result
 
 
-res = len('onethousand')
-for i in range(1, 1000):
-    res += count(i)
-print(res)
+def main():
+    result = len('one') + len('thousand')
+    for num in range(1, 1000):
+        result += count(num)
+    return result
 
 
 if __name__ == '__main__':

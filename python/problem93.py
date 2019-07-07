@@ -58,9 +58,9 @@ def clean (st):
 def result (a, b, c, d):
     return clean(four_combination(a, b, c, d))
 
-def length (res):
+def length (result):
     i = 1
-    while i in res:
+    while i in result:
         i += 1
     return i-1
 

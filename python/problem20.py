@@ -1,10 +1,12 @@
-ANSWER =
+import euler
 
 
-fact = [1]
-for i in range(1, 101):
-    fact.append(fact[-1]*i)
-print(sum(ord(c) for c in str(fact[100]))-ord('0')*len(str(fact[100])))
+ANSWER = 648
+LIMIT = 100
+
+
+def main():
+    return sum(int(digit) for digit in str(euler.factorials[LIMIT]))
 
 
 if __name__ == '__main__':

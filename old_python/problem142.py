@@ -35,11 +35,11 @@ for i in range(1, 100):
     wtf(i)
 
 for st in gyp[:]:
-    ar = list(st)
-    l = len(ar)
+    lst = list(st)
+    l = len(lst)
     if l >= 2:
         for index in itertools.combinations([i for i in range(l)], 2):
-            cort1, cort2 = ar[index[0]], ar[index[1]]
+            cort1, cort2 = lst[index[0]], lst[index[1]]
             a = cort1[-1]
             if cort1[1] > cort2[1]:
                 f, b = cort1[:-1]

@@ -12,7 +12,7 @@ prime_list = euler.prime_list(100000)
 prime_list.remove(2)
 prime_list.remove(5)
 
-res = 0
+result = 0
 for pr in prime_list:
     ff = f = find(pr)
     while f % 2 == 0:
@@ -20,5 +20,5 @@ for pr in prime_list:
     while f % 5 == 0:
         f //= 5
     if f == 1:
-        res += pr
-print(sum(prime_list)-res+2+5)
+        result += pr
+print(sum(prime_list)-result+2+5)

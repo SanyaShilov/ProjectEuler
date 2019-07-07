@@ -1,21 +1,21 @@
-ar = [i for i in range(1000)]
+lst = [i for i in range(1000)]
 for i in range(2, 32):
     for j in range(2, 1000//i+32):
         try:
-            ar[i*j] = 0
+            lst[i*j] = 0
         except:
             pass
 
 ml = 0
 ma = 0
 mb = 0
-for b in ar:
+for b in lst:
     if b > 2:
         for a in range(-999, 1001, 2):
             n = 0
             l = 0
             c = b
-            while ar[c] != 0:
+            while lst[c] != 0:
                 n += 1
                 l += 1
                 c = n**2+a*n+b

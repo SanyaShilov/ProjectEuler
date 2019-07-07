@@ -1,12 +1,9 @@
-ANSWER =
+ANSWER = 1366
+POWER = 1000
 
 
-n = 2**1000
-s = 0
-while n:
-    s += n % 10
-    n //= 10
-print(s)
+def main():
+    return sum(int(d) for d in str(2 ** POWER))
 
 
 if __name__ == '__main__':

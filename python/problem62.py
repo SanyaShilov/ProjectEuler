@@ -3,14 +3,14 @@ ANSWER =
 
 def numbers (n):
     s = str(n)
-    ar = [0 for i in range(10)]
+    lst = [0 for i in range(10)]
     for i in range(10):
-        ar[i] = s.count(str(i))
-    return ar
+        lst[i] = s.count(str(i))
+    return lst
 
-ar = [numbers(i**3) for i in range(10000)]
+lst = [numbers(i**3) for i in range(10000)]
 for i in range(10000):
-    if ar.count(ar[i]) == 5:
+    if lst.count(lst[i]) == 5:
         print(i**3)
         break
 

@@ -1,9 +1,9 @@
 ANSWER =
 
 
-ar = open('../txt/problem082.txt').readlines()
-ar = [k.split(',') for k in ar]
-tab = [[int(c) for c in k] for k in ar]
+lst = open('../txt/problem082.txt').readlines()
+lst = [k.split(',') for k in lst]
+tab = [[int(c) for c in k] for k in lst]
 l = len(tab)
 way = [[0 for i in range(l)] for j in range(l)]
 

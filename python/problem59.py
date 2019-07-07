@@ -5,15 +5,15 @@ import itertools
 ANSWER =
 
 
-ar = open('../txt/problem059.txt').readlines()
-ar = ar[0].split(',')
-ar = [int(k) for k in ar]
+lst = open('../txt/problem059.txt').readlines()
+lst = lst[0].split(',')
+lst = [int(k) for k in lst]
 
-def decrypt (ar, key):
+def decrypt (lst, key):
     artext = []
     i = 0
     l = len(key)
-    for n in ar:
+    for n in lst:
         artext.append(chr(n ^ key[i]))
         i += 1
         if i == l:
@@ -26,11 +26,11 @@ def isword (s):
             return False
     return True
 
-spaces = len(ar) // 10
+spaces = len(lst) // 10
 symbols = string.printable
 keyset = [ord(s) for s in string.ascii_lowercase]
 for key in itertools.product(keyset, repeat = 3):
-    text = decrypt(ar, key)
+    text = decrypt(lst, key)
     
     if text.count(' ') < spaces:
         continue

@@ -9,7 +9,7 @@ def d_sum (n):
         ds += ord(s[i])
     return ds-l*ord('0')
 
-def res (n):
+def result (n):
     m = n * 100
     sq = int(n**0.5)
     while len(str(sq)) < 100:
@@ -24,7 +24,7 @@ squares = [i**2 for i in range(1, 11)]
 s = 0
 for i in range(1, 101):
     if i not in squares:
-        r = res(i)
+        r = result(i)
         s += r
 print(s)
 

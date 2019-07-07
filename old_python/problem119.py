@@ -5,12 +5,12 @@ def sum_d (n):
         n //= 10
     return s
 n = 1
-ar = []
+lst = []
 for i in range (2, 2000):
     for j in range(2, 100):
         num = i**j
         if sum_d(num) == i:
-            ar.append(num)
+            lst.append(num)
             n += 1
-ar.sort()
-print(ar[30-1])
+lst.sort()
+print(lst[30-1])

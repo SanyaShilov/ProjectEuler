@@ -1,7 +1,9 @@
-ANSWER =
+ANSWER = 171
+START = 1901
+STOP = 2001
 
 
-months = [31,
+MONTHS = [31,
           28,
           31,
           30,
@@ -14,31 +16,29 @@ months = [31,
           30,
           31]
 
-def is_leap (year):
+
+def is_leap(year):
     if year % 4:
         return False
-    if year % 25:
+    if year % 100:
         return True
-    if year % 16:
+    if year % 400:
         return False
     return True
 
-temp = 1
-year = 1901
-mon = 0
-res = 0
 
-while year != 2001:
-    if is_leap(year):
-        months[1] = 29
-    else:
-        months[1] = 28
-    for i in range(12):
-        temp = (temp+months[i])%7
-        if temp == 6:
-            res += 1
-    year += 1
-print(res)
+def main():
+    temp = 1
+    year = START
+    result = 0
+    while year != STOP:
+        MONTHS[1] = 28 + is_leap(year)
+        for i in range(12):
+            temp = (temp + MONTHS[i]) % 7
+            if temp == 6:
+                result += 1
+        year += 1
+    return result
 
 
 if __name__ == '__main__':

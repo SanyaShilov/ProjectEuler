@@ -28,7 +28,7 @@ for pr in prime_list:
         temp *= 10
 '''
 
-res = 0
+result = 0
 for n in range(1, 10):
     print(n)
     N = 10*n - 1
@@ -39,8 +39,8 @@ for n in range(1, 10):
                 num = ((10**power * f - nf)//N)*10 + f
                 n2 = num*n
                 if len(str(num)) == len(str(n2)):
-                    res += num % 100000
-print(res)
+                    result += num % 100000
+print(result)
 
 
 if __name__ == '__main__':

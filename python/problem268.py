@@ -5,9 +5,9 @@ LIMIT = 10**16
 
 prime_list = euler.prime_list(100)
 
-def product (ar):
+def product (lst):
     a = 1
-    for i in ar:
+    for i in lst:
         a *= i
     return a
 '''
@@ -27,15 +27,15 @@ for c in itertools.combinations(prime_list, 4):
     l += 1
     if not l % 100:
         print(l)
-    ar = []
+    lst = []
     m = c[-1]
     for pr in prime_list:
         if pr < m and pr not in c:
-            ar.append(pr)
+            lst.append(pr)
     a = 1
     for pr in c:
         a *= pr
-    s += euler.notdivisible(LIMIT//a, ar, len(ar))
+    s += euler.notdivisible(LIMIT//a, lst, len(lst))
 print(s)
 
 

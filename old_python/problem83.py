@@ -1,6 +1,6 @@
-ar = open('../txt/problem083.txt').readlines()
-ar = [k.split(',') for k in ar]
-tab = [[int(c) for c in k] for k in ar]
+lst = open('../txt/problem083.txt').readlines()
+lst = [k.split(',') for k in lst]
+tab = [[int(c) for c in k] for k in lst]
 
 l = len(tab)
 way = [[100000000 for i in range(l)] for j in range(l)]

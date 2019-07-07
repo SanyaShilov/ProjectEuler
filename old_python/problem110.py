@@ -6,41 +6,41 @@ prime_list = euler.prime_list(100)
 result = 10**1000
 LIMIT = 4 * 10**6
 
-def decisions (ar):
-    res = 1
-    for a in ar:
+def decisions (lst):
+    result = 1
+    for a in lst:
         if a == 0:
             break
-        res *= (a << 1) + 1
-    return res // 2 + 1
+        result *= (a << 1) + 1
+    return result // 2 + 1
 
-def number (ar):
-    res = 1
-    for i in range(len(ar)):
-        if ar[i] == 0:
+def number (lst):
+    result = 1
+    for i in range(len(lst)):
+        if lst[i] == 0:
             break
-        res *= prime_list[i]**ar[i]
-    return res
+        result *= prime_list[i]**lst[i]
+    return result
 
-def new_arrays (ar):
-    yield (ar[0] + 1,) + ar[1:]
-    for i in range(1, len(ar)):
-        if ar[i - 1] == 0:
+def new_arrays (lst):
+    yield (lst[0] + 1,) + lst[1:]
+    for i in range(1, len(lst)):
+        if lst[i - 1] == 0:
             return
-        if ar[i] < ar[i - 1]:
-            yield ar[:i] + (ar[i] + 1,) + ar[i + 1:]
+        if lst[i] < lst[i - 1]:
+            yield lst[:i] + (lst[i] + 1,) + lst[i + 1:]
 
-ar = tuple(0 for i in range(len(prime_list)))
-ars = {ar}
+lst = tuple(0 for i in range(len(prime_list)))
+ars = {lst}
 while ars:
     newars = set()
-    for ar in ars:
-        n = number(ar)
+    for lst in ars:
+        n = number(lst)
         if n > result:
             continue
-        if decisions(ar) > LIMIT:
+        if decisions(lst) > LIMIT:
             result = n
-        for newar in new_arrays(ar):
+        for newar in new_arrays(lst):
             newars.add(newar)
     ars = newars
 print(result)

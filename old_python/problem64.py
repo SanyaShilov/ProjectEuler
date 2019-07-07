@@ -17,9 +17,9 @@ def calc (nn):
 squares = [i*i for i in range(1000)]
 notsquares = [i for i in range(1, 10001) if i not in squares]
 
-res = 0
+result = 0
 for num in notsquares:
     c = calc(num)
     if c % 2:
-        res += 1
-print(res)
+        result += 1
+print(result)

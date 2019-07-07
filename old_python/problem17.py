@@ -68,30 +68,30 @@ bigtens = [
 # one thousand
 
 def count (i):
-    res = 0
+    result = 0
     if (i // 100) and (i % 100):
-        res += len('and')
+        result += len('and')
     
     r = i // 100
     if r:
-        res += len(ones[r])+len('hundred')
+        result += len(ones[r])+len('hundred')
 
     r = (i // 10) % 10
     if r:
         if r == 1:
             r2 = i % 10
-            res += len(tens[r2])
-            return res
+            result += len(tens[r2])
+            return result
         else:
-            res += len(bigtens[r])
+            result += len(bigtens[r])
 
     r2 = i % 10
     if r2:
-        res += len(ones[r2])
-    return res
+        result += len(ones[r2])
+    return result
 
 
-res = len('onethousand')
+result = len('onethousand')
 for i in range(1, 1000):
-    res += count(i)
-print(res)
+    result += count(i)
+print(result)

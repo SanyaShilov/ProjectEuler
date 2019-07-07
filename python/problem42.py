@@ -1,8 +1,8 @@
 ANSWER =
 
 
-ar = open('../txt/problem042.txt').readlines()
-ar = ar[0][1:-1].split('\",\"')
+lst = open('../txt/problem042.txt').readlines()
+lst = lst[0][1:-1].split('\",\"')
 tr = [k*(k+1)//2 for k in range(1, 50)]
 def value (w):
     s = 0
@@ -11,7 +11,7 @@ def value (w):
         s -= 64
     return s
 num = 0
-for k in ar:
+for k in lst:
     if value(k) in tr:
         num += 1
 print(num)

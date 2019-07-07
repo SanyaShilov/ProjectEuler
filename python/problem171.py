@@ -4,24 +4,24 @@ ANSWER =
 '''
 l = 2000
 little = [i*i for i in range(10)]
-ar = [0 for i in range(l)]
+lst = [0 for i in range(l)]
 for k in little:
-    ar[k] = 1
-ar[0] = 0
+    lst[k] = 1
+lst[0] = 0
 s = 0
 for i in range(44):
-    s += ar[i*i]
+    s += lst[i*i]
 print(s)
 for _ in range(20-1):
     newar = [0 for i in range(l)]
     for i in range(l):
-        if ar[i]:
+        if lst[i]:
             for q in little:
-                newar[i+q] += ar[i]
+                newar[i+q] += lst[i]
     
-    ar = newar
+    lst = newar
     for i in range(44):
-        s += ar[i*i]
+        s += lst[i*i]
 print(s)
 '''
 
@@ -38,24 +38,24 @@ for i in range(45+1):
     sqar[i*i] = True
 dgsq = [i*i for i in range(10)]
 
-def check (ar):
-    res = 0
+def check (lst):
+    result = 0
     for i in range(1, 10):
-        res += dgsq[i]*ar[i]
-    return sqar[res]
+        result += dgsq[i]*lst[i]
+    return sqar[result]
 
-def perestanovki (ar, l):
-    res = fact[l]
-    for k in ar:
-        res //= fact[k]
-    return res
+def perestanovki (lst, l):
+    result = fact[l]
+    for k in lst:
+        result //= fact[k]
+    return result
 
-def summ (ar, l):
+def summ (lst, l):
     s = 0
     for i in range(1, 10):
-        s +=i*ar[i]
-    res = s*perestanovki(ar, l)*repunits[l]//l
-    return res
+        s +=i*lst[i]
+    result = s*perestanovki(lst, l)*repunits[l]//l
+    return result
 
 arar = []
 for i in range(10):
@@ -65,16 +65,16 @@ arlast = [i for i in range(10)]
 arlen = [1 for i in range(10)]
 s = 0
 while arar:
-    ar = arar.pop()
+    lst = arar.pop()
     last = arlast.pop()
     l = arlen.pop()
     if l == 20:
-        if check(ar):
-            s += summ(ar, 20)
+        if check(lst):
+            s += summ(lst, 20)
     elif l < 20:
         l1 = l+1
         for i in range(last, 10):
-            newar = ar[:]
+            newar = lst[:]
             newar[i] += 1
             arar.append(newar)
             arlast.append(i)

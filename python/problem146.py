@@ -47,7 +47,7 @@ prime_list = euler.prime_list(100)
 prime_list.remove(2)
 st = [1, 3, 7, 9, 13, 27]
 bad = [5, 11, 15, 17, 19, 21, 23, 25]
-ar = {2}
+lst = {2}
 prod = 2
 for pr in prime_list:
     rest = set()
@@ -63,24 +63,24 @@ for pr in prime_list:
             rest.add(i)
     
     newar = set()
-    for a in ar:
+    for a in lst:
         for i in range(pr):
             q = a + prod*i
             if q < LIMIT:
                 if q% pr in rest:
                     newar.add(q)
-    ar = newar
+    lst = newar
     prod *= pr
 
 prime_list = euler.prime_list(LIMIT)
 
-res = set()
-for a in ar:
+result = set()
+for a in lst:
     if qwerty(a):
         print(a)
         if not cococo(a):
-            res.add(a)
-print(sum(res))
+            result.add(a)
+print(sum(result))
 # without 676333270, because 676333270**2 - 23 is prime (it must not be prime)
 
 

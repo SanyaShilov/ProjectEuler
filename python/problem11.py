@@ -1,22 +1,37 @@
-ANSWER =
+import functools
+import operator
 
 
-ar = [
-    [int(c) for c in line.split()]
-    for line in open('../txt/problem011.txt').readlines()
-]
-length = len(ar)
-mx = 0
-for i in range(length - 3):
-    for j in range(length - 3):
-        for prod in [
-            ar[i][j] * ar[i][j + 1] * ar[i][j + 2] * ar[i][j + 3],
-            ar[i][j] * ar[i + 1][j] * ar[i + 2][j] * ar[i + 3][j],
-            ar[i][j] * ar[i + 1][1] * ar[i + 2][2] * ar[i + 3][3],
-            ar[i + 3][j] * ar[i + 2][j + 1] * ar[i + 1][j + 2] * ar[i][j + 3]
-        ]:
-            mx = max(prod, mx)
-print(mx)
+ANSWER = 70600674
+NUMBERS = 4
+
+
+def main():
+    lst = [
+        [int(item) for item in line.split()]
+        for line in open('../txt/problem011.txt').readlines()
+    ]
+    length = len(lst)
+    maximum = 0
+    for i in range(length - NUMBERS + 1):
+        for j in range(length - NUMBERS + 1):
+            for start_i, start_j, di, dj in [
+                    (0, 0, 0, 1),
+                    (0, 0, 1, 0),
+                    (0, 0, 1, 1),
+                    (NUMBERS - 1, 0, -1, 1)
+            ]:
+                maximum = max(
+                    maximum,
+                    functools.reduce(
+                        operator.mul,
+                        (
+                            lst[i + start_i + di * n][j + start_j + dj * n]
+                            for n in range(NUMBERS)
+                        )
+                    )
+                )
+    return maximum
 
 
 if __name__ == '__main__':

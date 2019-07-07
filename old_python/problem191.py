@@ -1,13 +1,13 @@
 # Late # consecutive Absent
 
-ar = [[0, 0, 1], #0 
+lst = [[0, 0, 1], #0 
       [0, 1, 1], #1
       [0, 2, 0], #2
       [1, 0, 1], #3
       [1, 1, 0], #4
       [1, 2, 0]] #5
 
-def iteration (ar):
+def iteration (lst):
     newar =  [[0, 0, 0],
               [0, 1, 0],
               [0, 2, 0],
@@ -15,7 +15,7 @@ def iteration (ar):
               [1, 1, 0],
               [1, 2, 0]]
     '''
-    for k in ar[:]:
+    for k in lst[:]:
         if k[0]:
             newar.append([1, 0]) # On time
             if k[1] != 2:
@@ -27,7 +27,7 @@ def iteration (ar):
                 newar.append([0, k[1]+1]) # Absent
 
         '''
-    for k in ar:
+    for k in lst:
         num = k[2]
         if k[0]:
             newar[3][2] += num # On time
@@ -46,8 +46,8 @@ def iteration (ar):
 
 for i in range(29):
     print(i)
-    ar = iteration(ar)
+    lst = iteration(lst)
 s = 0
-for k in ar:
+for k in lst:
     s += k[2]
 print(s)

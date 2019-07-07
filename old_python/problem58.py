@@ -1,6 +1,6 @@
 import euler
 
-ar = euler.prime_list(1000000)
+lst = euler.prime_list(1000000)
 
 def fill (n): #  нечетное
     tab = [[0 for i in range(n)] for j in range(n)]
@@ -30,13 +30,13 @@ temp = 9
 while c >= 0.1:
     d += 2
     temp += d
-    if euler.isprime(temp, ar):
+    if euler.isprime(temp, lst):
         pr += 1
     temp += d
-    if euler.isprime(temp, ar):
+    if euler.isprime(temp, lst):
         pr += 1
     temp += d
-    if euler.isprime(temp, ar):
+    if euler.isprime(temp, lst):
         pr += 1
     temp += d
     al += 4

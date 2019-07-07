@@ -21,8 +21,8 @@ def wtf (p):
 for i in range(1, 613):
     wtf(i)
 
-res = 0
+result = 0
 for i in range(len(per)):
     if len(per[i]) == 1:
-        res += 1
-print(res)
+        result += 1
+print(result)

@@ -6,13 +6,13 @@ ANSWER =
 
 def sumdivisors (n):
     i = (1 for i in range(n+1))
-    res = array.array('L', i)
+    result = array.array('L', i)
     for i in range(2, n//2):
         for j in range(2, n//i+1):
-            res[i*j] += i
-    return res
+            result[i*j] += i
+    return result
 
-ar = sumdivisors(1000000)
+lst = sumdivisors(1000000)
 mxl = 0
 value = 0
 
@@ -20,13 +20,13 @@ def length (start):
     global mxl
     global value
     l = 1
-    ind = ar[start]
+    ind = lst[start]
     while ind > start:
         if l > 100:
             return
         if ind >= 1000000:
             return
-        ind = ar[ind]
+        ind = lst[ind]
         l += 1
     if ind == start:
         if l > mxl:
