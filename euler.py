@@ -5,8 +5,8 @@ sqrt_LIMIT = 10**16
 
 
 factorials = [1]
-for i in range(1, 10001):
-    factorials.append(factorials[-1]*i)
+for _ in range(1, 1001):
+    factorials.append(factorials[-1] * _)
 
 
 def int_sqrt(n):
@@ -51,7 +51,7 @@ def sum_divisors(n):
     return d
 
 
-def isprime(n, prime_list):
+def is_prime(n, prime_list):
     sq = int(n ** 0.5)
     for pr in prime_list:
         if pr > sq:
@@ -60,19 +60,18 @@ def isprime(n, prime_list):
             return False
 
 
-def prime_list(n):
-    index = array.array('L', (1 for _ in range(n)))
-    result = array.array('L')
-    i = 2
-    while i < n:
+def prime_list_with_zeros(n):
+    index = array.array('L', (range(n)))
+    index[1] = 0
+    for i in range(n):
         if index[i]:
-            result.append(i)
-            j = i
-            while j < n:
+            for j in range(2 * i, n, i):
                 index[j] = 0
-                j += i
-        i += 1
-    return result
+    return index
+
+
+def prime_list(n):
+    return array.array('L', (i for i in prime_list_with_zeros(n) if i))
 
 
 def totientlist(n):

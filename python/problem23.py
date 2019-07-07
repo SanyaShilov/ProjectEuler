@@ -1,23 +1,29 @@
 import euler
 
 
-ANSWER =
+ANSWER = 4179871
+LIMIT = 28124
 
 
-def abun (n):
-    return n < euler.sum_divisors(n)
+def abundant(num):
+    return num < euler.sum_divisors(num)
 
-lst  = [i for i in range(1, 28124) if abun(i)]
-l = len(lst)
-LIMIT = 28124 // 2
-st = [i for i in range(28124 * 2)]
-for i in range(l):
-    ai = lst[i]
-    if ai >= LIMIT:
-        break
-    for j in range(i, l):
-        st[ai + lst[j]] = 0
-print(sum(st[:28124]))
+
+def main():
+    lst = [i for i in range(1, LIMIT) if abundant(i)]
+    length = len(lst)
+    half = LIMIT // 2
+    cannot_be_written = [i for i in range(LIMIT)]
+    for i in range(length):
+        lst_i = lst[i]
+        if lst_i >= half:
+            break
+        for j in range(i, length):
+            num = lst_i + lst[j]
+            if num >= LIMIT:
+                break
+            cannot_be_written[num] = 0
+    return sum(cannot_be_written)
 
 
 if __name__ == '__main__':

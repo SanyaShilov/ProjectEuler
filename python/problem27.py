@@ -1,34 +1,28 @@
-ANSWER =
+import euler
 
 
-lst = [i for i in range(1000)]
-for i in range(2, 32):
-    for j in range(2, 1000//i+32):
-        try:
-            lst[i*j] = 0
-        except:
-            pass
+ANSWER = -59231
 
-ml = 0
-ma = 0
-mb = 0
-for b in lst:
-    if b > 2:
-        for a in range(-999, 1001, 2):
+
+def main():
+    maximum_l = 0
+    maximum_a = 0
+    maximum_b = 0
+    lst = euler.prime_list(1000)
+    for b in lst:
+        for a in range(-b + 2, 1001, 2):
             n = 0
-            l = 0
+            length = 0
             c = b
-            while lst[c] != 0:
+            while c > 1 and euler.is_prime(c, lst):
                 n += 1
-                l += 1
-                c = n**2+a*n+b
-                if c < 0 or c > 999:
-                    break
-            if l > ml:
-                ml = l
-                ma = a
-                mb = b
-print(ma*mb)
+                length += 1
+                c = n ** 2 + a * n + b
+            if length > maximum_l:
+                maximum_l = length
+                maximum_a = a
+                maximum_b = b
+    return maximum_a * maximum_b
 
 
 if __name__ == '__main__':

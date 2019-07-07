@@ -1,16 +1,15 @@
 import itertools
 
 
-ANSWER =
+ANSWER = 2783915460
+LIMIT = 10 ** 6
 
 
-for i, permutation in enumerate(itertools.permutations(tuple(i for i in range(10)))):
-    if i == 999999:
-        s = 0
-        for n in permutation:
-            s = s * 10 + n
-        print(s)
-        break
+def main():
+    for i, permutation in enumerate(itertools.permutations(range(10)), start=1):
+        if i == LIMIT:
+            return int(''.join(str(digit) for digit in permutation))
+    return 0
 
 
 if __name__ == '__main__':

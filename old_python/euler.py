@@ -46,7 +46,7 @@ def sum_divisors(n):
     return d
 
 
-def isprime(n, prime_list):
+def is_prime(n, prime_list):
     sq = int(n ** 0.5)
     i = 0
     for pr in prime_list:

@@ -1,16 +1,17 @@
 import euler
 
 
-ANSWER =
+ANSWER = 31626
 
 
-s = 0
-for i in range(2, 10000):
-    d = euler.sum_divisors(i)
-    if d != i:
-        if euler.sum_divisors(d) == i:
-            s += i
-print(s)
+def main():
+    total = 0
+    for num in range(2, 10000):
+        sum_divisors = euler.sum_divisors(num)
+        if sum_divisors != num:
+            if euler.sum_divisors(sum_divisors) == num:
+                total += num
+    return total
 
 
 if __name__ == '__main__':

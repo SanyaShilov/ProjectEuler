@@ -34,13 +34,13 @@ temp = 9
 while c >= 0.1:
     d += 2
     temp += d
-    if euler.isprime(temp, lst):
+    if euler.is_prime(temp, lst):
         pr += 1
     temp += d
-    if euler.isprime(temp, lst):
+    if euler.is_prime(temp, lst):
         pr += 1
     temp += d
-    if euler.isprime(temp, lst):
+    if euler.is_prime(temp, lst):
         pr += 1
     temp += d
     al += 4

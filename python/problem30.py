@@ -1,12 +1,11 @@
-ANSWER =
+ANSWER = 443839
 
 
-s = 0
-for i in range (2, 300000):
-    lst = [int(d) for d in str(i)]
-    if i == sum(k**5 for k in lst):
-        s += i
-print(s)
+def main():
+    return sum(
+        i for i in range(2, 300000)
+        if i == sum(int(digit) ** 5 for digit in str(i))
+    )
 
 
 if __name__ == '__main__':

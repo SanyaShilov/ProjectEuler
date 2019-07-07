@@ -41,7 +41,7 @@ for pr in prime_list:
                     start = 1
                 for i in range(start, 10):
                     n = int(mask.replace('*', str(i)))
-                    if euler.isprime(n, prime_list):
+                    if euler.is_prime(n, prime_list):
                         print(n)
                         sys.exit()
         else:
