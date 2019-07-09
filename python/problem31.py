@@ -1,22 +1,22 @@
-ANSWER =
+ANSWER = 73682
+COINS = [1, 2, 5, 10, 20, 50, 100, 200]
+SUM = 200
 
 
-coins = [1, 2, 5, 10, 20, 50, 100, 200]
-s = 0
-
-def work (sum, index):
-    global s
-    if sum == 200:
-        s += 1
+def find_ways(total, index):
+    result = 0
+    if total == SUM:
+        result += 1
+    elif total > SUM:
+        pass
     else:
         for i in range(index, 8):
-            ss = sum + coins[i]
-            if ss > 200:
-                break
-            work(ss, i)
+            result += find_ways(total + COINS[i], i)
+    return result
 
-work(0, 0)
-print(s)
+
+def main():
+    return find_ways(0, 0)
 
 
 if __name__ == '__main__':

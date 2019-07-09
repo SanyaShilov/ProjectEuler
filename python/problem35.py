@@ -1,33 +1,26 @@
-ANSWER =
+import euler
 
 
-lst = [i for i in range(1000000)]
-for i in range(2, 1000):
-    for j in range(2, 1000000//i+1000):
-        try:
-            lst[i*j] = 0
-        except:
-            pass
-lst[1] = 0
+ANSWER = 55
+LIMIT = 10 ** 6
 
 
-s = 0
-def get_round (n):
-    st = str(n)
-    return [int(st[i:]+st[:i]) for i in range(len(st))]
+def get_round(n):
+    string = str(n)
+    return [int(string[i:] + string[:i]) for i in range(len(string))]
 
-for i in range(1000000):
-    a = lst[i]
-    if a:
-        g = get_round(a)
-        t = 1
-        for b in g:
-            if lst[b] == 0:
-                t = 0
-        if t == 1:
-            s += 1
 
-print(s)
+def main():
+    lst = euler.prime_list_with_zeros(LIMIT)
+    count = 0
+    for n in lst:
+        if n:
+            for rounding in get_round(n):
+                if lst[rounding] == 0:
+                    break
+            else:
+                count += 1
+    return count
 
 
 if __name__ == '__main__':

@@ -1,15 +1,15 @@
-ANSWER =
+import euler
 
 
-fact = [1]
-for i in range(1, 10):
-    fact.append(fact[-1]*i)
+ANSWER = 40730
 
-s = 0
-for i in range(10, 2000000):
-    if i == sum(fact[int(k)] for k in str(i)):
-        s += i
-print(s)
+
+def main():
+    total = 0
+    for i in range(10, 2177280):
+        if i == sum(euler.factorials[int(digit)] for digit in str(i)):
+            total += i
+    return total
 
 
 if __name__ == '__main__':

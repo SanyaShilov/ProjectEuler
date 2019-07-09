@@ -1,4 +1,6 @@
 import array
+import functools
+import operator
 
 
 sqrt_LIMIT = 10**16
@@ -7,6 +9,10 @@ sqrt_LIMIT = 10**16
 factorials = [1]
 for _ in range(1, 1001):
     factorials.append(factorials[-1] * _)
+
+
+def product(sequence, initial=1):
+    return functools.reduce(operator.mul, sequence, initial)
 
 
 def int_sqrt(n):

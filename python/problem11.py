@@ -1,5 +1,4 @@
-import functools
-import operator
+import euler
 
 
 ANSWER = 70600674
@@ -23,8 +22,7 @@ def main():
             ]:
                 maximum = max(
                     maximum,
-                    functools.reduce(
-                        operator.mul,
+                    euler.product(
                         (
                             lst[i + start_i + di * n][j + start_j + dj * n]
                             for n in range(NUMBERS)

@@ -1,14 +1,14 @@
-ANSWER =
+ANSWER = 932718654
 
 
-s = set('123456789')
-m = 0
-for i in range(9001, 10000):
-    if set(str(i)+str(i*2)) == s:
-        if i > m:
-            m = i
-print(int(str(m)+str(m*2)))
-        
+def main():
+    digits = set(str(i) for i in range(1, 10))
+    for i in range(9999, 9000 - 1, -1):
+        concatenated_product = str(i) + str(i * 2)
+        if set(concatenated_product) == digits:
+            return int(concatenated_product)
+    return 0
+
 
 if __name__ == '__main__':
     print(main())

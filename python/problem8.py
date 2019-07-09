@@ -1,5 +1,4 @@
-import functools
-import operator
+import euler
 
 
 ANSWER = 23514624000
@@ -29,8 +28,7 @@ NUMBER = '\
 
 def main():
     return max(
-        functools.reduce(
-            operator.mul,
+        euler.product(
             (int(digit) for digit in NUMBER[i:i + 13])
         )
         for i in range(len(NUMBER) - 13 + 1)
