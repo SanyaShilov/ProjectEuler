@@ -1,10 +1,8 @@
+import euler
+
+
 ANSWER = 906609
 DIGITS = 3
-
-
-def is_palindrome(num):
-    string = str(num)
-    return string == string[::-1]
 
 
 def main():
@@ -13,7 +11,7 @@ def main():
         for j in range(10 ** DIGITS - 1, i - 1, -1):
             prod = i * j
             if prod > maximum:
-                if is_palindrome(prod):
+                if euler.is_palindrome(prod):
                     maximum = prod
             else:
                 break

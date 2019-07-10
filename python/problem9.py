@@ -6,11 +6,14 @@ SUM = 1000
 
 
 def main():
-    for a in range(int((SUM // 2) ** 0.5)):
-        for trio in euler.pythagorean_trio(a):
-            if sum(trio) == SUM:
-                return trio[0] * trio[1] * trio[2]
-    return 0
+    return euler.product(
+        next(
+            trio
+            for a in range(int((SUM // 2) ** 0.5))
+            for trio in euler.pythagorean_trio(a)
+            if sum(trio) == SUM
+        )
+    )
 
 
 if __name__ == '__main__':

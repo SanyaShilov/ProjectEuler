@@ -1,7 +1,8 @@
-ANSWER =
+ANSWER = 9110846700
 
 
-print(sum(i**i for i in range(1, 1001)) % 10**10)
+def main():
+    return sum(i ** i for i in range(1, 1001)) % 10 ** 10
 
 
 if __name__ == '__main__':

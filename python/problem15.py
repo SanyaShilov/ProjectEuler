@@ -7,9 +7,9 @@ GRID = 20, 20
 
 def main():
     return (
-        euler.factorials[GRID[0] + GRID[1]] //
-        euler.factorials[GRID[0]] //
-        euler.factorials[GRID[1]]
+        euler.FACTORIALS[GRID[0] + GRID[1]] //
+        euler.FACTORIALS[GRID[0]] //
+        euler.FACTORIALS[GRID[1]]
     )
 
 

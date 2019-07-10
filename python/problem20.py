@@ -6,7 +6,7 @@ LIMIT = 100
 
 
 def main():
-    return sum(int(digit) for digit in str(euler.factorials[LIMIT]))
+    return sum(int(digit) for digit in str(euler.FACTORIALS[LIMIT]))
 
 
 if __name__ == '__main__':

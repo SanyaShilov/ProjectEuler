@@ -1,19 +1,27 @@
-ANSWER =
+import euler
 
 
-tr = [i * (i+1) // 2 for i in range(1, 1000000)]
-pn = [i * (3*i-1) // 2 for i in range(1, 1000000)]
-hx = [i * (2*i-1) for i in range(1, 1000000)]
-t = 0
-p = 2
-h = 200
-while tr[t] != pn[p] or tr[t] != hx[h]:
-    t += 1
-    if tr[t] > pn[p]:
-        p += 1
-    if tr[t] > hx[h]:
-        h += 1
-print(tr[t])
+ANSWER = 1533776805
+
+
+def main():
+    t_index = 285
+    p_index = 165
+    h_index = 143
+    pentagonal = euler.pentagonal(p_index)
+    hexagonal = euler.hexagonal(h_index)
+    while True:
+        t_index += 1
+        triangular = euler.triangular(t_index)
+        if triangular > pentagonal:
+            p_index += 1
+            pentagonal = euler.pentagonal(p_index)
+        if triangular > hexagonal:
+            h_index += 1
+            hexagonal = euler.hexagonal(h_index)
+        if triangular == pentagonal == hexagonal:
+            break
+    return triangular
 
 
 if __name__ == '__main__':

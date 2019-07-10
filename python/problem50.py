@@ -1,29 +1,27 @@
-ANSWER =
+import euler
 
 
-lst = [i for i in range(1000000)]
-for i in range(2, 1000):
-    for j in range(2, 1000000//i+1000):
-        try:
-            lst[i*j] = 0
-        except:
-            pass
-lst[1] = 0
-prime = []
-for i in range(1000000):
-    if lst[i] != 0:
-        prime.append(i)
-l = len(prime)
-m = 0
+ANSWER = 997651
+LIMIT = 10 ** 6
 
-for i in range(3, l, 2):
-    s = sum(prime[3:i+3])
-    if s > 1000000:
-        break
-    if lst[s] != 0:
-        if s > m:
-            m = s          
-print(m)
+
+def main():
+    lst = euler.prime_list_with_zeros(LIMIT)
+    prime_list = [n for n in lst if n != 0]
+    length = len(prime_list)
+    prime = 0
+    max_j = 0
+    for i in range(length):
+        for j in range(1, length - i):
+            total = sum(prime_list[i:i + j])
+            if total > 1000000:
+                if j < max_j:
+                    return prime
+                break
+            if lst[total] != 0:
+                prime = max(prime, total)
+                max_j = max(max_j, j)
+    return prime
 
 
 if __name__ == '__main__':

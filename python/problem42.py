@@ -1,20 +1,13 @@
-ANSWER =
+import euler
 
 
-lst = open('../txt/problem042.txt').readlines()
-lst = lst[0][1:-1].split('\",\"')
-tr = [k*(k+1)//2 for k in range(1, 50)]
-def value (w):
-    s = 0
-    for i in range(len(w)):
-        s += ord(w[i])
-        s -= 64
-    return s
-num = 0
-for k in lst:
-    if value(k) in tr:
-        num += 1
-print(num)
+ANSWER = 162
+
+
+def main():
+    lst = open('../txt/problem042.txt').readline()[1:-1].split('","')
+    triangles = {euler.triangular(i) for i in range(1, 50)}
+    return sum(euler.alphabetical_value(word) in triangles for word in lst)
 
 
 if __name__ == '__main__':

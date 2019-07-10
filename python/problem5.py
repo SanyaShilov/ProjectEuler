@@ -8,11 +8,10 @@ LIMIT = 20
 
 
 def main():
-    prime_list = euler.prime_list(LIMIT + 1)
-    result = 1
-    for prime in prime_list:
-        result *= prime ** int(math.log(LIMIT, prime))
-    return result
+    return euler.product(
+        prime ** int(math.log(LIMIT, prime))
+        for prime in euler.prime_list(LIMIT + 1)
+    )
 
 
 if __name__ == '__main__':

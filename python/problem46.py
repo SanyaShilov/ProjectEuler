@@ -1,34 +1,24 @@
-ANSWER =
+import euler
 
 
-lst = [i for i in range(100000)]
-for i in range(2, 320):
-    for j in range(2, 100000//i+320):
-        try:
-            lst[i*j] = 0
-        except:
-            pass
-lst[1] = 0
-sq = [2*i**2 for i in range(1, 101)]
-big = []
-a = 33
-while True:
-    a += 2
-    if lst[a] != 0:
-        pass
-    else:
-        maybe = 1
-        for i in range(100):
-            q = a - sq[i]
-            if q > 0:
-                if lst[a - sq[i]] != 0:
-                    maybe = 0
-                    break
-            else:
-                break
-        if maybe == 1:
-            print(a)
-            break
+ANSWER = 5777
+LIMIT = 10 ** 2
+
+
+def main():
+    lst = euler.prime_list_with_zeros(LIMIT ** 2)
+    double_squares = [2 * i ** 2 for i in range(1, LIMIT + 1)]
+    number = 33
+    while True:
+        number += 2
+        if lst[number] == 0:
+            for i in range(LIMIT):
+                must_be_prime = number - double_squares[i]
+                if must_be_prime > 0:
+                    if lst[must_be_prime] != 0:
+                        break
+                else:
+                    return number
 
 
 if __name__ == '__main__':
