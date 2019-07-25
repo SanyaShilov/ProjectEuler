@@ -1,227 +1,77 @@
-ANSWER =
+ANSWER = 376
+RANKS = ''.join(str(i) for i in range(10)) + 'TJQKA'
 
 
-f = open('../txt/problem054.txt')
-r = f.readlines()
-lst = [k for k in r]
-
-def checkFlush (strhand):
-    m = strhand[0][1]
-    for k in strhand:
-        if k[1] != m:
+def check_flush(str_hand):
+    suit = str_hand[0][1]
+    for card in str_hand:
+        if card[1] != suit:
             return False
     return True
 
-def checkStraight (sorthand):
-    a = sorthand[0]
+
+def check_straight(sort_hand):
+    first = sort_hand[0]
     for i in range(1, 5):
-        if sorthand[i]-a != i:
+        if sort_hand[i] - first != i:
             return False
     return True
 
-def Player1Win (str1, str2):
-    for i in range(len(str1)):
-        if str1[i] > str2[i]:
-            return True
-        if str1[i] < str2[i]:
-            return False
+
+def player1_wins(str1, str2):
+    return str1 > str2
 
 
-s = 0
-for k in range(len(lst)):
-    hand1 = lst[k][:14].split()
-    hand2 = lst[k][15:][:-1].split()
-    nhand1 = []
-    for j in hand1:
-        n = j[0]
-        if n <= '9':
-            nhand1.append(int(n))
-        if n == 'T':
-            nhand1.append(10)
-        if n == 'J':
-            nhand1.append(11)
-        if n == 'Q':
-            nhand1.append(12)
-        if n == 'K':
-            nhand1.append(13)
-        if n == 'A':
-            nhand1.append(14)
-    nhand1.sort()
-    nhand2 = []
-    for j in hand2:
-        n = j[0]
-        if n <= '9':
-            nhand2.append(int(n))
-        if n == 'T':
-            nhand2.append(10)
-        if n == 'J':
-            nhand2.append(11)
-        if n == 'Q':
-            nhand2.append(12)
-        if n == 'K':
-            nhand2.append(13)
-        if n == 'A':
-            nhand2.append(14)
-    nhand2.sort()
-    count1 = [nhand1.count(k) for k in nhand1]
-    count2 = [nhand2.count(k) for k in nhand2]
-    
-    if checkStraight(nhand1):
-        if checkFlush(hand1):
-            strength1 = [9, nhand1[-1]]
-            
+def construct_detailed_strength(strength, int_hand, count):
+    for i in int_hand[::-1]:
+        if int_hand.count(i) == count:
+            strength.append(i)
+    for i in int_hand[::-1]:
+        if int_hand.count(i) != count:
+            strength.append(i)
+
+
+def get_strength(hand):
+    int_hand = sorted(RANKS.index(card[0]) for card in hand)
+    count = [int_hand.count(k) for k in int_hand]
+    if check_straight(int_hand):
+        if check_flush(hand):
+            strength = [9] + int_hand[::-1]
         else:
-            strength1 = [5, nhand1[-1]]
-            
-    elif checkFlush(hand1):
-        strength1 = [6]
-        for i in nhand1[::-1]:
-            strength1.append(i)
-        
+            strength = [5] + int_hand[::-1]
+    elif check_flush(hand):
+        strength = [6] + int_hand[::-1]
     else:
-        if count1.count(4) == 4:
-            strength1 = [8]
-            for i in nhand1:
-                if nhand1.count(i) == 4:
-                    strength1.append(i)
-                    break
-            for i in nhand1:
-                if nhand1.count(i) == 1:
-                    strength1.append(i)
-                    break
-            
-        elif count1.count(3) == 3:
-            if count1.count(2) == 2:
-                strength1 = [7]
-                for i in nhand1:
-                    if nhand1.count(i) == 3:
-                        strength1.append(i)
-                        break
-                for i in nhand1:
-                    if nhand1.count(i) == 2:
-                        strength1.append(i)
-                        break
-                
+        if count.count(4) == 4:
+            strength = [8]
+            construct_detailed_strength(strength, int_hand, 4)
+        elif count.count(3) == 3:
+            if count.count(2) == 2:
+                strength = [7]
+                construct_detailed_strength(strength, int_hand, 3)
             else:
-                strength1 = [4]
-                for i in nhand1:
-                    if nhand1.count(i) == 3:
-                        strength1.append(i)
-                        break
-                while i in nhand1:
-                    nhand1.remove(i)
-                for i in nhand1[::-1]:
-                    strength1.append(i)
-                    
-        elif count1.count(2) == 4:
-            strength1 = [3]
-            for i in nhand1[::-1]:
-                if nhand1.count(i) == 2:
-                    strength1.append(i)
-                    break
-            while i in nhand1:
-                nhand1.remove(i)
-            for i in nhand1:
-                if nhand1.count(i) == 2:
-                    strength1.append(i)
-                    break
-                
-        elif count1.count(2) == 2:
-            strength1 = [2]
-            for i in nhand1:
-                if nhand1.count(i) == 2:
-                    strength1.append(i)
-                    break
-            while i in nhand1:
-                nhand1.remove(i)
-            for i in nhand1[::-1]:
-                strength1.append(i)
-            
-        elif count1.count(1) == 5:
-            strength1 = [1]
-            for i in nhand1[::-1]:
-                strength1.append(i)
-
-    #
-
-    if checkStraight(nhand2):
-        if checkFlush(hand2):
-            strength2 = [9, nhand2[-1]]
-            
+                strength = [4]
+                construct_detailed_strength(strength, int_hand, 3)
+        elif count.count(2) == 4:
+            strength = [3]
+            construct_detailed_strength(strength, int_hand, 2)
+        elif count.count(2) == 2:
+            strength = [2]
+            construct_detailed_strength(strength, int_hand, 2)
         else:
-            strength2 = [5, nhand2[-1]]
-            
-    elif checkFlush(hand2):
-        strength2 = [6]
-        for i in nhand2[::-1]:
-            strength2.append(i)
-        
-    else:
-        if count2.count(4) == 4:
-            strength2 = [8]
-            for i in nhand2:
-                if nhand2.count(i) == 4:
-                    strength2.append(i)
-                    break
-            for i in nhand2:
-                if nhand2.count(i) == 1:
-                    strength2.append(i)
-                    break
-            
-        elif count2.count(3) == 3:
-            if count2.count(2) == 2:
-                strength2 = [7]
-                for i in nhand2:
-                    if nhand2.count(i) == 3:
-                        strength2.append(i)
-                        break
-                for i in nhand2:
-                    if nhand2.count(i) == 2:
-                        strength2.append(i)
-                        break
-                
-            else:
-                strength2 = [4]
-                for i in nhand2:
-                    if nhand2.count(i) == 3:
-                        strength2.append(i)
-                        break
-                while i in nhand2:
-                    nhand2.remove(i)
-                for i in nhand2[::-1]:
-                    strength2.append(i)
-                    
-        elif count2.count(2) == 4:
-            strength2 = [3]
-            for i in nhand2[::-1]:
-                if nhand2.count(i) == 2:
-                    strength2.append(i)
-                    break
-            while i in nhand2:
-                nhand2.remove(i)
-            for i in nhand2:
-                if nhand2.count(i) == 2:
-                    strength2.append(i)
-                    break
-                
-        elif count2.count(2) == 2:
-            strength2 = [2]
-            for i in nhand2:
-                if nhand2.count(i) == 2:
-                    strength2.append(i)
-                    break
-            while i in nhand2:
-                nhand2.remove(i)
-            for i in nhand2[::-1]:
-                strength2.append(i)
-            
-        elif count2.count(1) == 5:
-            strength2 = [1]
-            for i in nhand2[::-1]:
-                strength2.append(i)
+            strength = [1] + int_hand[::-1]
+    return strength
 
-    s += Player1Win(strength1, strength2)
-print(s)
+
+def main():
+    lst = open('../txt/problem054.txt').readlines()
+    count = 0
+    for hands in lst:
+        cards = hands.split()
+        hand1 = cards[:5]
+        hand2 = cards[5:]
+        count += player1_wins(get_strength(hand1), get_strength(hand2))
+    return count
 
 
 if __name__ == '__main__':

@@ -1,27 +1,23 @@
-ANSWER =
+import euler
 
 
-def step (n):
+ANSWER = 249
+
+
+def step(n):
     return n + int(str(n)[::-1])
 
-def is_p (n):
-    s = str(n)
-    return s == s[::-1]
 
-s = 0
-for i in range(1, 10000):
-    c = step(i)
-    temp = 1
-    d = 0
-    while temp < 51:
-        if is_p(c):
-            d = 1
-            break
-        c = step(c)
-        temp += 1
-    if d == 0:
-        s += 1
-print(s)
+def main():
+    count = 0
+    for i in range(1, 10000):
+        for _ in range(50):
+            i = step(i)
+            if euler.is_palindrome(i):
+                break
+        else:
+            count += 1
+    return count
 
 
 if __name__ == '__main__':

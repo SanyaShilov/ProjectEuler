@@ -1,53 +1,48 @@
+# TODO: use correct algorithm
+
+
 import string
 import itertools
 
 
-ANSWER =
+ANSWER = 129448
 
 
-lst = open('../txt/problem059.txt').readlines()
-lst = lst[0].split(',')
-lst = [int(k) for k in lst]
-
-def decrypt (lst, key):
-    artext = []
+def decrypt(lst, key):
+    text = []
     i = 0
-    l = len(key)
+    key_len = len(key)
     for n in lst:
-        artext.append(chr(n ^ key[i]))
-        i += 1
-        if i == l:
-            i = 0
-    return ''.join(artext)
+        text.append(chr(n ^ key[i]))
+        i = (i + 1) % key_len
+    return ''.join(text)
 
-def isword (s):
-    for symbol in s:
+
+def is_word(word):
+    for symbol in word:
         if symbol not in string.ascii_letters:
             return False
     return True
 
-spaces = len(lst) // 10
-symbols = string.printable
-keyset = [ord(s) for s in string.ascii_lowercase]
-for key in itertools.product(keyset, repeat = 3):
-    text = decrypt(lst, key)
-    
-    if text.count(' ') < spaces:
-        continue
 
-    words = text.split()
-    count = sum(isword(s) for s in words)
-    if count < len(words)//2:
-        continue
-
-    if 'the' not in words or 'The' not in words:
-        continue
-    
-    for s in text:
-        if s not in symbols:
-            break
-    else:
-        print(sum(ord(s) for s in text))
+def main():
+    lst = [int(n) for n in open('../txt/problem059.txt').readline().split(',')]
+    spaces = len(lst) // 10
+    keyset = [ord(s) for s in string.ascii_lowercase]
+    for key in itertools.product(keyset, repeat=3):
+        text = decrypt(lst, key)
+        if text.count(' ') < spaces:
+            continue
+        words = text.split()
+        count = sum(is_word(word) for word in words)
+        if count < len(words) / 1.5:
+            continue
+        for symbol in text:
+            if symbol not in string.printable:
+                break
+        else:
+            return sum(ord(s) for s in text)
+    return 0
 
 
 if __name__ == '__main__':

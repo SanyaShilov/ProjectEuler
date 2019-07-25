@@ -1,16 +1,15 @@
-ANSWER =
+import euler
 
 
-def dsum (n):
-    return sum(int(k) for k in str(n))
+ANSWER = 972
 
-m = 0
-for i in range(1, 100):
-    for j in range(1, 100):
-        d = dsum(i**j)
-        if d > m:
-            m = d
-print(m)
+
+def main():
+    return max(
+        euler.digit_sum(a ** b)
+        for a in range(1, 100)
+        for b in range(1, 100)
+    )
 
 
 if __name__ == '__main__':

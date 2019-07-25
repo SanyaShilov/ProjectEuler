@@ -1,20 +1,20 @@
-ANSWER =
+import euler
 
 
-def fact (n):
-    r = 1
-    while n > 1:
-        r = r * n
-        n -= 1
-    return r
+ANSWER = 4075
+LIMIT = 10 ** 6
 
-tab = [fact(i) for i in range(101)]
-s = 0
-for n in range (1, 101):
-    for r in range(n+1):
-        if tab[n] / tab[r] / tab[n-r] > 1000000:
-            s += 1
-print(s)
+
+def main():
+    return sum(
+        (
+            euler.FACTORIALS[n] /
+            euler.FACTORIALS[r] /
+            euler.FACTORIALS[n - r]
+        ) > LIMIT
+        for n in range(1, 101)
+        for r in range(n + 1)
+    )
 
 
 if __name__ == '__main__':

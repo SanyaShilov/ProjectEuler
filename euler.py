@@ -75,7 +75,12 @@ def is_not_divisible(num, lst, ind):
 # primes
 
 
-def is_prime(n, prime_lst):
+def is_prime(n, prime_lst, prime_lst_with_zeros=None):
+    if prime_lst_with_zeros:
+        try:
+            return bool(prime_lst_with_zeros[n])
+        except IndexError:
+            pass
     sq = int(n ** 0.5)
     for prime in prime_lst:
         if prime > sq:
@@ -171,6 +176,13 @@ def is_pentagonal(n):
 
 def alphabetical_value(word):
     return sum(string.ascii_uppercase.index(letter) + 1 for letter in word)
+
+
+# digits
+
+
+def digit_sum(n):
+    return sum(int(digit) for digit in str(n))
 
 
 # other

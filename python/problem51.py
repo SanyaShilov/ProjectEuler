@@ -1,55 +1,55 @@
+import collections
 import itertools
-import sys
+
 import euler
 
 
-ANSWER =
+ANSWER = 121313
 
 
-def all_masks (pr):
-    result = []
-    s = str(pr)
-    for i in range(10):
-        stri = str(i)
-        c = s.count(stri)
-        if c >= 3:
-            st = set()
-            for perm in itertools.permutations([True for i in range(3)]+
-                                               [False for i in range(c - 3)]):
-                st.add(perm)
-            for perm in st:
-                j = 0
-                mask = ''
-                for symbol in s:
-                    if symbol == stri:
-                        if perm[j]:
-                            mask += '*'
-                        else:
-                            mask += stri
-                        j += 1
+def i_masks(prime, i):
+    str_prime = str(prime)
+    str_i = str(i)
+    count = str_prime.count(str_i)
+    if count >= 3:
+        for perm in set(
+                itertools.permutations(
+                    [True for _ in range(3)] +
+                    [False for _ in range(count - 3)]
+                )
+        ):
+            j = 0
+            mask = ''
+            for symbol in str_prime:
+                if symbol == str_i:
+                    if perm[j]:
+                        mask += '*'
                     else:
-                        mask += symbol
-                result.append(mask)
-    return result    
+                        mask += str_i
+                    j += 1
+                else:
+                    mask += symbol
+            yield mask
 
-length = 10000000
-prime_list = euler.prime_list(length)
-masks = {}
-for pr in prime_list:
-    for mask in all_masks(pr):
-        if mask in masks:
+
+def all_masks(prime):
+    for i in range(10):
+        yield from i_masks(prime, i)
+
+
+def main():
+    prime_list = euler.prime_list(10 ** 7)
+    masks = collections.defaultdict(int)
+    for prime in prime_list:
+        for mask in all_masks(prime):
             masks[mask] += 1
             if masks[mask] == 8:
-                start = 0
-                if mask.startswith('*'):
-                    start = 1
+                start = 1 if mask.startswith('*') else 0
                 for i in range(start, 10):
                     n = int(mask.replace('*', str(i)))
                     if euler.is_prime(n, prime_list):
-                        print(n)
-                        sys.exit()
-        else:
-            masks[mask] = 1
+                        return n
+    return 0
 
 
 if __name__ == '__main__':
