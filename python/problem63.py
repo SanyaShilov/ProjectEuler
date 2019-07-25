@@ -1,12 +1,12 @@
-ANSWER =
+ANSWER = 49
 
 
-s = 0
-for i in range(1, 100):
-    for j in range(1, 200):
-        if len(str(i**j)) == j:
-            s += 1
-print(s)
+def main():
+    return sum(
+        len(str(i ** j)) == j
+        for i in range(1, 100)
+        for j in range(1, 200)
+    )
 
 
 if __name__ == '__main__':

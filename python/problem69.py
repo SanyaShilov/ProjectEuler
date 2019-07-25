@@ -1,12 +1,14 @@
 import euler
 
 
-ANSWER =
+ANSWER = 510510
+LIMIT = 10 ** 6
 
 
-totient = euler.totientlist(1000000+1)
-lst = [0]+[i/totient[i] for i in range(1, 1000000+1)]
-print(lst.index(max(lst)))
+def main():
+    totient = euler.totient_list(LIMIT + 1)
+    lst = [0] + [i / totient[i] for i in range(1, LIMIT + 1)]
+    return lst.index(max(lst))
 
 
 if __name__ == '__main__':

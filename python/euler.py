@@ -225,30 +225,27 @@ def parse_fraction(lst):
     b = 1
     a = lst[-1]
     for i in range(len(lst) - 1):
-        c = a
-        a = a * lst[-2 - i] + b
-        b = c
+        a, b = a * lst[-2 - i] + b, a
     return a, b
 
 
-def square_fraction(nn, length):
-    sq = nn ** 0.5
-    tr = int(sq)
-    add = -tr
-    d = 1
+def square_fraction(n, length):
+    sqrt = n ** 0.5
+    a = int(sqrt)
+    diff = -a
+    denom = 1
     current_length = 0
     lst = []
     while True:
-        lst.append(tr)
+        lst.append(a)
         current_length += 1
-        wtf = nn - add * add
-        d = wtf // d
-        tr = int((sq - add) / d)
-        add = -add - tr * d
+        denom = (n - diff * diff) // denom
+        a = int((sqrt - diff) / denom)
+        diff = -diff - a * denom
         if current_length > length:
             break
     return lst
 
 
 if __name__ == '__main__':
-    print(list_of_prime_factors(600851475143))
+    print(square_fraction(23, 10))

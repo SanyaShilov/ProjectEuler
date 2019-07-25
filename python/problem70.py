@@ -1,40 +1,23 @@
 import euler
 
 
-ANSWER =
+ANSWER = 8319823
+LIMIT = 10 ** 7
 
 
-lst = euler.totientlist(10000000)
-
-def is_permutation (a, b):
-    s = []
-    while a:
-        s.append(a % 10)
-        a //= 10
-    try:
-        while b:
-            s.remove(b % 10)
-            b //= 10
-        if s:
-            return False
-        return True
-    except:
-        return False
-
-def is_permutation (a, b):
-    return sorted(str(a)) == sorted(str(b))
- 
-minimum = 10000
-n = 0
-sorted_strings = [sorted(str(i)) for i in range(10000000)]
-for i in range(2, 10000000):
-    fi = lst[i]
-    if sorted_strings[i] == sorted_strings[fi]:
-        m = i/fi
-        if m < minimum:
-            minimum = m
-            n = i
-print(n)
+def main():
+    lst = euler.totient_list(LIMIT)
+    minimum = LIMIT
+    n = 0
+    sorted_strings = [sorted(str(i)) for i in range(LIMIT)]
+    for i in range(2, LIMIT):
+        phi = lst[i]
+        if sorted_strings[i] == sorted_strings[phi]:
+            ratio = i / phi
+            if ratio < minimum:
+                minimum = ratio
+                n = i
+    return n
 
 
 if __name__ == '__main__':

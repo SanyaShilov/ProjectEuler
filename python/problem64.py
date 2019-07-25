@@ -1,31 +1,26 @@
-ANSWER =
+ANSWER = 1322
 
 
-def calc (nn):
-    sq = nn**0.5
-    tr = int(sq)
-    start = add = -tr
-    d = 1
-    l = 0
+def period(n):
+    sqrt = n ** 0.5
+    int_sqrt = int(sqrt)
+    start = diff = -int_sqrt
+    denom = 1
+    length = 0
     while True:
-        l += 1
-        wtf = nn-add*add
-        d = wtf//d
-        tr = int((sq-add)/d)
-        add = -add - tr*d
-        if d == 1 and add == start:
+        length += 1
+        denom = (n - diff ** 2) // denom
+        a = int((sqrt - diff) / denom)
+        diff = -diff - a * denom
+        if denom == 1 and diff == start:
             break
-    return l 
-        
-squares = [i*i for i in range(1000)]
-notsquares = [i for i in range(1, 10001) if i not in squares]
+    return length
 
-result = 0
-for num in notsquares:
-    c = calc(num)
-    if c % 2:
-        result += 1
-print(result)
+
+def main():
+    squares = [i*i for i in range(101)]
+    not_squares = [i for i in range(1, 10001) if i not in squares]
+    return sum(period(n) % 2 for n in not_squares)
 
 
 if __name__ == '__main__':

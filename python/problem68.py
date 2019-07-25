@@ -1,38 +1,36 @@
 import itertools
 
 
-ANSWER =
+ANSWER = 6531031914842725
 
 
-lst = [6, 9, 8, 7, 10]
-
-def calc (lst):
+def get_internal(external):
     result = [0, 0, 0, 0, 0]
-    result[2] = lst[0]-lst[1]
-    result[3] = lst[4]-lst[3]
-    result[1] = result[3]+lst[2]-lst[1]
-    result[4] = result[1]+lst[0]-lst[4]
+    result[2] = external[0] - external[1]
+    result[3] = external[4] - external[3]
+    result[1] = result[3] + external[2] - external[1]
+    result[4] = result[1] + external[0] - external[4]
     if len(set(result)) < 5:
         return None
-    if max(result)-min(result) != 4:
+    if max(result) - min(result) != 4:
         return None
-    return result, 5-max(result)
+    return [n + 5 - max(result) for n in result]
 
-m = 0
-for a in itertools.permutations(lst, 5):
-    if a[0] == 6:
-        c = calc(a)
-        if c:
-            b = [k+c[1] for k in c[0]]
-            r = ''
+
+def main():
+    maximum = 0
+    lst = [7, 8, 9, 10]
+    for permutation in itertools.permutations(lst, len(lst)):
+        external = [6] + list(permutation)
+        internal = get_internal(external)
+        if internal:
+            ring = ''
             for i in range(5):
-                r += str(a[i])
-                r += str(b[i])
-                r += str(b[(i+1)%5])
-            t = int(r)
-            if t > m:
-                m = t
-print(m)
+                ring += str(external[i])
+                ring += str(internal[i])
+                ring += str(internal[(i + 1) % 5])
+            maximum = max(maximum, int(ring))
+    return maximum
 
 
 if __name__ == '__main__':

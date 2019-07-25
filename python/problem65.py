@@ -1,36 +1,30 @@
-import sys
+import euler
 
 
-ANSWER =
+ANSWER = 272
+N = 100
 
 
-def d_sum (n):
-    s = str(n)
-    l = len(s)
-    r = 0
-    for i in range(l):
-        r += ord(s[i])
-    return r - l*ord('0')
-
-a1, a2 = 3, 1
-b1, b2 = 8, 3
-i = 3
-step = 4
-while True:
-    for q in range(2):
-        a1, b1 = b1, a1+b1
-        a2, b2 = b2, a2+b2
+def main():
+    nom1, denom1 = 3, 1
+    nom2, denom2 = 8, 3
+    i = 3
+    step = 4
+    while True:
+        for _ in range(2):
+            nom1, denom1, nom2, denom2 = (
+                nom2, denom2, nom1 + nom2, denom1 + denom2
+            )
+            i += 1
+            if i == N:
+                return euler.digit_sum(nom2)
+        nom1, denom1, nom2, denom2 = (
+            nom2, denom2, nom1 + nom2 * step, denom1 + denom2 * step
+        )
+        step += 2
         i += 1
-        if i == 100:
-            print(d_sum(b1))
-            sys.exit()
-    a1, b1 = b1, b1*step+a1
-    a2, b2 = b2, b2*step+a2
-    step += 2
-    i += 1
-    if i == 100:
-        print(d_sum(b1))
-        break
+        if i == N:
+            return euler.digit_sum(nom2)
 
 
 if __name__ == '__main__':
