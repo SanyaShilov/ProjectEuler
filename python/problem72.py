@@ -1,11 +1,12 @@
 import euler
 
 
-ANSWER =
+ANSWER = 303963552391
+LIMIT = 10 ** 6
 
 
-l = euler.totientlist(1000000+1)
-print(sum(l)-1)
+def main():
+    return sum(euler.totient_list(LIMIT + 1)) - 1
 
 
 if __name__ == '__main__':

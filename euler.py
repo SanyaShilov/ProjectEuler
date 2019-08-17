@@ -16,6 +16,16 @@ for _ in range(1, 1001):
 # divisors
 
 
+def divisors(n):
+    d = set()
+    sqrt = int_sqrt(n)
+    for i in range(1, sqrt + 1):
+        if n % i == 0:
+            d.add(i)
+            d.add(n // i)
+    return d
+
+
 def count_divisors(n):
     d = 0
     sqrt = int_sqrt(n)
@@ -100,8 +110,12 @@ def prime_list_with_zeros(n):
     return index
 
 
+def clean_zeros(prime_lst):
+    return array.array('L', (i for i in prime_lst if i))
+
+
 def prime_list(n):
-    return array.array('L', (i for i in prime_list_with_zeros(n) if i))
+    return clean_zeros(prime_list_with_zeros(n))
 
 
 def list_of_prime_factors(n):

@@ -1,32 +1,32 @@
-ANSWER =
+ANSWER = 73162890
 
 
-lst = [l.split()[0] for l in open('../txt/problem079.txt').readlines()]
+def main():
+    lst = [line.split()[0] for line in open('../txt/problem079.txt')]
 
-s = set()
-for n in lst:
-    for l in n:
-        s.add(l)
-        
-before = {}
-for l in s:
-    before[l] = set()
+    digits = set()
     for n in lst:
-        i = n.find(l)
-        if i != -1:
-            for j in range(i):
-                before[l].add(n[j])
+        for digit in n:
+            digits.add(digit)
 
-password = ''
-for _ in range(len(before)):
-    for l in before.copy():
-        if before[l] == set():
-            password += l
-            for ll in before:
-                before[ll].discard(l)
-            before.pop(l)
-print(password)
-        
+    before = {}
+    for digit in digits:
+        before[digit] = set()
+        for n in lst:
+            i = n.find(digit)
+            for j in range(i):
+                before[digit].add(n[j])
+
+    password = ''
+    for _ in range(len(before)):
+        for digit in before.copy():
+            if not before[digit]:
+                password += digit
+                for digit_after in before:
+                    before[digit_after].discard(digit)
+                before.pop(digit)
+    return password
+
 
 if __name__ == '__main__':
     print(main())

@@ -1,73 +1,49 @@
+import itertools
+
 import euler
 
 
-ANSWER =
+ANSWER = 71
+LIMIT = 5000
 
 
-prime_list = euler.prime_list(10000)
+PRIME_LIST_WITH_ZEROS = euler.prime_list_with_zeros(LIMIT)
+PRIME_LIST = euler.clean_zeros(PRIME_LIST_WITH_ZEROS)
 
-def add (lst, num):
-    newar = []
-    j = prime_list.index(num)
-    for i in lst[:]:
-        c = i[:]
-        c[j] += 1
-        newar.append(c)
-    return newar
 
-def sumtwo (n, ind):
-    result = []
-    i = ind
-    pr = prime_list[i]
-    n2 = n//2
-    while pr <= n2:
-        j = i
-        rest = n - pr
-        pr2 = prime_list[j]
-        while pr2 <= rest:
-            if pr2 == rest:
-                result.append([0 for p in range(j+1)])
-                result[-1][i] += 1
-                result[-1][j] += 1
-            j += 1
-            pr2 = prime_list[j]
-        i += 1
-        pr = prime_list[i]
+def sum_two(n, index):
+    result = 0
+    prime = PRIME_LIST[index]
+    n_2 = n // 2
+    while prime <= n_2:
+        if PRIME_LIST_WITH_ZEROS[n - prime]:
+            result += 1
+        index += 1
+        prime = PRIME_LIST[index]
     return result
-    
-def sumcount (n, count, ind = 0):
+
+
+def sum_count(n, count, index=0):
     if n < count * 2:
-        return []
+        return 0
     if count == 2:
-        return sumtwo(n, ind)
-    i = ind
-    pr = prime_list[i]
-    smallest = n//count
-    result = []
-    while pr <= smallest:
-        result += add(sumcount(n-pr, count-1, i), pr)
-        i += 1
-        pr = prime_list[i]
+        return sum_two(n, index)
+    prime = PRIME_LIST[index]
+    smallest = n // count
+    result = 0
+    while prime <= smallest:
+        result += sum_count(n - prime, count - 1, index)
+        index += 1
+        prime = PRIME_LIST[index]
     return result
 
-def sumall (n):
-    c = 2
-    temp = sumcount(n, c)
-    result = []
-    while n > 2*c:
-        result += temp
-        c += 1
-        temp = sumcount(n, c)
-    return result
 
-i = 1
-while True:
-    i += 1
-    r = sumall(i)
-    l = len(r)
-    if l > 5000:
-        print(i)
-        break
+def sum_all(n):
+    return sum((sum_count(n, count) for count in range(2, n // 2)))
+
+
+def main():
+    return next(n for n in itertools.count(2) if sum_all(n) > LIMIT)
 
 
 if __name__ == '__main__':

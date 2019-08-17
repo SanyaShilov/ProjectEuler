@@ -1,31 +1,25 @@
-ANSWER =
+import euler
 
 
-def div (n):
-    d = set()
-    while n > 1:
-        for i in range(2, n+1):
-            if n % i == 0:
-                d = d.union({i})
-                n = n // i
-                break
-    return d
+ANSWER = 7295372
+LIMIT = 12000
 
-def fract (n):
-    s = 0
-    dn = div(n)
-    for i in range(n//3 + 1, (n+1)//2):
-        for d in dn:
+
+def fraction(n):
+    total = 0
+    divisors = euler.divisors(n)
+    divisors.remove(1)
+    for i in range(n // 3 + 1, (n + 1) // 2):
+        for d in divisors:
             if i % d == 0:
                 break
         else:
-            s += 1
-    return s
+            total += 1
+    return total
 
-s = 0
-for i in range(2, 12001):
-    s += fract(i)
-print(s)
+
+def main():
+    return sum(fraction(i) for i in range(2, LIMIT + 1))
 
 
 if __name__ == '__main__':
