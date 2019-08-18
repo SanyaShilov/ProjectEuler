@@ -8,7 +8,7 @@ def main():
             sum(
                 (
                     int(line)
-                    for line in open('../txt/problem013.txt').readlines()
+                    for line in open('../txt/problem013.txt')
                 )
             )
         )[:DIGITS]

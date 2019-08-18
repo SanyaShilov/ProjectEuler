@@ -4,7 +4,7 @@ ANSWER = 1074
 def main():
     lst = [
         [int(i) for i in l.split()]
-        for l in open('../txt/problem018.txt').readlines()
+        for l in open('../txt/problem018.txt')
     ]
     maximum = lst[0]
     for i in range(1, len(lst)):

@@ -1,30 +1,39 @@
-ANSWER =
+import math
 
 
-lst = open('../txt/problem083.txt').readlines()
-lst = [k.split(',') for k in lst]
-tab = [[int(c) for c in k] for k in lst]
+ANSWER = 425185
 
-l = len(tab)
-way = [[100000000 for i in range(l)] for j in range(l)]
-way[0][0] = tab[0][0]
 
-def it (tab, way):
-    l = len(tab)
-    for i in range(1, l):
-        way[0][i] = min(way[0][i-1], way[1][i]) + tab[0][i]
-        way[i][0] = min(way[i-1][0], way[i][1]) + tab[i][0]
-    for i in range(1, l-1):
-        for j in range(1, l-1):
-            way[i][j] = min(way[i-1][j], way[i][j-1], way[i+1][j],
-                            way[i][j+1]) + tab[i][j]
-    for i in range(1, l):
-        way[i][l-1] = min(way[i-1][l-1], way[i][l-2]) + tab[i][l-1]
-        way[l-1][i] = min(way[l-1][i-1], way[l-2][i]) + tab[l-1][i]
+def iterate(lst, way):
+    length = len(lst)
+    for i in range(1, length):
+        way[0][i] = min(way[0][i - 1], way[1][i]) + lst[0][i]
+        way[i][0] = min(way[i - 1][0], way[i][1]) + lst[i][0]
+    for i in range(1, length - 1):
+        for j in range(1, length - 1):
+            way[i][j] = min(
+                way[i - 1][j], way[i][j - 1], way[i + 1][j], way[i][j + 1]
+            ) + lst[i][j]
+    for i in range(1, length):
+        way[i][length - 1] = min(
+            way[i - 1][length - 1], way[i][length - 2]
+        ) + lst[i][length - 1]
+        way[length - 1][i] = min(
+            way[length - 1][i - 1], way[length - 2][i]
+        ) + lst[length - 1][i]
 
-for i in range(1000):
-    it(tab, way)
-print(way[l-1][l-1])
+
+def main():
+    lst = [
+        [int(i) for i in line[:-1].split(',')]
+        for line in open('../txt/problem083.txt')
+    ]
+    length = len(lst)
+    way = [[math.inf for _ in range(length)] for _ in range(length)]
+    way[0][0] = lst[0][0]
+    for _ in range(length):
+        iterate(lst, way)
+    return way[length - 1][length - 1]
 
 
 if __name__ == '__main__':

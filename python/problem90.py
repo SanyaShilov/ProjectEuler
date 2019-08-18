@@ -1,113 +1,72 @@
 import itertools
 
 
-ANSWER =
+ANSWER = 1217
+
+RULES = {
+    0: [[1], [4], [6, 9]],
+    1: [[8], [6, 9]],
+    2: [[5]],
+    3: [[6, 9]],
+    4: [[6, 9]],
+}
 
 
-dig = [i for i in range(10)]
+def missing_all(cube, lst):
+    for n in lst:
+        if cube[n]:
+            return False
+    return True
 
-have = []
-for ind in itertools.combinations(dig, 6):
-    have.append([i in ind for i in range(10)])
 
-s = 0
-l = len(have)
-for i in range(l):
+def check_rule(cube, need, digit, lists):
+    if not cube[digit]:
+        for lst in lists:
+            if missing_all(cube, lst):
+                return False
+        need.add((digit,))
+    else:
+        for lst in lists:
+            if missing_all(cube, lst):
+                need.add(tuple(lst))
+            else:
+                need.add(tuple(lst) + (digit,))
+    return True
+
+
+def check_cube(cube):
     need = set()
-    needone = set()
-    need69 = False
-    
-    if not have[i][0]:
-        if not have[i][1]:
-            continue
-        if not have[i][4]:
-            continue
-        if not have[i][6] and not have[i][9]:
-            continue
-        need.add(0)
-    else:
-        if not have[i][1]:
-            need.add(1)
-        else:
-            needone.add((0, 1))
-        if not have[i][4]:
-            need.add(4)
-        else:
-            needone.add((0, 4))
-        if not have[i][6] and not have[i][9]:
-            need69 = True
-        else:
-            needone.add((0, 6, 9))
+    for digit, lists in RULES.items():
+        if not check_rule(cube, need, digit, lists):
+            return None
+    return need
 
-    if not have[i][1]:
-        if not have[i][8]:
-            continue
-        if not have[i][6] and not have[i][9]:
-            continue
-        need.add(1)
-    else:
-        if not have[i][8]:
-            need.add(8)
-        else:
-            needone.add((1, 8))
-        if not have[i][6] and not have[i][9]:
-            need69 = True
-        else:
-            needone.add((1, 6, 9))
 
-    if not have[i][2]:
-        if not have[i][5]:
-            continue
-        need.add(2)
-    else:
-        if not have[i][5]:
-            need.add(5)
-        else:
-            needone.add((2, 5))
-
-    if not have[i][3]:
-        if not have[i][6] and not have[i][9]:
-            continue
-        need.add(3)
-    else:
-        if not have[i][6] and not have[i][9]:
-            need69 = True
-        else:
-            needone.add((3, 6, 9))
-
-    if not have[i][4]:
-        if not have[i][6] and not have[i][9]:
-            continue
-        need.add(4)
-    else:
-        if not have[i][6] and not have[i][9]:
-            need69 = True
-        else:
-            needone.add((4, 6, 9))
-
-    for j in range(i, l):
-        passedneed = True
-        for k in need:
-            if not have[j][k]:
-                passedneed = False
-                break
-        if not passedneed:
-            continue
-        if need69:
-            if not have[j][6] and not have[j][9]:
-                continue
-        for nn in needone:
-            passed = False
-            for n in nn:
-                if have[j][n]:
-                    passed = True
+def compatible(i, cubes, need):
+    result = 0
+    for j in range(i, len(cubes)):
+        for choice in need:
+            for n in choice:
+                if cubes[j][n]:
                     break
-            if not passed:
+            else:
                 break
-        if not passed:
-            continue
-        s += 1
-print(s)
+        else:
+            result += 1
+    return result
+
+
+def main():
+    total = 0
+    cubes = [
+        [i in cube for i in range(10)]
+        for cube in itertools.combinations(range(10), 6)
+    ]
+    for i, cube in enumerate(cubes):
+        need = check_cube(cube)
+        if need is not None:
+            total += compatible(i, cubes, need)
+    return total
 
 
 if __name__ == '__main__':

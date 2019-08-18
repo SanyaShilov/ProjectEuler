@@ -64,7 +64,7 @@ def get_strength(hand):
 
 
 def main():
-    lst = open('../txt/problem054.txt').readlines()
+    lst = open('../txt/problem054.txt')
     count = 0
     for hands in lst:
         cards = hands.split()

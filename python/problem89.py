@@ -1,35 +1,21 @@
-ANSWER =
+ANSWER = 743
+
+ROMAN_TO_TEN_MAPPING = {
+    'M': 1000,
+    'D': 500,
+    'C': 100,
+    'L': 50,
+    'X': 10,
+    'V': 5,
+    'I': 1
+}
 
 
-f = open('../txt/problem089.txt')
-r = f.readlines()
-
-def clean (s):
-    if s[-1] == '\n':
-        return s[:-1]
-    return s
-
-def number (s):
-    if s == 'M':
-        return 1000
-    if s == 'D':
-        return 500
-    if s == 'C':
-        return 100
-    if s == 'L':
-        return 50
-    if s == 'X':
-        return 10
-    if s == 'V':
-        return 5
-    if s == 'I':
-        return 1
-
-def RomanToTen (s):
+def roman_to_ten(roman):
     result = 0
-    last = number(s[0])
-    for i in range(1, len(s)):
-        temp = number(s[i])
+    last = ROMAN_TO_TEN_MAPPING[roman[0]]
+    for i in range(1, len(roman)):
+        temp = ROMAN_TO_TEN_MAPPING[roman[i]]
         if temp <= last:
             result += last
         else:
@@ -38,11 +24,12 @@ def RomanToTen (s):
     result += last
     return result
 
-def TenToRoman (n):
+
+def ten_to_roman(n):
     result = ''
-    result += 'M'*(n//1000)
+    result += 'M' * (n // 1000)
     n %= 1000
-    r = n//100
+    r = n // 100
     if r == 9:
         result += 'CM'
     elif r == 4:
@@ -50,9 +37,9 @@ def TenToRoman (n):
     else:
         if r >= 5:
             result += 'D'
-        result += (r%5)*'C'
+        result += (r % 5) * 'C'
     n %= 100
-    r = n//10
+    r = n // 10
     if r == 9:
         result += 'XC'
     elif r == 4:
@@ -60,8 +47,8 @@ def TenToRoman (n):
     else:
         if r >= 5:
             result += 'L'
-        result += (r%5)*'X'
-    r = n%10
+        result += (r % 5) * 'X'
+    r = n % 10
     if r == 9:
         result += 'IX'
     elif r == 4:
@@ -69,17 +56,15 @@ def TenToRoman (n):
     else:
         if r >= 5:
             result += 'V'
-        result += (r%5)*'I'
+        result += (r % 5) * 'I'
     return result
 
 
-result = 0
-for i in range(len(r)):
-    s = clean(r[i])
-    n = RomanToTen(s)
-    s2 = TenToRoman(n)
-    result = result + len(s) - len(s2)
-print(result)
+def main():
+    return sum(
+        len(line) - len(ten_to_roman(roman_to_ten(line)))
+        for line in (line[:-1] for line in open('../txt/problem089.txt'))
+    )
 
 
 if __name__ == '__main__':
