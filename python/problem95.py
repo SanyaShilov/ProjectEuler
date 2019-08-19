@@ -1,42 +1,45 @@
 import array
 
 
-ANSWER =
+ANSWER = 14316
+LIMIT = 10 ** 6
 
 
-def sumdivisors (n):
-    i = (1 for i in range(n+1))
-    result = array.array('L', i)
-    for i in range(2, n//2):
-        for j in range(2, n//i+1):
-            result[i*j] += i
+def sum_divisors(n):
+    result = array.array('L', (1 for _ in range(n + 1)))
+    for i in range(2, n // 2):
+        for j in range(2, n // i + 1):
+            result[i * j] += i
     return result
 
-lst = sumdivisors(1000000)
-mxl = 0
-value = 0
 
-def length (start):
-    global mxl
-    global value
-    l = 1
-    ind = lst[start]
-    while ind > start:
-        if l > 100:
-            return
-        if ind >= 1000000:
-            return
-        ind = lst[ind]
-        l += 1
-    if ind == start:
-        if l > mxl:
-            mxl = l
-            value = start
+LST = sum_divisors(LIMIT)
 
-for i in range(1, 1000000):
-    length(i)
 
-print(value)
+def length(start):
+    leng = 1
+    index = LST[start]
+    while index > start:
+        if leng > 100:
+            break
+        if index >= LIMIT:
+            return 0
+        index = LST[index]
+        leng += 1
+    if index == start:
+        return leng
+    return 0
+
+
+def main():
+    maximum = 0
+    value = 0
+    for i in range(1, LIMIT):
+        leng = length(i)
+        if leng > maximum:
+            maximum = leng
+            value = i
+    return value
 
 
 if __name__ == '__main__':

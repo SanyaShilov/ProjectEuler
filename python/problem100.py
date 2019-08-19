@@ -1,19 +1,20 @@
-ANSWER =
+ANSWER = 756872327473
+LIMIT = 10 ** 12
+
+SQ2 = 2 ** 0.5
 
 
-sq2 = 2**0.5
-
-for s1 in range(1, 10000000):
-    s2 = int(s1/sq2)
-    if s1*s1-2*s2*s2 == 1:
-        if 2*s2*(s1+s2) > 10**12:
-            print((s1+s2)*s1)
-            break
-    s2 = int(s1*sq2)
-    if 2*s1*s1-s2*s2 == 1:
-        if 2*s1*(s1+s2) > 10**12:
-            print((s1+s2)*s2+1)
-            break
+def main():
+    for a in range(1, LIMIT):
+        b = int(a / SQ2)
+        if a * a - 2 * b * b == 1:
+            if 2 * b * (a + b) > LIMIT:
+                return (a + b) * a
+        b = int(a * SQ2)
+        if 2 * a * a - b * b == 1:
+            if 2 * a * (a + b) > LIMIT:
+                return (a + b) * b + 1
+    return 0
 
 
 if __name__ == '__main__':

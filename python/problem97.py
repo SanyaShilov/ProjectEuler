@@ -1,12 +1,14 @@
-ANSWER =
+ANSWER = 8739992577
+DIGITS = 10
 
 
-a = 1
-mod = 10**10
-for i in range(7830457):
-    a = (a << 1) % mod
-a = a * 28433 + 1
-print(a % mod)
+def main():
+    a = 1
+    mod = 10 ** DIGITS
+    for _ in range(7830457):
+        a = (a << 1) % mod
+    a = a * 28433 + 1
+    return a % mod
 
 
 if __name__ == '__main__':

@@ -1,209 +1,177 @@
 import copy
 
 
-ANSWER =
+ANSWER = 24702
 
 
-f = open('../txt/problem096.txt')
-read = f.readlines()
+def load(number, lines):
+    lines = lines[number * 10 + 1:(number + 1) * 10]
+    return [
+        [int(i) for i in line]
+        for line in (line[:-1] for line in lines)
+    ]
 
-r = range(9)
 
-def load (number, read):
-    temp = read[number*10+1:(number+1)*10]
-    m = []
-    for l in temp:
-        m.append([])
-        for i in l:
-            try:
-                m[-1].append(int(i))
-            except:
-                pass
-        
-    return m
+def is_solved(sudoku):
+    return all(sudoku[i][j] for i in range(9) for j in range(9))
 
-def Solved (m):
-    for i in r:
-        for j in r:
-            if m[i][j] == 0:
-                return False
-    return True
 
-def SolveN (n, canbe, m):
+def solve_n_in_row(sudoku, can_be, n):
     solved = 0
-    
-    for i in r:
-        ind = -1
-        for j in r:
-            if canbe[i][j]:
-                if ind == -1:
-                    ind = j
+    for i in range(9):
+        index = -1
+        for j in range(9):
+            if can_be[i][j]:
+                if index == -1:
+                    index = j
                 else:
-                    ind = -2
-        if ind > -1:
+                    index = -2
+        if index > -1:
             solved += 1
-            m[i][ind] = n
-
-    for i in r:
-        ind = -1
-        for j in r:
-            if canbe[j][i]:
-                if ind == -1:
-                    ind = j
-                else:
-                    ind = -2
-        if ind > -1:
-            solved += 1
-            m[ind][i] = n
-    
-    for isq in range(3):
-        for jsq in range(3):
-            indi = -1
-            indj = -1
-            for i in range(3*isq, 3*isq + 3):
-                for j in range(3*jsq, 3*jsq + 3):
-                    if canbe[i][j]:
-                        if indi == -1:
-                            indi = i
-                            indj = j
-                        else:
-                            indi = -2
-            if indi > -1:
-                solved += 1
-                m[indi][indj] = n
-                
+            sudoku[i][index] = n
     return solved
 
-def Deduct (m):
+
+def solve_n_in_column(sudoku, can_be, n):
     solved = 0
-    
-    lst = [WhereCanBe(i, m) for i in range(1, 10)]
-    for i in r:
-        for j in r:
+    for i in range(9):
+        index = -1
+        for j in range(9):
+            if can_be[j][i]:
+                if index == -1:
+                    index = j
+                else:
+                    index = -2
+        if index > -1:
+            solved += 1
+            sudoku[index][i] = n
+    return solved
+
+
+def solve_n_in_square(sudoku, can_be, n):
+    solved = 0
+    for isq in range(3):
+        for jsq in range(3):
+            index_i = -1
+            index_j = -1
+            for i in range(3 * isq, 3 * (isq + 1)):
+                for j in range(3 * jsq, 3 * (jsq + 1)):
+                    if can_be[i][j]:
+                        if index_i == -1:
+                            index_i = i
+                            index_j = j
+                        else:
+                            index_i = -2
+            if index_i > -1:
+                solved += 1
+                sudoku[index_i][index_j] = n
+    return solved
+
+
+def solve_n(sudoku, can_be, n):
+    return (
+        solve_n_in_row(sudoku, can_be, n) +
+        solve_n_in_column(sudoku, can_be, n) +
+        solve_n_in_square(sudoku, can_be, n)
+    )
+
+
+def deduct(sudoku):
+    solved = 0
+    lst = {i: where_can_be(sudoku, i) for i in range(1, 10)}
+    for i in range(9):
+        for j in range(9):
             num = -1
-            for nn in r:
-                if lst[nn][i][j]:
+            for n in range(1, 10):
+                if lst[n][i][j]:
                     if num == -1:
-                        num = nn+1
+                        num = n
                     else:
                         num = -2
             if num > -1:
-                m[i][j] = num
+                sudoku[i][j] = num
                 solved += 1
-                
     return solved
 
-def Guess (m, n):
-    can = WhereCanBe(n, m)
-    for i in r:
-        for j in r:
-            if can[i][j]:
-                m[i][j] = n
-                return (True, i, j)
-    return (False, -1, -1)
 
-def Solve (m, guessed = False):
-    while not Solved(m):
-        s = 0
-        for i in range(1, 10):
-            can = WhereCanBe(i, m)
-            s += SolveN(i, can, m)
-        if s == 0:
-            s += Deduct(m)
-        if s == 0:
-            
-            if guessed:
-                return (False, m)
-        
-            for i in range(1, 10):
-                cm = copy.deepcopy(m)
-                g = Guess(cm, i)
-                if g:
-                    S = Solve(cm, guessed = True)
-                    if S[0]:
-                        m = cm
-                        return (True, m)
-            return (False, m)
-                    
-    return (True, m)
-
-def Solve (m):
-    while not Solved(m):
-        s = 0
-        for i in range(1, 10):
-            can = WhereCanBe(i, m)
-            s += SolveN(i, can, m)
-        if s == 0:
-            s += Deduct(m)
-        if s == 0:
-            
-            for i in range(1, 10):
-                cm = copy.deepcopy(m)
-                g = Guess(cm, i)
-                
-                if g[0]:
-                    S = Solve(cm)
-                    if Correct(S[1]):
-                        m = copy.deepcopy(S[1])
-                        break
-            break
-
-    if Correct(m):
-        return (True, m)
-    return (False, m)
-
-def Empty (m):
-    return [[1 if m[i][j] == 0 else 0 for j in r ] for i in r]
-
-def WhereCanBe (n, m):
-    nm = Empty(m)
-    
-    for i in r:
-        for j in r:
-            if m[i][j] == n:
-                for k in r:
-                    nm[i][k] = 0
-                    nm[k][j] = 0
-                for k in range(3*(i//3), 3*(i//3 + 1)):
-                    for q in range(3*(j//3), 3*(j//3 + 1)):
-                        nm[k][q] = 0
-    
-    return nm
-
-def InSquare (n, m, row, col):
-    for i in range(3*row, 3*row+3):
-        for j in range(3*col, 3*col+3):
-            if m[i][j] == n:
+def guess(sudoku, n):
+    can_be = where_can_be(sudoku, n)
+    for i in range(9):
+        for j in range(9):
+            if can_be[i][j]:
+                sudoku[i][j] = n
                 return True
     return False
 
-def Correct (m):
-    for i in r:
-        for n in range(1, 10):
-            c = 0
-            for j in r:
-                if m[i][j] == n:
-                    c += 1
-            if c != 1:
-                return False
 
-    for i in r:
-        for n in range(1, 10):
-            c = 0
-            for j in r:
-                if m[j][i] == n:
-                    c += 1
-            if c != 1:
+def solve(sudoku):
+    while not is_solved(sudoku):
+        check_progress = copy.deepcopy(sudoku)
+        solved = 0
+        for i in range(1, 10):
+            can_be = where_can_be(sudoku, i)
+            solved += solve_n(sudoku, can_be, i)
+        if solved == 0:
+            solved += deduct(sudoku)
+        if solved == 0:
+            for i in range(1, 10):
+                sudoku_copy = copy.deepcopy(sudoku)
+                if guess(sudoku_copy, i):
+                    solution = solve(sudoku_copy)
+                    if correct(solution):
+                        return solution
+        # incorrect guess sometimes loops infinitely
+        if sudoku == check_progress:
+            break
+    return sudoku
+
+
+def empty(sudoku):
+    return [[1 if sudoku[i][j] == 0 else 0 for j in range(9)] for i in range(9)]
+
+
+def where_can_be(sudoku, n):
+    can_be = empty(sudoku)
+    for i in range(9):
+        for j in range(9):
+            if sudoku[i][j] == n:
+                for k in range(9):
+                    can_be[i][k] = 0
+                    can_be[k][j] = 0
+                for k in range(3 * (i // 3), 3 * (i // 3 + 1)):
+                    for q in range(3 * (j // 3), 3 * (j // 3 + 1)):
+                        can_be[k][q] = 0
+    return can_be
+
+
+def correct(sudoku):
+    for n in range(1, 10):
+        for i in range(9):
+            count = 0
+            for j in range(9):
+                if sudoku[i][j] == n:
+                    count += 1
+            if count != 1:
                 return False
-            
+    for n in range(1, 10):
+        for i in range(9):
+            count = 0
+            for j in range(9):
+                if sudoku[j][i] == n:
+                    count += 1
+            if count != 1:
+                return False
     return True
 
-result = 0
-for n in range(50):
-    m = load(n, read)
-    s = Solve(m)
-    result += 100*s[1][0][0] + 10*s[1][0][1] + s[1][0][2]
-print(result)
+
+def main():
+    result = 0
+    lines = open('../txt/problem096.txt').readlines()
+    for n in range(len(lines) // 10):
+        sudoku = load(n, lines)
+        solution = solve(sudoku)
+        result += 100 * solution[0][0] + 10 * solution[0][1] + solution[0][2]
+    return result
 
 
 if __name__ == '__main__':
