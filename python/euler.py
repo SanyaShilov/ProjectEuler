@@ -26,6 +26,15 @@ def divisors(n):
     return d
 
 
+def low_divisors(n):
+    d = set()
+    sqrt = int_sqrt(n)
+    for i in range(1, sqrt + 1):
+        if n % i == 0:
+            d.add(i)
+    return d
+
+
 def count_divisors(n):
     d = 0
     sqrt = int_sqrt(n)
@@ -140,6 +149,14 @@ def pythagorean_trio(a):
         yield a2 - b2, 2 * a * b, a2 + b2
 
 
+def pythagorean_trio_my(c):
+    c_double = 2 * c
+    c_double_square = c_double *c
+    for a in low_divisors(c_double_square):
+        b = c_double_square // a
+        yield a + c_double, b + c_double, a + b + c_double
+
+
 def pythagorean_unique_trio(a):
     a2 = a * a
     for b in range(1, a):
@@ -199,6 +216,13 @@ def digit_sum(n):
     return sum(int(digit) for digit in str(n))
 
 
+# combinatorics
+
+
+def combination(n, k):
+    return FACTORIALS[n] // FACTORIALS[k] // FACTORIALS[n - k]
+
+
 # other
 
 
@@ -233,6 +257,19 @@ def totient_list(n):
             for j in range(i, n, i):
                 result[j] -= result[j] // i
     return result
+
+
+def lagged_fibonacci_generator():
+    lst = [
+        (100003 - 200003 * i + 300007 * i ** 3) % 1000000 - 500000
+        for i in range(56)
+    ]
+    for n in lst:
+        yield n
+    while True:
+        lst.append((lst[-24] + lst[-55]) % 1000000 - 500000)
+        lst.pop(0)
+        yield lst[-1]
 
 
 def parse_fraction(lst):

@@ -1,23 +1,20 @@
-n = 1000
-LIMIT = 10**9
-power = 1000
+import euler
 
-mp = 1000
-mq = 0
-for i in range(0, 20):
-    power = 500
-    q = 0.145 + i * 0.0001
-    q2 = q+q
-    while True:
-        if (1+q2)**power * (1-q)**(n-power) < LIMIT:
-            print(q, power, (1+q2)**power * (1-q)**(n-power))
-            print((1+q2)**(power+1) * (1-q)**(n-power-1))
-            if power < mp:
-                mp = power
-                mq = q
-            break
-        power -= 1
-print(mp, mq)
+
+ANSWER = 0.999992836187
+LIMIT = 10 ** 9
+POWER = 1000
+
+
+def main():
+    min_power = POWER
+    for q in (i * 0.001 for i in range(500)):
+        for power in range(POWER, -1, -1):
+            if (1 + q * 2) ** power * (1 - q) ** (POWER - power) < LIMIT:
+                min_power = min(min_power, power + 1)
+                break
+    combinations = [euler.combination(POWER, k) for k in range(POWER + 1)]
+    return round(sum(combinations[min_power:]) / sum(combinations), 12)
 
 
 if __name__ == '__main__':
