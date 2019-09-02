@@ -9,8 +9,8 @@ def main():
     return euler.product(
         next(
             trio
-            for a in range(int((SUM // 2) ** 0.5))
-            for trio in euler.pythagorean_trio(a)
+            for c in range(SUM)
+            for trio in euler.pythagorean_trio_my(c)
             if sum(trio) == SUM
         )
     )

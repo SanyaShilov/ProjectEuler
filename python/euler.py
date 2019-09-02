@@ -26,6 +26,24 @@ def divisors(n):
     return d
 
 
+def prime_divisors(n, prime_lst=None):
+    d = set()
+    sqrt = int_sqrt(n) + 1
+    i = 0 if prime_lst else 2
+    prime_lst = prime_lst or list(range(sqrt + 1))
+    prime = prime_lst[i]
+    while prime < sqrt and n > 1:
+        if not n % prime:
+            d.add(prime)
+            while not n % prime:
+                n //= prime
+        i += 1
+        prime = prime_lst[i]
+    if n > 1:
+        d.add(n)
+    return d
+
+
 def low_divisors(n):
     d = set()
     sqrt = int_sqrt(n)
@@ -49,7 +67,7 @@ def count_divisors(n):
 def count_prime_divisors(n, prime_lst=None):
     count = 0
     sqrt = int_sqrt(n) + 1
-    prime_lst = prime_lst or [i for i in range(sqrt)]
+    prime_lst = prime_lst or list(range(2, sqrt))
     i = 0
     prime = prime_lst[i]
     while prime < sqrt:
@@ -180,6 +198,11 @@ def is_pandigital(n):
     return len(str_n) == len(set(str_n))
 
 
+def is_pandigital_without_zero(n):
+    str_n = str(n)
+    return '0' not in str_n and len(str_n) == len(set(str_n))
+
+
 def is_pandigital_1n(n):
     str_n = str(n)
     return len(str_n) == len(set(str_n)) == int(max(str_n))
@@ -299,4 +322,4 @@ def square_fraction(n, length):
 
 
 if __name__ == '__main__':
-    print(square_fraction(23, 10))
+    print(prime_divisors(2500))
