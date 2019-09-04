@@ -1,40 +1,41 @@
-ANSWER =
+ANSWER = 329468
 
 
-a, b = 1, 1
-i = 2
-s = set('123456789')
-a5 = (1 + 5**0.5)/2
-b5 = (1 - 5**0.5)/2
-q5 = 5**0.5
-tens = 10**14
-tab = [0, 1, 1]
+DIGITS = {str(n) for n in range(1, 10)}
+Q5 = 5 ** 0.5
+A5 = (1 + Q5) / 2
+B5 = (1 - Q5) / 2
+TEN = 10 ** 14
+TAB = [0, 1, 1]
 
-def fib (n): # первые 15 цифр
-    a = tab[1]
-    b = tab[2]
-    for i in range(n-tab[0]):
-        a *= a5
-        b *= b5
-        if a > tens:
+
+def fib(n):  # первые 15 цифр
+    a = TAB[1]
+    b = TAB[2]
+    for _ in range(n - TAB[0]):
+        a *= A5
+        b *= B5
+        if a > TEN:
             a /= 10
-        if b > tens:
+        if b > TEN:
             b /= 10
-    tab[:] = [n, a, b]
-    return round((a-b)/q5)
+    TAB[:] = [n, a, b]
+    return round((a - b) / Q5)
 
-while 1:
-    a, b = b, a+b
-    i += 1
-    st = str(b)[-9:]
-    end = set(st)
-    if end == s:
-        st2 = str(fib(i))[:9]
-        begin = set(st2)
-        if begin == s:
-            print(i)
-            break
-    b = int(st)
+
+def main():
+    a, b = 1, 1
+    i = 2
+    while True:
+        a, b = b, a + b
+        i += 1
+        str_b = str(b)[-9:]
+        end = set(str_b)
+        if end == DIGITS:
+            begin = set(str(fib(i))[:9])
+            if begin == DIGITS:
+                return i
+        b = int(str_b)
 
 
 if __name__ == '__main__':

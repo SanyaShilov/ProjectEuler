@@ -1,34 +1,27 @@
 import itertools
 
-def pairs (n):
-    t = tuple(i for i in range(1, n + 1))
-    s = set()
-    for i in range(2, len(t) + 1):
-        l = (i + 2) // 2
-        for perm in itertools.combinations(t, i):
-            for i in range(1, l):
-                for comb in itertools.combinations(perm, i):
-                    second = tuple(a for a in perm if a not in comb)
-                    if comb > second:
-                        comb, second = second, comb
-                    s.add((comb, second))
-    return s
 
-def check (pair):
-    p1, p2 = pair
-    l = len(p1)
-    if l != len(p2):
-        return False
-    for i in range(l):
-        if p1[i] > p2[i]:
-            return True
-    return False
+ANSWER = 21384
 
-p = pairs(12)
-s = 0
-for pair in p:
-    s += check(pair)
-print(s)
+
+def pairs(n):
+    st = set()
+    for i in range(4, n + 1, 2):
+        for combination in itertools.combinations(range(1, n + 1), i):
+            for part1 in itertools.combinations(combination, i // 2):
+                part2 = tuple(n for n in combination if n not in part1)
+                if part1 > part2:
+                    part1, part2 = part2, part1
+                st.add((part1, part2))
+    return st
+
+
+def check(pair):
+    return any(n > m for n, m in zip(*pair))
+
+
+def main():
+    return sum(check(pair) for pair in pairs(12))
 
 
 if __name__ == '__main__':

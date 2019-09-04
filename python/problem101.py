@@ -1,108 +1,70 @@
-ANSWER =
+from fractions import Fraction
 
 
-def f (n):
-    return 1 - n + n**2 - n**3 + n**4 - n**5 + n**6 - n**7 + n**8 - n**9 + n**10
+ANSWER = 37076114526
 
-table = [[n, f(n), 1] for n in range(1, 12)]
 
-def square_approximation (x, y, n, w = None):
-    if not w:
-        w = [1 for i in range(len(x))]
-    matrix = [[0 for j in range(n+1)] for i in range(n)]
+def polynomial(n):
+    return sum((-n) ** i for i in range(1, 11))
+
+
+def square_approximation(x, y, n, weights=None):
+    r = range(len(x))
+    weights = weights or [1 for _ in r]
+    matrix = [[0 for _ in range(n + 1)] for _ in range(n)]
     for i in range(n):
+        sum_b = 0
         for j in range(n):
-            sumA, sumB = 0, 0
-            for k in range(len(x)):
-                sumA += x[k]**i * x[k]**j * w[k]
-            matrix[i][j] = sumA
-        for k in range(len(x)):
-            sumB += y[k] * x[k]**i * w[k]
-        matrix[i][n] = sumB
+            sum_a = 0
+            for k in r:
+                sum_a += x[k] ** i * x[k] ** j * weights[k]
+            matrix[i][j] = sum_a
+        for k in r:
+            sum_b += y[k] * x[k] ** i * weights[k]
+        matrix[i][n] = sum_b
     return matrix
 
-def swapstr (a, i, j):
-    a[i], a[j] = a[j][:], a[i][:]
 
-def Gauss (a):
-    l = len(a)
-    r = range(len(a))
-    swp = 0
-    ind = [i for i in r]
+def swap_rows(matrix, i, j):
+    matrix[i], matrix[j] = matrix[j], matrix[i]
+
+
+def gauss(matrix):
+    length = len(matrix)
+    r = range(length)
+    indices = list(r)
+    result = [0 for _ in r]
     for i in r:
-        for j in range(i+1, l):
-            if a[i][i] == 0:
-                swapstr(a, i, j)
-                ind[i], ind[j] = ind[j], ind[i]
-                swp += 1
-        if a[i][i] == 0:
-            return 0
-        else:
-            for j in range(i+1, l):
-                q = a[j][i]/a[i][i]
-                for k in range(l+1):
-                    a[j][k] = a[j][k]-a[i][k]*q
-                    
-    for i in range(l-1, 0, -1):
+        for j in range(i + 1, length):
+            if matrix[i][i] == 0:
+                swap_rows(matrix, i, j)
+                indices[i], indices[j] = indices[j], indices[i]
+        if matrix[i][i] == 0:
+            return result  # maybe raise some exception?
+        for j in range(i + 1, length):
+            q = Fraction(matrix[j][i], matrix[i][i])
+            for k in range(length + 1):
+                matrix[j][k] = matrix[j][k] - matrix[i][k] * q
+    for i in range(length - 1, 0, -1):
         for j in range(i):
-            q = a[j][i]/a[i][i]
-            for k in range(l+1):
-                a[j][k] = a[j][k]-a[i][k]*q
-
-    C = [0 for k in r]
+            q = Fraction(matrix[j][i], matrix[i][i])
+            for k in range(length + 1):
+                matrix[j][k] = matrix[j][k] - matrix[i][k] * q
     for i in r:
-        C[ind[i]] = round(a[i][-1]/a[i][i])
-    return C
+        result[indices[i]] = Fraction(matrix[i][-1], matrix[i][i])
+    return result
 
 
-
-s = 0
-for n in range(1, 11):
-    newtable = table[:n]
-
-    r = range(len(newtable))
-
-    x = [table[i][0] for i in r]
-    y = [table[i][1] for i in r]
-    w = [table[i][2] for i in r]
-    
-    matrix = square_approximation(x, y, n, w)
-
-    C = Gauss(matrix)
-
-    ymyfi = []
-    
-    X = [min(x)+k*(max(x)-min(x))/100 for k in range(101)]
-    for i in range(1, int(X[-1]+1)):
-        fi = f(i)
-        myfi = sum(C[j]*i**j for j in range(n))
-        ymyfi.append(myfi)
-
-    
-    need = True
-    while need:
-        need = False
-        for i in r:
-            if y[i] != ymyfi[i]:
-                need = True
-        if need:
-            diff = []
-            for i in r:
-                diff.append(y[i]-ymyfi[i])
-            m = square_approximation(x, diff, n, w)
-            C2 = Gauss(m)
-            for i in r:
-                C[i] += C2[i]
-
-        ymyfi = []
-        for i in range(1, int(X[-1]+1)):
-            fi = f(i)
-            myfi = sum(C[j]*i**j for j in range(n))
-            ymyfi.append(myfi)
-
-    s += sum(C[j]*(int(X[-1]+1))**j for j in range(n))
-    
-print(s)
+def main():
+    total = 0
+    for n in range(1, 11):
+        r = range(1, n + 1)
+        x = list(r)
+        y = [polynomial(i) for i in r]
+        matrix = square_approximation(x, y, n)
+        c = gauss(matrix)
+        total += sum(c[j] * (n + 1) ** j for j in range(n))
+    return total
 
 
 if __name__ == '__main__':

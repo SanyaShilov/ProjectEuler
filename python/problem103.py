@@ -1,56 +1,53 @@
 import itertools
 
 
-ANSWER =
+ANSWER = 20313839404245
 
 
-def check (lst):
-    prev_max = lst[0]
-    for i in range(2, len(lst)):
-        s = set()
-        for comb in itertools.combinations(lst, i):
-            sm = sum(comb)
-            if sm <= prev_max:
+def check(st):
+    prev_max = st[0]
+    for i in range(2, len(st)):
+        combination_sums = set()
+        for comb in itertools.combinations(st, i):
+            combination_sum = sum(comb)
+            if combination_sum <= prev_max:
                 return False
-            if sm in s:
+            if combination_sum in combination_sums:
                 return False
-            s.add(sm)
-        prev_max = max(s)
+            combination_sums.add(combination_sum)
+        prev_max = max(combination_sums)
     return True
 
-def build (n):
+
+def build(n):
     if n < 5:
-        lst = tuple(i for i in reversed(range(1, n + 1)))
+        st = tuple(range(n, 0, -1))
     else:
         b = build(n - 1)
-        lst = (b[0] + 1,) + b
-        lst = tuple(a + b[-1]//2 for a in lst)
-        print('started from', lst)
-    ars = {lst}
-    it = 0
+        st = (b[0] + 1,) + b
+        st = tuple(a + b[-1] // 2 for a in st)
+    ars = {st}
     while True:
-        if n == 7:
-            print(it, len(ars))
-            it += 1
-        newars = set()
-        for lst in ars:
-            if check(lst):
-                print('return', lst)
-                return lst
+        new_ars = set()
+        for st in ars:
+            if check(st):
+                return st
             add = True
             if n > 5:
                 for i in range(1, n):
-                    if lst[i - 1] - lst[i] >= lst[-1]:
+                    if st[i - 1] - st[i] >= st[-1]:
                         add = False
                         break
             if add:
-                newars.add((lst[0] + 1,) + lst[1:])
+                new_ars.add((st[0] + 1,) + st[1:])
                 for i in range(1, n):
-                    if lst[i - 1] - lst[i] > 1:
-                        newars.add(lst[:i] + (lst[i] + 1,) + lst[i + 1:])
-        ars = newars
+                    if st[i - 1] - st[i] > 1:
+                        new_ars.add(st[:i] + (st[i] + 1,) + st[i + 1:])
+        ars = new_ars
 
-print(build(7))
+
+def main():
+    return int(''.join(str(n) for n in sorted(build(7))))
 
 
 if __name__ == '__main__':

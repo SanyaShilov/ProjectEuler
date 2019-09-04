@@ -1,89 +1,100 @@
-from fractions import *
-from itertools import *
-from functools import *
+ANSWER = 20101196798
 
 
 class MyFraction:
-    __slots__ = ('a', 'b')
-    def __init__ (self, a, b = 1):
-        self.a = a
-        self.b = b
-    def __add__ (self, other):
-        return MyFraction(self.a*other.b + self.b*other.a, self.b*other.b)
-    def __sub__ (self, other):
-        return MyFraction(self.a*other.b - self.b*other.a, self.b*other.b)
-    def __mul__ (self, other):
-        return MyFraction(self.a*other.a, self.b*other.b)
-    def __truediv__ (self, other):
-        return MyFraction(self.a*other.b, self.b*other.a)
-    def __hash__ (self):
-        return hash(self.a/self.b)
-    def __eq__ (self, other):
-        return self.a/self.b == other.a/other.b
-    
+    """ Don't use fractions.Fraction because they are much slower"""
 
-def two_comb (a, b):
-    if type(a) == str:
-        if type(b) == str:
-            sa = int(a)
-            sb = int(b)
-            sab = a+b
-            return {(sa+sb), (sa-sb), (sa*sb), (sa/sb), sab}
-        sa = int(a)
-        if b:
-            return {(sa+b), (sa-b), (sa*b), (sa/b)}
-        return {(sa), (0)}
-    if type(b) == str:
-        sb = int(b)
-        return {(a+sb), (a-sb), (a*sb), (a/sb)}
-    if b:
-        return {(a+b), (a-b), (a*b), (a/b)}
-    return {(a), 0}
+    __slots__ = ('numerator', 'denominator')
 
-def two_comb (a, b):
-    if type(a) == str:
-        if type(b) == str:
-            sa = MyFraction(int(a))
-            sb = MyFraction(int(b))
-            sab = a+b
-            return {(sa+sb), (sa-sb), (sa*sb), (sa/sb), sab}
-        sa = MyFraction(int(a))
-        if b.a:
-            return {(sa+b), (sa-b), (sa*b), (sa/b)}
-        return {(sa), MyFraction(0)}
-    if type(b) == str:
-        sb = MyFraction(int(b))
-        return {(a+sb), (a-sb), (a*sb), (a/sb)}
-    if b.a:
-        return {(a+b), (a-b), (a*b), (a/b)}
-    return {(a), MyFraction(0)}
+    def __init__(self, a, b=1):
+        self.numerator = a
+        self.denominator = b
 
-def multi_comb (lst):
-    l = len(lst)
-    if l == 1:
+    def __add__(self, other):
+        return MyFraction(
+            self.numerator * other.denominator +
+            self.denominator * other.numerator,
+            self.denominator * other.denominator
+        )
+
+    def __sub__(self, other):
+        return MyFraction(
+            self.numerator * other.denominator -
+            self.denominator * other.numerator,
+            self.denominator * other.denominator
+        )
+
+    def __mul__(self, other):
+        return MyFraction(
+            self.numerator * other.numerator,
+            self.denominator * other.denominator
+        )
+
+    def __truediv__(self, other):
+        return MyFraction(
+            self.numerator * other.denominator,
+            self.denominator * other.numerator
+        )
+
+    def __hash__(self):
+        return hash(self.numerator / self.denominator)
+
+    def __eq__(self, other):
+        return (
+            self.numerator * other.denominator ==
+            other.numerator * self.denominator
+        )
+
+
+def two_comb(a, b):
+    if isinstance(a, str):
+        fraction_a = MyFraction(int(a))
+        if isinstance(b, str):
+            fraction_b = MyFraction(int(b))
+            str_ab = a + b
+            return {
+                fraction_a + fraction_b, fraction_a - fraction_b,
+                fraction_a * fraction_b, fraction_a / fraction_b, str_ab
+            }
+        if b.numerator:
+            return {
+                fraction_a + b, fraction_a - b, fraction_a * b, fraction_a / b
+            }
+        return {fraction_a, MyFraction(0)}
+    if isinstance(b, str):
+        fraction_b = MyFraction(int(b))
+        return {a + fraction_b, a - fraction_b, a * fraction_b, a / fraction_b}
+    if b.numerator:
+        return {a + b, a - b, a * b, a / b}
+    return {a, MyFraction(0)}
+
+
+def multi_comb(lst):
+    length = len(lst)
+    if length == 1:
         return {lst[0]}
-    if l == 2:
+    if length == 2:
         return two_comb(lst[0], lst[1])
     result = set()
-    for i in range(1, l):
-        m1 = multi_comb(lst[:i])
-        m2 = multi_comb(lst[i:])
-        for a in m1:
-            for b in m2:
+    for i in range(1, length):
+        part1 = multi_comb(lst[:i])
+        part2 = multi_comb(lst[i:])
+        for a in part1:
+            for b in part2:
                 result.update(two_comb(a, b))
     return result
 
-m = multi_comb([str(i) for i in range(1, 9+1)])
-print('len', len(m))
 
-s = set()
-for k in m:
-    if type(k) == str:
-        k = MyFraction(int(k))
-    if k.a * k.b > 0:
-        if not k.a % k.b:
-            s.add(k.a//k.b)
-print('sum', sum(s))
+def main():
+    numbers = multi_comb([str(i) for i in range(1, 9 + 1)])
+    natural_numbers = set()
+    for n in numbers:
+        if isinstance(n, str):
+            n = MyFraction(int(n))
+        if n.numerator * n.denominator > 0:
+            if not n.numerator % n.denominator:
+                natural_numbers.add(n.numerator // n.denominator)
+    return sum(natural_numbers)
 
 
 if __name__ == '__main__':

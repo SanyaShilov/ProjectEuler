@@ -1,61 +1,33 @@
-import array
+import euler
 
-def pandig (n):
-    s = [0 for i in range(10)]
-    while n:
-        nn = n % 10
-        if not nn:
-            return False
-        if s[nn]:
-            return False
-        s[nn] = 1
-        n //= 10
-    return True
 
-def pandigstr (st):
-    s = set()
-    for k in st:
-        if k in s:
-            return False
-        s.add(k)
-    return True
+ANSWER = 44680
 
-def prime_list (n):
-    index = array.array('L', (1 for i in range(n)))
-    result = array.array('L')
-    i = 2
-    while i < n:
-        if index[i]:
-            j = i+i
-            while j < n:
-                index[j] = 0
-                j += i
-            if pandig(i):
-                result.append(i)
-        i += 1
-    return result
 
-lst = prime_list(10**8)
-strlst = [str(p) for p in lst]
-s = 0
-arstr = ['']
-arind = [-1]
-l = len(strlst)
-while arstr:
-    st = arstr.pop()
-    ind = arind.pop()
-    for i in range(ind+1, l):
-        new = st+strlst[i]
-        ln = len(new)
-        if ln > 9:
-            break
-        if pandigstr(new):
-            if ln == 9:
-                s += 1
-            else:
-                arstr.append(new)
-                arind.append(i)
-print(s)
+def main():
+    str_lst = [
+        str(prime) for prime in euler.prime_list(10 ** 8)
+        if euler.is_pandigital_without_zero(prime)
+    ]
+    total = 0
+    str_array = ['']
+    index_array = [-1]
+    lst_length = len(str_lst)
+    while str_array:
+        string1 = str_array.pop()
+        ind = index_array.pop()
+        for i in range(ind + 1, lst_length):
+            new = string1 + str_lst[i]
+            length = len(new)
+            if length > 9:
+                break
+            if euler.is_pandigital_without_zero(new):
+                if length == 9:
+                    total += 1
+                else:
+                    str_array.append(new)
+                    index_array.append(i)
+    return total
 
 
 if __name__ == '__main__':

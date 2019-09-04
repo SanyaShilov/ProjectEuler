@@ -1,27 +1,31 @@
 import itertools
 
-def check (lst):
-    prev_max = lst[0]
-    for i in range(2, len(lst)):
-        s = set()
-        for comb in itertools.combinations(lst, i):
-            sm = sum(comb)
-            if sm <= prev_max:
+
+def check(st):
+    prev_max = st[0]
+    for i in range(2, len(st)):
+        combination_sums = set()
+        for comb in itertools.combinations(st, i):
+            combination_sum = sum(comb)
+            if combination_sum <= prev_max:
                 return False
-            if sm in s:
+            if combination_sum in combination_sums:
                 return False
-            s.add(sm)
-        prev_max = max(s)
+            combination_sums.add(combination_sum)
+        prev_max = max(combination_sums)
     return True
 
-lst = [sorted([int(k) for k in l.split(',')], reverse = True)
-      for l in open('../txt/problem105.txt').readlines()]
-print(lst)
-s = 0
-for a in lst:
-    if check(a):
-        print(a)
-        s += sum(a)
+
+def main():
+    lst = [
+        sorted([int(n) for n in line.split(',')], reverse=True)
+        for line in open('../txt/problem105.txt')
+    ]
+    total = 0
+    for st in lst:
+        if check(st):
+            total += sum(st)
+    return total
 
 
 if __name__ == '__main__':

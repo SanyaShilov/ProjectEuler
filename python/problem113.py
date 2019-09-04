@@ -1,29 +1,29 @@
-ANSWER =
+ANSWER = 51161058134250
 
 
-N = 100
-
-increasing = [[1] for i in range(9)]
-
-for i in range(1, N):
-    for j in range(9):
-        increasing[j].append(sum(increasing[n][i-1] for n in range(j, 9)))
+POWER = 100
 
 
+def main():
+    increasing = [[1] for _ in range(9)]
 
-decreasing = [[1] for i in range(9)]
+    for i in range(1, POWER):
+        for j in range(9):
+            increasing[j].append(sum(increasing[n][i-1] for n in range(j, 9)))
 
-for i in range(1, N):
-    for j in range(9):
-        decreasing[j].append(1+sum(decreasing[n][i-1] for n in range(j+1)))
+    decreasing = [[1] for _ in range(9)]
 
-s = 0
-for k in increasing:
-    s += sum(k)
-for k in decreasing:
-    s += sum(k)
-s -= 9*N
-print(s)
+    for i in range(1, POWER):
+        for j in range(9):
+            decreasing[j].append(1+sum(decreasing[n][i-1] for n in range(j+1)))
+
+    total = 0
+    for lst in increasing:
+        total += sum(lst)
+    for lst in decreasing:
+        total += sum(lst)
+    total -= 9 * POWER
+    return total
 
 
 if __name__ == '__main__':

@@ -1,4 +1,4 @@
-ANSWER =
+ANSWER = None
 
 
 count = 0

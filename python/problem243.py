@@ -3,18 +3,13 @@ import math
 import euler
 
 
-ANSWER = 180180
+ANSWER = 892371480
+LIMIT = 15499 / 94744
 PRIME_LIST = euler.prime_list(100)
-LIMIT = 10 ** 3
 
 
-def decisions(lst):
-    result = 1
-    for a in lst:
-        if a == 0:
-            break
-        result *= (a << 1) | 1
-    return (result >> 1) + 1
+def resilience(n):
+    return euler.totient(n, PRIME_LIST) / (n - 1)
 
 
 def number(lst):
@@ -45,9 +40,9 @@ def main():
             n = number(lst)
             if n > result:
                 continue
-            if decisions(lst) > LIMIT:
-                result = n
             new_ars.update(new_arrays(lst))
+            if n > 1 and resilience(n) < LIMIT:
+                result = n
         ars = new_ars
     return result
 

@@ -1,63 +1,53 @@
-ANSWER =
+import math
 
 
-f = open('../txt/problem107.txt')
-r = f.readlines()
+ANSWER = 259679
 
-lst = []
-for i in range(len(r)):
-    lst.append(r[i][:-1].split(','))
-    for j in range(len(lst[-1])):
-        if lst[-1][j] == '-':
-            lst[-1][j] = 0
-        else:
-            lst[-1][j] = int(lst[-1][j])
 
-leng = len(lst)
+def shortest_edge(lst):
+    shortest = math.inf
+    shortest_i = -1
+    shortest_j = -1
+    r = range(len(lst))
+    for i in r:
+        for j in r:
+            length = lst[i][j]
+            if length and length < shortest:
+                shortest = length
+                shortest_i = i
+                shortest_j = j
+    return shortest_i, shortest_j
 
-def minar (lst):
-    m = 1000
-    mi = 0
-    mj = 0
-    for i in range(leng):
-        for j in range(leng):
-            a = lst[i][j]
-            if a:
-                if a < m:
-                    m = a
-                    mi = i
-                    mj = j
-    return mi, mj
 
-mn = minar(lst)
-st = set(mn)
-sm = lst[mn[0]][mn[1]]
-
-def connect (lst, st):
-    m = 1000
-    mi = 0
-    mj = 0
+def connect(lst, st):
+    shortest = math.inf
+    shortest_i = -1
+    shortest_j = -1
     for i in st:
-        for j in range(leng):
+        for j in range(len(lst)):
             if j not in st:
-                a = lst[i][j]
-                if a:
-                    if a < m:
-                        m = a
-                        mi = i
-                        mj = j
-    st.add(mj)
-    return lst[mi][mj]
+                length = lst[i][j]
+                if length and length < shortest:
+                    shortest = length
+                    shortest_i = i
+                    shortest_j = j
+    st.add(shortest_j)
+    return lst[shortest_i][shortest_j]
 
-for i in range(leng-2):
-    sm += connect(lst, st)
 
-s = 0
-for i in range(leng):
-    for j in range(leng):
-        s += lst[i][j]
-s //= 2
-print(s-sm)
+def main():
+    lst = [
+        [0 if n == '-' else int(n) for n in line[:-1].split(',')]
+        for line in open('../txt/problem107.txt')
+    ]
+    leng = len(lst)
+    i, j = shortest_edge(lst)
+    st = {i, j}
+    minimal = lst[i][j]
+    for i in range(leng - 2):
+        minimal += connect(lst, st)
+    initial = sum(lst[i][j] for i in range(leng) for j in range(leng)) // 2
+    return initial - minimal
 
 
 if __name__ == '__main__':

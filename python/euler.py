@@ -169,7 +169,7 @@ def pythagorean_trio(a):
 
 def pythagorean_trio_my(c):
     c_double = 2 * c
-    c_double_square = c_double *c
+    c_double_square = c_double * c
     for a in low_divisors(c_double_square):
         b = c_double_square // a
         yield a + c_double, b + c_double, a + b + c_double
@@ -271,6 +271,16 @@ def int_sqrt(n):
             sqr = temp_sqrt
         temp >>= 1
     return sqrt
+
+
+def totient(n, prime_lst):
+    result = n
+    for prime in prime_lst:
+        if prime > n:
+            break
+        if n % prime == 0:
+            result -= result // prime
+    return result
 
 
 def totient_list(n):
