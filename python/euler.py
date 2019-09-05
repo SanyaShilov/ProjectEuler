@@ -26,6 +26,14 @@ def divisors(n):
     return d
 
 
+def divisors_list(n):
+    result = [[] for _ in range(n)]
+    for i in range(1, n):
+        for j in range(i, n, i):
+            result[j].append(i)
+    return result
+
+
 def prime_divisors(n, prime_lst=None):
     d = set()
     sqrt = int_sqrt(n) + 1
