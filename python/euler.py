@@ -120,19 +120,20 @@ def is_not_divisible(num, lst, ind):
 # primes
 
 
-def is_prime(n, prime_lst, prime_lst_with_zeros=None):
+def is_prime(n, prime_lst=None, prime_lst_with_zeros=None):
     if prime_lst_with_zeros:
         try:
             return bool(prime_lst_with_zeros[n])
         except IndexError:
             pass
     sq = int(n ** 0.5)
+    prime_lst = prime_lst or range(2, sq + 1)
     for prime in prime_lst:
         if prime > sq:
             return True
         if not n % prime:
             return False
-    raise RuntimeError('Cannot determine if {} is prime'.format(n))
+    return True
 
 
 def prime_list_with_zeros(n):

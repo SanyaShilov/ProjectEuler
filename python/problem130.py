@@ -1,40 +1,31 @@
+import itertools
+
 import euler
 
-def find (n):
+
+ANSWER = 149253
+LIMIT = 25
+
+
+def find(n):
     rest = 1
     i = 1
     while rest:
-        rest = (rest*10 + 1) % n
+        rest = (rest * 10 + 1) % n
         i += 1
     return i
 
-l= 30000
 
-prime_list = euler.prime_list(l)
-
-lst = [i for i in range(l)]
-lst[1] = 0
-
-for pr in prime_list:
-    lst[pr] = 0
-
-for i in range(2, l, 2):
-    lst[i] = 0
-
-for i in range(5, l, 5):
-    lst[i] = 0
-
-s = 0
-i = 0
-for k in lst:
-    if k:
-        f = find(k)
-        if (k-1) % f == 0:
+def main():
+    total = 0
+    i = 0
+    for n in itertools.count(4):
+        if n % 2 and n % 5 and not euler.is_prime(n) and (n - 1) % find(n) == 0:
             i += 1
-            s += k
-            if i == 25:
+            total += n
+            if i == LIMIT:
                 break
-print(s)
+    return total
 
 
 if __name__ == '__main__':

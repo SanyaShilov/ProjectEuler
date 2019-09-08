@@ -1,21 +1,25 @@
-ANSWER =
+import itertools
 
 
-def find (n):
+ANSWER = 1000023
+LIMIT = 10 ** 6
+
+
+def find(n):
     rest = 1
     i = 1
     while rest:
-        rest = (rest*10 + 1) % n
+        rest = (rest * 10 + 1) % n
         i += 1
     return i
 
-n = 10**6
-while True:
-    n += 1
-    if n % 2 and n % 5:
-        if find(n) > 10**6:
-            print(n)
-            break
+
+def main():
+    return next(
+        n
+        for n in itertools.count(LIMIT)
+        if n % 2 and n % 5 and find(n) > LIMIT
+    )
 
 
 if __name__ == '__main__':

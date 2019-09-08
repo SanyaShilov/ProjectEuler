@@ -1,19 +1,15 @@
 import euler
-import array
 
-prime_list = euler.prime_list(1000000)
 
-lst = array.array('L', (0 for i in range(10000000)))
+ANSWER = 173
+LIMIT = 10 ** 6
 
-for pr in prime_list:
-    lst[pr] = 1
 
-s = 0
-for i in range(1, 600):
-    pr = 3*i*i-3*i+1
-    if lst[pr]:
-        s += 1
-print(s)
+def main():
+    return sum(
+        euler.is_prime(3 * i * i + 3 * i + 1)
+        for i in range(1, int((LIMIT // 3) ** 0.5))
+    )
 
 
 if __name__ == '__main__':

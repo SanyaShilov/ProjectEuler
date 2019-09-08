@@ -15,14 +15,14 @@ def chinese_remainder(divisors, remainders):
 
 
 def mul_inv(a, b):
-    r1, r2 = a, b
+    r_1, r_2 = a, b
     prev, tmp = 1, 0
-    # r1 = prev * a + not_calculated * b; r2 = tmp * a + not_calculated * b
-    while r1 > 1:
-        r1, r2, q = r2, r1 % r2, r1 // r2
+    # r_1 = prev * a + not_calculated * b; r_2 = tmp * a + not_calculated * b
+    while r_1 > 1:
+        r_1, r_2, q = r_2, r_1 % r_2, r_1 // r_2
         prev, tmp = tmp, prev - q * tmp
     if prev < 0:
-        prev += r2
+        prev += r_2
     return prev
 
 

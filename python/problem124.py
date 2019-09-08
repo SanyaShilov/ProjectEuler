@@ -1,19 +1,17 @@
 import euler
 
-prime_list = euler.prime_list(100001)
 
-lst = [[1, n] for n in range(100001)]
+ANSWER = 21417
+LIMIT = 100000
+INDEX = 10000
 
-for pr in prime_list:
-    for i in range(pr, 100001, pr):
-        lst[i][0] *= pr
 
-def sortkey (elem):
-    return elem[0]*1000000 + elem[1]
-
-lst.sort(key = sortkey)
-
-print(lst[10000][1])
+def main():
+    lst = [[1, n] for n in range(LIMIT + 1)]
+    for prime in euler.prime_list(LIMIT + 1):
+        for i in range(prime, LIMIT + 1, prime):
+            lst[i][0] *= prime
+    return lst.index(sorted(lst)[INDEX])
 
 
 if __name__ == '__main__':
