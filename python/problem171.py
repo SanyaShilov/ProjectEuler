@@ -1,85 +1,66 @@
-ANSWER =
+import euler
 
 
-'''
-l = 2000
-little = [i*i for i in range(10)]
-lst = [0 for i in range(l)]
-for k in little:
-    lst[k] = 1
-lst[0] = 0
-s = 0
-for i in range(44):
-    s += lst[i*i]
-print(s)
-for _ in range(20-1):
-    newar = [0 for i in range(l)]
-    for i in range(l):
-        if lst[i]:
-            for q in little:
-                newar[i+q] += lst[i]
-    
-    lst = newar
-    for i in range(44):
-        s += lst[i*i]
-print(s)
-'''
+ANSWER = 142989277
+LIMIT = 20
+LIMIT1 = LIMIT + 1
 
-fact = [1]
-for i in range(1, 21):
-    fact.append(i*fact[-1])
 
-repunits = [0]
-for i in range(1, 21):
-    repunits.append(repunits[-1]*10+1)
+REPUNITS = [0]
+for _ in range(1, LIMIT1):
+    REPUNITS.append(REPUNITS[-1] * 10 + 1)
 
-sqar = [False for i in range(45*45+1)]
-for i in range(45+1):
-    sqar[i*i] = True
-dgsq = [i*i for i in range(10)]
+SQUARES_MASK = [False for i in range(45 * 45 + 1)]
+for N in range(45 + 1):
+    SQUARES_MASK[N * N] = True
+DIGIT_SQUARES = [i * i for i in range(10)]
 
-def check (lst):
+
+def check(lst):
     result = 0
     for i in range(1, 10):
-        result += dgsq[i]*lst[i]
-    return sqar[result]
+        result += DIGIT_SQUARES[i] * lst[i]
+    return SQUARES_MASK[result]
 
-def perestanovki (lst, l):
-    result = fact[l]
+
+def permutations(lst, length):
+    result = euler.FACTORIALS[length]
     for k in lst:
-        result //= fact[k]
+        result //= euler.FACTORIALS[k]
     return result
 
-def summ (lst, l):
-    s = 0
+
+def summ(lst, length):
+    total = 0
     for i in range(1, 10):
-        s +=i*lst[i]
-    result = s*perestanovki(lst, l)*repunits[l]//l
-    return result
+        total += i * lst[i]
+    return total * permutations(lst, length) * REPUNITS[length] // length
 
-arar = []
-for i in range(10):
-    arar.append([0 for j in range(10)])
-    arar[-1][i] = 1
-arlast = [i for i in range(10)]
-arlen = [1 for i in range(10)]
-s = 0
-while arar:
-    lst = arar.pop()
-    last = arlast.pop()
-    l = arlen.pop()
-    if l == 20:
-        if check(lst):
-            s += summ(lst, 20)
-    elif l < 20:
-        l1 = l+1
-        for i in range(last, 10):
-            newar = lst[:]
-            newar[i] += 1
-            arar.append(newar)
-            arlast.append(i)
-            arlen.append(l1)
-print(s)
+
+def main():
+    list_of_lists = []
+    for i in range(10):
+        list_of_lists.append([0 for _ in range(10)])
+        list_of_lists[-1][i] = 1
+    list_of_last = list(range(10))
+    list_of_len = [1 for _ in range(10)]
+    total = 0
+    while list_of_lists:
+        lst = list_of_lists.pop()
+        last = list_of_last.pop()
+        length = list_of_len.pop()
+        if length == LIMIT:
+            if check(lst):
+                total += summ(lst, LIMIT)
+        elif length < LIMIT:
+            length1 = length + 1
+            for i in range(last, 10):
+                new_lst = lst[:]
+                new_lst[i] += 1
+                list_of_lists.append(new_lst)
+                list_of_last.append(i)
+                list_of_len.append(length1)
+    return total % 10 ** 9
 
 
 if __name__ == '__main__':

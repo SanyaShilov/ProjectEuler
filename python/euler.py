@@ -1,11 +1,12 @@
 import array
+import deprecation
 import functools
 import math
 import operator
 import string
 
 
-SQRT_LIMIT = 10 ** 16
+SQRT_LIMIT = 10 ** 14
 
 
 FACTORIALS = [1]
@@ -126,10 +127,10 @@ def is_prime(n, prime_lst=None, prime_lst_with_zeros=None):
             return bool(prime_lst_with_zeros[n])
         except IndexError:
             pass
-    sq = int(n ** 0.5)
-    prime_lst = prime_lst or range(2, sq + 1)
+    square = int(n ** 0.5)
+    prime_lst = prime_lst or range(2, square + 1)
     for prime in prime_lst:
-        if prime > sq:
+        if prime > square:
             return True
         if not n % prime:
             return False
@@ -169,11 +170,12 @@ def list_of_prime_factors(n):
 # pythagorean
 
 
+@deprecation.deprecated(details='Doesnt produce all triplets')
 def pythagorean_trio(a):
-    a2 = a * a
+    a_2 = a * a
     for b in range(1, a):
-        b2 = b * b
-        yield a2 - b2, 2 * a * b, a2 + b2
+        b_2 = b * b
+        yield a_2 - b_2, 2 * a * b, a_2 + b_2
 
 
 def pythagorean_trio_my(c):
@@ -185,13 +187,13 @@ def pythagorean_trio_my(c):
 
 
 def pythagorean_unique_trio(a):
-    a2 = a * a
+    a_2 = a * a
     for b in range(1, a):
-        b2 = b * b
-        x = a2 - b2
+        b_2 = b * b
+        x = a_2 - b_2
         y = 2 * a * b
         if gcd1(x, y):
-            yield x, y, a2 + b2
+            yield x, y, a_2 + b_2
 
 
 # special numbers
@@ -271,15 +273,16 @@ def int_sqrt(n):
         sqrt <<= 1
         sqr <<= 2
     sqrt >>= 1
-    sqr >>= 2
     temp = sqrt >> 1
     while temp:
-        temp_sqrt = sqr + temp * ((sqrt << 1) + temp)
-        if temp_sqrt <= n:
+        if (sqrt + temp) ** 2 <= n:
             sqrt += temp
-            sqr = temp_sqrt
         temp >>= 1
     return sqrt
+
+
+def is_square(n):
+    return int_sqrt(n) ** 2 == n
 
 
 def totient(n, prime_lst):
@@ -338,7 +341,3 @@ def square_fraction(n, length):
         if current_length > length:
             break
     return lst
-
-
-if __name__ == '__main__':
-    print(prime_divisors(2500))

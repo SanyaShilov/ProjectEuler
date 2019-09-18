@@ -1,21 +1,28 @@
-ANSWER =
+import euler
 
 
-lst = [0 for i in range(1000)]
-for i in range(1, 10):
-    lst[i] = 1
+ANSWER = 378158756814587
+DIGITS = 3
+LIMIT = 20
+SUM = 9
+TEN = 10 ** DIGITS
+TEN1 = TEN // 10
 
-sums = [a//100 + (a//10)%10 + a%10 for a in range(1000)]
 
-for _ in range(19):
-    newar = [0 for i in range(1000)]
-    for i in range(1000):
-        s = sums[i]
-        n = (i%100)*10
-        for j in range(10-s+i//100):
-            newar[n+j] += lst[i]
-    lst = newar
-print(sum(lst))
+def main():
+    lst = [0 for _ in range(TEN)]
+    for i in range(1, 10):
+        lst[i] = 1
+    sums = [euler.digit_sum(a) for a in range(TEN)]
+    for _ in range(LIMIT - 1):
+        new_lst = [0 for _ in range(TEN)]
+        for i in range(TEN):
+            s = sums[i]
+            n = (i % TEN1) * 10
+            for j in range(SUM + 1 - s + i // TEN1):
+                new_lst[n + j] += lst[i]
+        lst = new_lst
+    return sum(lst)
 
 
 if __name__ == '__main__':

@@ -1,87 +1,55 @@
 import euler
 
-def qwerty (n):
-    nn = n*n
-    i = 0
-    pr = prime_list[0]
-    try:
-        while pr < n:
-            bol = True
-            for j in st:
-                q = nn + j
-                if not q % pr:
-                    bol = False
+
+ANSWER = 676333270
+ADDITIONS = [1, 3, 7, 9, 13, 27]
+LIMIT = 150 * 10 ** 6
+SLOW = True
+
+
+def prepare_lst():
+    small_list = euler.prime_list(10000)
+    small_list.remove(2)
+    lst = {2}
+    prod = 2
+    for prime in small_list:
+        rest = set()
+        for i in range(prime):
+            q = i * i
+            for j in ADDITIONS:
+                if not (q + j) % prime:
                     break
-            if not bol:
+            else:
+                rest.add(i)
+        new_lst = set()
+        for a in lst:
+            for i in range(prime):
+                q = a + prod * i
+                if q < LIMIT:
+                    if q % prime in rest:
+                        new_lst.add(q)
+                else:
+                    break
+        lst = new_lst
+        prod *= prime
+    return lst
+
+
+def main():
+    lst = prepare_lst()
+    prime_list = euler.prime_list(LIMIT)
+    result = {10}
+    for a in sorted(lst):
+        for addition in ADDITIONS:
+            if not euler.is_prime(a * a + addition, prime_list):
                 break
-            i += 1
-            pr = prime_list[i]
-        if bol:
-            return n
-        return 0
-    except:
-        return n
-
-def cococo (n):
-    nn = n*n
-    i = 0
-    pr = prime_list[0]
-    while pr < n:
-        bol = True
-        for j in bad:
-            q = nn + j
-            if not q % pr:
-                bol = False
-                break
-        if bol:
-            break
-        i += 1
-        pr = prime_list[i]
-    if bol:
-        return n
-    return 0
-
-LIMIT = 150*10**6
-
-prime_list = euler.prime_list(100)
-prime_list.remove(2)
-st = [1, 3, 7, 9, 13, 27]
-bad = [5, 11, 15, 17, 19, 21, 23, 25]
-lst = {2}
-prod = 2
-for pr in prime_list:
-    rest = set()
-    
-    for i in range(pr):
-        q = i*i
-        bol = True
-        for j in st:
-            if not (q+j) % pr:
-                bol = False
-                break
-        if bol:
-            rest.add(i)
-    
-    newar = set()
-    for a in lst:
-        for i in range(pr):
-            q = a + prod*i
-            if q < LIMIT:
-                if q% pr in rest:
-                    newar.add(q)
-    lst = newar
-    prod *= pr
-
-prime_list = euler.prime_list(LIMIT)
-
-result = set()
-for a in lst:
-    if qwerty(a):
-        print(a)
-        if not cococo(a):
-            result.add(a)
-print(sum(result))
-# without 676333270, because 676333270**2 - 23 is prime (it must not be prime)
+        else:
+            for addition in (19, 21):
+                if euler.is_prime(a * a + addition, prime_list):
+                    break
+            else:
+                result.add(a)
+    return sum(result)
 
 
 if __name__ == '__main__':

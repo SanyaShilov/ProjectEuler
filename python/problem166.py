@@ -1,7 +1,7 @@
 import itertools
 
 
-ANSWER = None
+ANSWER = 7130034
 
 
 def main():
@@ -12,15 +12,15 @@ def main():
         g = grid_sum - comb[2] - comb[5] - comb[7]
         f = grid_sum - comb[3] - comb[5] - e
         h = grid_sum - comb[6] - comb[7] - f
-        b = (grid_sum - comb[4] - comb[5] - comb[3] - h + comb[0] + comb[7]) / 2
-        if not b.is_integer():
+        b_2 = grid_sum - comb[4] - comb[5] - comb[3] - h + comb[0] + comb[7]
+        if b_2 % 2 == 1:
             continue
-        b = round(b)
+        b = b_2 // 2
         a = grid_sum - comb[4] - comb[5] - b
         c = grid_sum - comb[1] - a - f
         d = grid_sum - comb[3] - b - h
         for n in (e, f, g, h, a, b, c, d):
-            if n < 0 or n > 9:
+            if not 0 <= n <= 9:
                 break
         else:
             total += 1

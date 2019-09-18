@@ -1,92 +1,67 @@
-ANSWER =
+import functools
 
 
-s = 0
-for a in range(1, 10):
-    for b in range(1, 10):
-        if a+b > 9:
-            break
-        if (a+b) % 2:
-            s += 1
-            
-for a in range(1, 10):
-    for b in range(5):
-        for c in range(10):
-            if a+c < 10:
-                continue
-            if (a+c) % 2:
-                s += 1
+ANSWER = 608720
+LIMIT = 9
 
-for a in range(1, 10):
-    for b in range(10):
-        for c in range(10):
-            if c + b > 9:
-                break
-            if (c+b) % 2:
-                for d in range(1, 10):
-                    if a+d > 9:
-                        break
-                    if (a+d) % 2:
-                        s += 1
 
-for a in range(1, 10):
-    for b in range(10):
-        for c in range(10):
-            for d in range(10):
-                if c + d > 9:
-                    break
-                if (c + d) % 2:
-                    for e in range(10):
-                        if b + e > 9:
-                            break
-                        if (b+e) % 2:
-                            for f in range(1, 10):
-                                if a + f > 9:
-                                    break
-                                if (a+f) % 2:
-                                    s += 1
+@functools.lru_cache(maxsize=None)
+def odd_less():
+    return sum(
+        1
+        for i in range(10) for j in range(10)
+        if (i + j) % 2 == 1 and i + j < 10
+    )
 
-for a in range(1, 10):
-    for b in range(10):
-        for c in range(10):
-            for d in range(5):
-                for e in range(10):
-                    if c + e < 10:
-                        continue
-                    if (c+e) % 2:
-                        for f in range(10):
-                            if b + f > 9:
-                                break
-                            if (b+f) % 2 == 0:
-                                for g in range(1, 10):
-                                    if a + g < 10:
-                                        continue
-                                    if (a+g) % 2:
-                                        s += 1
 
-for a in range(1, 10):
-    for b in range(10):
-        for c in range(10):
-            for d in range(10):
-                for e in range(10):
-                    if d + e > 9:
-                        break
-                    if (d+e) % 2:
-                        for f in range(10):
-                            if f + c > 9:
-                                break
-                            if (f+c) % 2:
-                                for g in range(10):
-                                    if g + b > 9:
-                                        break
-                                    if (g+b)% 2:
-                                        for h in range(1, 10):
-                                            if a + h > 9:
-                                                break
-                                            if (a+h) % 2:
-                                                s += 1
+@functools.lru_cache(maxsize=None)
+def odd_less_without_zero():
+    return sum(
+        1
+        for i in range(1, 10) for j in range(1, 10)
+        if (i + j) % 2 == 1 and i + j < 10
+    )
 
-print(s)
+
+@functools.lru_cache(maxsize=None)
+def odd_more():
+    return sum(
+        1
+        for i in range(10) for j in range(10)
+        if (i + j) % 2 == 1 and i + j >= 10
+    )
+
+
+@functools.lru_cache(maxsize=None)
+def odd_more_without_zero():
+    return sum(
+        1
+        for i in range(1, 10) for j in range(1, 10)
+        if (i + j) % 2 == 1 and i + j >= 10
+    )
+
+
+@functools.lru_cache(maxsize=None)
+def even_less():
+    return sum(
+        1
+        for i in range(10) for j in range(10)
+        if (i + j) % 2 == 0 and i + j < 10
+    )
+
+
+def reversible(digits):
+    if digits % 2 == 0:
+        return odd_less_without_zero() * odd_less() ** (digits // 2 - 1)
+    if digits % 4 == 1:
+        return 0
+    return 5 * odd_more_without_zero() * (odd_more() * even_less()) ** (
+        (digits - 3) // 4
+    )
+
+
+def main():
+    return sum(reversible(digits) for digits in range(1, LIMIT + 1))
 
 
 if __name__ == '__main__':

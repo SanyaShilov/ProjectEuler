@@ -1,58 +1,47 @@
 import itertools
-import sys
+import collections
+import math
 
-per = [set() for i in range(10001)]
-gyp = [set() for i in range(10001)]
+import euler
 
-def isquare (n):
-    i = 1
-    while i*i <= n:
-        i <<= 1
-    i >>= 1
-    while i*i < n:
-        i += 1
-    return i*i == n
 
-def wtf (p):
-    q = p + 1
-    p2 = p*p
-    q2 = q*q
-    while True:
-        a = q2-p2
-        b = 2*p*q
-        if a > b:
-            a, b = b, a
-        c = q2+p2
-        if c <= 10000:
-            for i in range(1, 10000//c+1):
-                gyp[i*c].add((a*i, b*i, c*i))
-        else:
-            break
-        q += 1
-        q2 = q*q
+ANSWER = 1006193
 
-for i in range(1, 100):
-    wtf(i)
 
-for st in gyp[:]:
-    lst = list(st)
-    l = len(lst)
-    if l >= 2:
-        for index in itertools.combinations([i for i in range(l)], 2):
-            cort1, cort2 = lst[index[0]], lst[index[1]]
-            a = cort1[-1]
-            if cort1[1] > cort2[1]:
-                f, b = cort1[:-1]
-                e, c = cort2[:-1]
-            else:
-                f, b = cort2[:-1]
-                e, c = cort1[:-1]
-            d2 = e*e-f*f
-            if isquare(d2):
-                x = (a*a+d2)/2
-                if x == int(x):
-                    print(int(x + a*a-x + b*b-x))
-                    sys.exit(0)
+def calculate(trio1, trio2):
+    d, e, a = trio1
+    f, c, a = trio2
+    if c < e:
+        d, e, f, c = f, c, d, e
+    b_2 = c * c - e * e
+    if euler.is_square(b_2):
+        x_2 = a * a + b_2
+        if x_2 % 2 == 0:
+            x = x_2 // 2
+            y = a * a - x
+            z = c * c - x
+            b = euler.int_sqrt(b_2)
+            x_y_z = int(x + y + z)
+            return x_y_z, min(a, b, c, d, e, f), max(a, b, c, d, e, f)
+    return None, None, None
+
+
+def main():
+    min_x_y_z = math.inf
+    max_param = math.inf
+    triplets = collections.defaultdict(list)
+    for gen_c in itertools.count(1):
+        for trio in euler.pythagorean_trio_my(gen_c):
+            lst = triplets[trio[-1]]
+            lst.append(trio)
+            for trio1, trio2 in itertools.combinations(lst, 2):
+                x_y_z, min_param, new_max_param = calculate(trio1, trio2)
+                if x_y_z and x_y_z < min_x_y_z:
+                    min_x_y_z = x_y_z
+                    max_param = new_max_param
+                if min_param and min_param > max_param:
+                    return min_x_y_z
+    return 0
 
 
 if __name__ == '__main__':
