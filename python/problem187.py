@@ -1,31 +1,24 @@
 import array
 
-n = 10**8
 
-def big_list (n):
-    lst = array.array('L', (0 for i in range(n)))
-    print('done')
-    i = 2
-    while i < n:
-        if i % 10000 == 0:
-            print(i)
+ANSWER = 17427258
+LIMIT = 10 ** 8
+
+
+def prime_factors_count(n):
+    lst = array.array('L', (0 for _ in range(n)))
+    for i in range(2, n):
         if not lst[i]:
             power = i
             while power < n:
-                temp = power
-                while temp < n:
+                for temp in range(power, n, power):
                     lst[temp] += 1
-                    temp += power
                 power *= i
-        i += 1
     return lst
 
-result = 0
-lst = big_list(n)
-for i in lst:
-    if i == 2:
-        result += 1
-print(result)
+
+def main():
+    return prime_factors_count(LIMIT).count(2)
 
 
 if __name__ == '__main__':

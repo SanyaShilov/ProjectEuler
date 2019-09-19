@@ -1,12 +1,13 @@
-ANSWER =
+ANSWER = 1.710637717
 
 
-a = -1
-ten = 10**-9
-for i in range(600):
-    b = int(2**(30.403243784 - a*a))*ten
-    print(a+b)
-    a = b
+def main():
+    a = b = -1
+    ten = 10 ** -9
+    for _ in range(600):
+        a = b
+        b = int(2**(30.403243784 - a*a))*ten
+    return round(a + b, 9)
 
 
 if __name__ == '__main__':

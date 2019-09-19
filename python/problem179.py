@@ -1,24 +1,18 @@
-import primes
-'''
-prime_list = primes.prime_list(10000)
-
-squares = [i*i for i in range(1, 10000)]
-'''
+ANSWER = 986262
+LIMIT = 10 ** 7
 
 
-lst = [0 for i in range(10000000+1)]
-for i in range(2, 3163):
-    if i % 100 == 0:
-        print(i)
-    for j in range(i*i, 10000000+1, i):
-        lst[j] += 2
-    lst[i*i] -= 1
-
-result = 0
-for i in range(2, 10000000):
-    if lst[i] == lst[i+1]:
-        result += 1
-print(result)
+def main():
+    lst = [0 for _ in range(LIMIT + 1)]
+    for i in range(2, int(LIMIT ** 0.5) + 1):
+        for j in range(i * i, LIMIT + 1, i):
+            lst[j] += 2
+        lst[i * i] -= 1
+    result = 0
+    for i in range(2, LIMIT):
+        if lst[i] == lst[i+1]:
+            result += 1
+    return result
 
 
 if __name__ == '__main__':

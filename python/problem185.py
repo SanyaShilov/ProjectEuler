@@ -1,6 +1,9 @@
 import itertools
 
 
+ANSWER = 4640261571849533
+SLOW = True
+
 DIGITS = {str(d) for d in range(10)}
 GUESSES = [
     '5616185650518293',
@@ -120,7 +123,7 @@ def main():
     available_indices = list(range(LEN_STRING))
     hits = HITS
     parameters = [(result, hits, available_indices)]
-    for i in range(LEN_STRING):
+    for _ in range(LEN_STRING):
         parameters = [
             params
             for old_params in parameters
