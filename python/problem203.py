@@ -1,39 +1,30 @@
-ANSWER =
+import euler
 
 
-lst = [i for i in range(11243250)]
-for i in range(2, 3360):
-    for j in range(2, 11243250//i+3360):
-        try:
-            lst[i*j] = 0
-        except:
-            pass
-lst[1] = 0
-print('lst')
-sq = [i**2 for i in lst if i != 0]
-print(sq[:10])
-        
-pascal = [[0 for i in range(51)] for j in range(51)]
-for i in range(51):
-    pascal[i][0] = 1
-m = 0
-for i in range(1, 51):
-    for j in range(i+1):
-        pascal[i][j] = pascal[i-1][j-1]+pascal[i-1][j]
-        if pascal[i][j] > m:
-            m = pascal[i][j]
-print(m)
-s = set()
-for i in range(51):
-    for j in range(51):
-        s = s.union({pascal[i][j]})
-print(len(s))
-n = set(s)
-for q in sq:
-    for k in s:
-        if k % q == 0:
-            n.discard(k)
-print(sum(n))
+ANSWER = 34029210557338
+LIMIT = 8
+
+
+def main():
+    pascal = [[0 for _ in range(LIMIT)] for _ in range(51)]
+    for i in range(51):
+        pascal[i][0] = 1
+    for i in range(1, LIMIT):
+        for j in range(i + 1):
+            pascal[i][j] = pascal[i - 1][j - 1] + pascal[i - 1][j]
+    pascal_set = {n for row in pascal for n in row}
+    prime_squares = [
+        i ** 2
+        for i in euler.prime_list(int(max(pascal_set) ** 0.5) + 1)
+    ]
+    total = 0
+    for n in pascal_set:
+        for square in prime_squares:
+            if n % square == 0:
+                break
+        else:
+            total += n
+    return total
 
 
 if __name__ == '__main__':

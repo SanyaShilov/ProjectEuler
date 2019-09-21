@@ -1,65 +1,54 @@
-ANSWER =
+ANSWER = 806844323190414
 
 
-leng = 8
-height = 3
+LENGTH = 9
+HEIGHT = 3
 
-arwall = []
-arind = [0]
-arbuild = [[0 for i in range(leng+1)]]
-while arind:
-    
-    ind = arind.pop()
-    build = arbuild.pop()
-    if ind == leng-3:
-        arwall.append(build)
-        continue
-    if ind == leng-2:
-        arwall.append(build)
-        continue
-    if ind == leng-1:
-        continue
-    arind.append(ind+2)
-    newbuild = build[:]
-    newbuild[ind+2] = 1
-    arbuild.append(newbuild)
-    
-    arind.append(ind+3)
-    newbuild = build[:]
-    newbuild[ind+3] = 1
-    arbuild.append(newbuild)
 
-l = len(arwall)
-print(l)
+def build_walls():
+    walls = []
+    indices = [0]
+    builds = [[0 for _ in range(LENGTH + 1)]]
+    while indices:
+        index = indices.pop()
+        build = builds.pop()
+        if index == LENGTH - 3:
+            walls.append(build)
+        elif index == LENGTH - 2:
+            walls.append(build)
+        elif index != LENGTH - 1:
+            for addition in 2, 3:
+                indices.append(index + addition)
+                new_build = build[:]
+                new_build[index + addition] = 1
+                builds.append(new_build)
+    return walls
 
-can = [[1 for i in range(l)] for j in range(l)]
-for i in range(l):
-    if not i % 100:
-        print(i)
-    for j in range(i+1, l):
-        for k in range(leng):
-            if arwall[i][k] & arwall[j][k]:
-                can[i][j] = 0
-                break
 
-            
-for i in range(l):
-    can[i][i] = 0
-    for j in range(i+1, l):
-        can[j][i] = can[i][j]
-        
-print('done')
-arcount = [1 for i in range(l)]
-for h in range(height-1):
-    print(h)
-    newcount = [0 for i in range(l)]
-    for i in range(l):
-        c = arcount[i]
-        for j in range(l):
-            if can[i][j]:
-                newcount[j] += c
-    arcount = newcount
-print(sum(arcount))
+def main():
+    walls = build_walls()
+    length = len(walls)
+    can = [[1 for _ in range(length)] for _ in range(length)]
+    for i in range(length):
+        for j in range(i + 1, length):
+            can[i][j] = not any(
+                crack1 and crack2
+                for crack1, crack2 in zip(walls[i], walls[j])
+            )
+    for i in range(length):
+        can[i][i] = 0
+        for j in range(i + 1, length):
+            can[j][i] = can[i][j]
+    counts = [1 for _ in range(length)]
+    for _ in range(HEIGHT - 1):
+        new_counts = [0 for _ in range(length)]
+        for i in range(length):
+            c = counts[i]
+            for j in range(length):
+                if can[i][j]:
+                    new_counts[j] += c
+        counts = new_counts
+    return sum(counts)
 
 
 if __name__ == '__main__':

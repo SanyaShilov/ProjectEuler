@@ -1,24 +1,20 @@
 import array
 
-LIMIT = 64000000
+import euler
 
-lst = array.array('Q', (1 for i in range(LIMIT)))
 
-print('done')
-lst[0] = 0
-for i in range(2, LIMIT):
-    sq = i*i
-    for j in range(i, LIMIT, i):
-        lst[j] += sq
-print('done')
-s = 0
-for i in range(LIMIT):
-    n = lst[i]
-    sq = n**0.5
-    if sq == int(sq):
-        #print(i, n)
-        s += i
-print(s)
+ANSWER = 1922364685
+LIMIT = 64 * 10 ** 6
+
+
+def main():
+    lst = array.array('Q', (1 for _ in range(LIMIT)))
+    lst[0] = 0
+    for i in range(2, LIMIT):
+        square = i * i
+        for j in range(i, LIMIT, i):
+            lst[j] += square
+    return sum(i for i, n in enumerate(lst) if euler.is_square(n))
 
 
 if __name__ == '__main__':

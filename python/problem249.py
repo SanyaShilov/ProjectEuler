@@ -1,29 +1,24 @@
-import primes
+import collections
 
-prime_list = primes.prime_list(5000)
-
-
-ways = [0 for i in range(sum(prime_list)+1)]
-ways[0] = 1
-
-biglist = primes.prime_list(sum(prime_list)+1)
-
-st = {0}
-for pr in prime_list:
-    print(pr)
-    newways = ways[:]
-    for n in st.copy():
-        nn = pr + n
-        newways[nn] += ways[n]
-        st.add(nn)
-    ways = newways
-s = 0
-for pr in biglist:
-    s += ways[pr]
-print(s)
+import euler
 
 
-#2493013197774260
+ANSWER = 9275262564250418
+LIMIT = 5000
+
+
+def main():
+    prime_list = euler.prime_list(LIMIT)
+    ways = collections.defaultdict(int)
+    ways[0] = 1
+    for prime in prime_list:
+        new_ways = ways.copy()
+        for n in ways:
+            new_ways[prime + n] += ways[n]
+        ways = new_ways
+    return sum(
+        ways[prime] for prime in euler.prime_list(sum(prime_list) + 1)
+    ) % 10 ** 16
 
 
 if __name__ == '__main__':

@@ -1,25 +1,23 @@
-ANSWER =
+import euler
 
 
-mas = [i for i in range(100)]
-for i in range(2, 101):
-    for j in range(2, 101):
-        try:
-            mas[i*j] = 0
-        except:
-            pass
-mas = [i for i in mas if i]
-print(mas, len(mas))
+ANSWER = 2944730
+LIMIT = 10 ** 9
 
-lst = mas[:]
-last_len = 4
-while True:
-    mas = {i*j for i in mas for j in lst if i*j <= 1000000000}
-    l = len(mas)
-    if l == last_len:
-        break
-    last_len = l
-print(l)
+
+def main():
+    prime_set = set(euler.prime_list(100))
+    product_set = prime_set.copy()
+    all_set = prime_set | {1}
+    while product_set:
+        product_set = {
+            i * j
+            for i in product_set
+            for j in prime_set
+            if i * j <= LIMIT
+        }
+        all_set.update(product_set)
+    return len(all_set)
 
 
 if __name__ == '__main__':

@@ -1,22 +1,19 @@
-ANSWER =
+ANSWER = 44043947822
 
 
-la = [2, 3, 4]
-m = 12
-nex = 5
-newtwo = 8
-twoes = 2
-l = 3
-p = twoes / l
-stop = 1 / 12345
-while p >= stop:
-    if nex == newtwo:
-        twoes += 1
-        newtwo *= 2
-    l += 1
-    p = twoes / l
-    nex += 1
-print((nex-1)*(nex-1)-nex+1)
+def main():
+    next_n = 5
+    next_power_of_two = 8
+    powers_of_two = 2
+    p = powers_of_two / (next_n - 2)
+    stop = 1 / 12345
+    while p >= stop:
+        if next_n == next_power_of_two:
+            powers_of_two += 1
+            next_power_of_two *= 2
+        next_n += 1
+        p = powers_of_two / (next_n - 2)
+    return (next_n - 2) * (next_n - 1)
 
 
 if __name__ == '__main__':

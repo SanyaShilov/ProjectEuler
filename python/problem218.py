@@ -1,39 +1,30 @@
-ANSWER =
+import euler
 
 
-#
-def gcd1 (a, b):
-    if a == 1:
-        return True
-    if not a:
-        return False
-    if a > b:
-        return gcd1(a%b, b)
-    return gcd1(b%a, a)
+ANSWER = 0
+LIMIT = 10 ** 16
 
-for a in range(2, 1000):
-    a2 = a*a
-    for b in range(1, a):
-        if gcd1(b, a):
-            b2 = b*b
-            a2b2m = a2-b2
-            ab = 2*a*b
-            a2b2p = a2+b2
-            if gcd1(a2b2m, ab):
-                if a2b2m > ab:
-                    biga = a2b2m
-                    bigb = ab
-                else:
-                    biga = ab
-                    bigb = a2b2m
-                sa = biga*biga-bigb*bigb
-                sb = 2*biga*bigb
-                sc = a2b2p*a2b2p
-                area = sa*sb//2
-                if area % 6:
-                    print(sa, sb, sc)
-                elif area % 28:
-                    print(sa, sb, sc)
+
+def main():
+    total = 0
+    for a in range(2, int(LIMIT ** 0.25) + 1):
+        a_2 = a * a
+        for b in range(1, a):
+            if euler.gcd1(b, a):
+                b_2 = b * b
+                a2b2m = a_2 - b_2
+                ab_2 = 2 * a * b
+                a2b2p = a_2 + b_2
+                if euler.gcd1(a2b2m, ab_2):
+                    perfect_a = abs(ab_2 * ab_2 - a2b2m * a2b2m)
+                    perfect_b = 2 * ab_2 * a2b2m
+                    perfect_c = a2b2p * a2b2p
+                    if perfect_c > LIMIT:
+                        break
+                    area = perfect_a * perfect_b // 2
+                    if area % 6 and area % 28:
+                        total += 1
+    return total
 
 
 if __name__ == '__main__':

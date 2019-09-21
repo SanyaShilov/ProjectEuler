@@ -7,7 +7,7 @@ def main():
         a, b, c = (int(n) for n in binary[:3])
         shift = binary[1:] + str(a ^ (b and c))
         if binary == shift:
-            print('!!!!!!!!', binary)
+            print('!!!!!!', binary)
         print(binary, shift)
     return 0
 

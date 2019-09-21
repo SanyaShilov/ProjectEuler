@@ -2,15 +2,17 @@ import euler
 
 
 ANSWER = 61614848
-LIMIT = 1 * 10 ** 3
+LIMIT = 25 * 10 ** 6
 DIVISORS_LIST = euler.divisors_list(LIMIT // 3)
 
 
 def divisors_of_n2_minus_1(n):
     return sorted(
-        {i * j
-         for i in DIVISORS_LIST[n - 1]
-         for j in DIVISORS_LIST[n + 1]}
+        {
+            i * j
+            for i in DIVISORS_LIST[n - 1]
+            for j in DIVISORS_LIST[n + 1]
+        }
     )
 
 
