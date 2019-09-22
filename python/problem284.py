@@ -1,48 +1,48 @@
-#
+import string
 
 
-table = [str(i) for i in range(10)]+[chr(ord('a')+i) for i in range(20)]
-def transform (n, base):
+ANSWER = '5a411d7b'
+DIGITS = string.digits + string.ascii_lowercase
+BASE = 14
+LIMIT = 10 ** 4
+
+
+def transform(n, base):
     power = base
     while power < n:
         power *= base
     result = ''
     while power:
-        result += table[n//power]
+        result += DIGITS[n // power]
         n %= power
         power //= base
     if result[0] != '0':
         return result
     return result[1:]
 
-s = 16
-last = [7, 8]
-lastsum = [7, 8]
-LIMIT = 14
-add = 1
-two = 2
-for n in range(2, 10001):
-    newlast = []
-    newlastsum = []
-    LIMIT *= 14
-    add *= 14
-    two <<= 1
-    for k in range(len(last)):
-        start = last[k]
-        dig = 0
-        while start < LIMIT:
-            if not (start-1)*start % LIMIT:
-                newlast.append(start)
-                sm = lastsum[k]+dig
-                if dig:
-                    s += sm
-                newlastsum.append(sm)
-                break
-            start += add
-            dig += 1
-    last = newlast
-    lastsum = newlastsum
-print(transform(s, 14))
+
+def main():
+    total = 16
+    numbers = [7, 8]
+    digit_sums = [7, 8]
+    base_power = BASE
+    for _ in range(2, LIMIT + 1):
+        new_numbers = []
+        new_digit_sums = []
+        add = base_power
+        base_power *= 14
+        for start, digit_sum in zip(numbers, digit_sums):
+            for digit, n in enumerate(range(start, base_power, add)):
+                if not (n - 1) * n % base_power:
+                    new_numbers.append(n)
+                    new_sum = digit_sum + digit
+                    if digit:
+                        total += new_sum
+                    new_digit_sums.append(new_sum)
+                    break
+        numbers = new_numbers
+        digit_sums = new_digit_sums
+    return transform(total, 14)
 
 
 if __name__ == '__main__':

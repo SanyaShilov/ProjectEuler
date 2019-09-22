@@ -3,12 +3,11 @@ LIMIT = 13082761331670030
 
 
 def main():
-    total = 0
-    for i in range(153416670, LIMIT, 153416670):
-        j = i + 1
-        if j * j * j % LIMIT == 1:
-            total += j
-    return total
+    return sum(
+        i
+        for i in range(153416670 + 1, LIMIT, 153416670)
+        if pow(i, 3) % LIMIT == 1
+    )
 
 
 if __name__ == '__main__':

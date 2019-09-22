@@ -1,9 +1,10 @@
 import array
-import deprecation
 import functools
 import math
 import operator
 import string
+
+import deprecation
 
 
 SQRT_LIMIT = 10 ** 14
@@ -119,6 +120,36 @@ def is_not_divisible(num, lst, ind):
 
 
 # primes
+
+
+def _check(a, s, d, n):
+    x = pow(a, d, n)
+    if x == 1:
+        return True
+    n_1 = n - 1
+    for _ in range(s - 1):
+        if x == n_1:
+            return True
+        x = pow(x, 2, n)
+    return x == n_1
+
+
+def miller_rabin(n, k=5):
+    if n < 2:
+        return False
+    if n < 4:
+        return True
+    if not n & 1:
+        return False
+    s = 0
+    d = n - 1
+    while not d & 1:
+        d >>= 1
+        s += 1
+    for a in range(3, n - 2, max((n - 5) // k, 1)):
+        if not _check(a, s, d, n):
+            return False
+    return True
 
 
 def is_prime(n, prime_lst=None, prime_lst_with_zeros=None):

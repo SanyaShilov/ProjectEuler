@@ -1,29 +1,24 @@
-F = [1, 2]
-for i in range(100):
-    F.append(F[-1]+F[-2])
-    if F[-1] > 10**6:
-        break
-print(F)
-S = [1, 1, 3]
-for i in range(len(F)-4):
-    S.append(S[-1]+S[-2]+F[i])
-print(S)
-print(sum(S))
+ANSWER = 2252639041804718029
+LIMIT = 10 ** 17
 
 
-def Zeckendorf (n):
+def zeckendorf(n):
     if n < 5:
         return n-1
-    F = [1, 2]
-    while F[-1] < n:
-        F.append(F[-1]+F[-2])
-    S = [1, 1, 3]
-    for i in range(len(F)-4):
-        S.append(S[-1]+S[-2]+F[i])
-    if F[-1] == n:
-        return sum(S)
-    r = n - F[-2]
-    return sum(S[:-1])+r+Zeckendorf(r)
+    fibonacci = [1, 2]
+    while fibonacci[-1] < n:
+        fibonacci.append(fibonacci[-1] + fibonacci[-2])
+    result = [1, 1, 3]
+    for i in range(len(fibonacci) - 4):
+        result.append(result[-1] + result[-2] + fibonacci[i])
+    if fibonacci[-1] == n:
+        return sum(result)
+    rest = n - fibonacci[-2]
+    return sum(result[:-1]) + rest + zeckendorf(rest)
+
+
+def main():
+    return zeckendorf(LIMIT)
 
 
 if __name__ == '__main__':
