@@ -2,7 +2,7 @@ import euler
 
 
 ANSWER = 18613426663617118
-LIMIT = 1000000
+LIMIT = 10 ** 6
 
 
 def chinese_remainder(divisors, remainders):

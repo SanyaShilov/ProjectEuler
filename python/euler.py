@@ -134,7 +134,7 @@ def _check(a, s, d, n):
     return x == n_1
 
 
-def miller_rabin(n, k=5):
+def miller_rabin(n, k=10):
     if n < 2:
         return False
     if n < 4:

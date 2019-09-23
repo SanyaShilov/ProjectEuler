@@ -8,10 +8,10 @@ def main():
     d = collections.defaultdict(int)
     cubes = [c * c * c for c in range(1000)]
     for i in range(1, 80000):
-        i2 = i * i
+        i_2 = i * i
         for j in range(1, 1000):
-            a = i2 + cubes[j]
-            s = str(i2 + cubes[j])
+            a = i_2 + cubes[j]
+            s = str(i_2 + cubes[j])
             if s == s[::-1]:
                 d[a] += 1
     total = 0
