@@ -5,7 +5,6 @@ ANSWER = 26241
 
 
 def main():
-    lst = euler.prime_list(1000000)
     diff = 2
     primes = 3
     total = 5
@@ -15,7 +14,7 @@ def main():
         diff += 2
         for _ in range(3):
             temp += diff
-            if euler.is_prime(temp, lst):
+            if euler.miller_rabin(temp):
                 primes += 1
         temp += diff
         total += 4

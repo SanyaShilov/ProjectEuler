@@ -12,7 +12,7 @@ def i_masks(prime, i):
     str_i = str(i)
     count = str_prime.count(str_i)
     if count >= 3:
-        for perm in set(
+        for permutation in set(
                 itertools.permutations(
                     [True for _ in range(3)] +
                     [False for _ in range(count - 3)]
@@ -22,7 +22,7 @@ def i_masks(prime, i):
             mask = ''
             for symbol in str_prime:
                 if symbol == str_i:
-                    if perm[j]:
+                    if permutation[j]:
                         mask += '*'
                     else:
                         mask += str_i
@@ -38,7 +38,7 @@ def all_masks(prime):
 
 
 def main():
-    prime_list = euler.prime_list(10 ** 7)
+    prime_list = euler.prime_list(10 ** 6)
     masks = collections.defaultdict(int)
     for prime in prime_list:
         for mask in all_masks(prime):
@@ -47,7 +47,7 @@ def main():
                 start = 1 if mask.startswith('*') else 0
                 for i in range(start, 10):
                     n = int(mask.replace('*', str(i)))
-                    if euler.is_prime(n, prime_list):
+                    if euler.miller_rabin(n):
                         return n
     return 0
 

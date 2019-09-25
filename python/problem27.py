@@ -15,6 +15,7 @@ def main():
             length = 0
             c = b
             while c > 1 and euler.is_prime(c, lst):
+                # miller-rabin is slow because they all are primes
                 n += 1
                 length += 1
                 c = n ** 2 + a * n + b

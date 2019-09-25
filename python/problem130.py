@@ -20,7 +20,12 @@ def main():
     total = 0
     i = 0
     for n in itertools.count(4):
-        if n % 2 and n % 5 and not euler.is_prime(n) and (n - 1) % find(n) == 0:
+        if (
+                n & 1 and
+                n % 5 and
+                not euler.miller_rabin(n) and
+                not (n - 1) % find(n)
+        ):
             i += 1
             total += n
             if i == LIMIT:

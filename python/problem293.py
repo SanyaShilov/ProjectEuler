@@ -6,8 +6,6 @@ import euler
 ANSWER = 2209
 LIMIT = 10 ** 9
 PRIME_LIST = euler.prime_list(30)
-PRIME_LIST_WITH_ZEROS = euler.prime_list_with_zeros(10 ** 6)
-BIG_PRIME_LIST = euler.clean_zeros(PRIME_LIST_WITH_ZEROS)
 
 
 def number(lst):
@@ -31,7 +29,7 @@ def pseudo_fortunate_number(n):
     return next(
         2 + i
         for i in itertools.count()
-        if euler.is_prime(n + 2 + i, BIG_PRIME_LIST, PRIME_LIST_WITH_ZEROS)
+        if euler.miller_rabin(n + 2 + i)
     )
 
 

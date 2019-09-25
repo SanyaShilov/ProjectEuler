@@ -10,24 +10,16 @@ LIMIT = 10 ** 7
 SLOW = True
 
 
-PRIME_LIST_WITH_ZEROS = euler.prime_list_with_zeros(LIMIT)
-PRIME_LIST = [n for n in PRIME_LIST_WITH_ZEROS if n]
-
-
-@functools.lru_cache(maxsize=1000)
+@functools.lru_cache(maxsize=None)
 def check(a, b):
-    if (
-            euler.is_prime(int(a + b), PRIME_LIST, PRIME_LIST_WITH_ZEROS) and
-            euler.is_prime(int(b + a), PRIME_LIST, PRIME_LIST_WITH_ZEROS)
-    ):
-        return True
-    return False
+    return euler.miller_rabin(int(a + b)) and euler.miller_rabin(int(b + a))
 
 
 def main():
-    PRIME_LIST.remove(2)
-    PRIME_LIST.remove(5)
-    str_prime_list = [str(n) for n in PRIME_LIST]
+    prime_list = euler.prime_list(LIMIT)
+    prime_list.remove(2)
+    prime_list.remove(5)
+    str_prime_list = [str(n) for n in prime_list]
     sets = {}
     minimum = LIMIT * COUNT
     for prime in str_prime_list:
