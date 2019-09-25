@@ -119,6 +119,22 @@ def is_not_divisible(num, lst, ind):
     return result
 
 
+def max_divisors(iterable):
+    lst = list(iterable)
+    divisors_lst = [1 for _ in lst]
+    length = len(lst)
+    for i, n in enumerate(lst):
+        if n > 1:
+            for j in range(i, length, n):
+                if not lst[j] % n:
+                    divisors_lst[j] = max(divisors_lst[j], n)
+                    while True:
+                        lst[j] //= n
+                        if lst[j] % n:
+                            break
+    return divisors_lst
+
+
 # primes
 
 
@@ -193,9 +209,19 @@ def list_of_prime_factors(n):
         if not n % prime:
             factors.append(prime)
             n //= prime
-            prime -= 1
-        prime += 1
+        else:
+            prime += 1
     return factors
+
+
+def prime_cycle_length(prime):
+    n = 1
+    length = 0
+    while True:
+        n = (n * 10) % prime
+        length += 1
+        if n <= 1:
+            return length
 
 
 # pythagorean

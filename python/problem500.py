@@ -1,21 +1,32 @@
 import euler
-prime_list = euler.prime_list(7376513) # 500500 primes
-l = len(prime_list)
-lst = [1 for i in range(l)]
-pb = 0
-pe = l-1
-while lst[pb]:
-    pw1 = lst[pb]+1
-    if prime_list[pb]**pw1 < prime_list[pe]:
-        lst[pe] = 0
-        lst[pb] += pw1
-        pe -= 1
-    else:
-        pb += 1
-n = 1
-for i in range(l):
-    n = (n*prime_list[i]**lst[i])%500500507
-print(n)
+
+
+ANSWER = 35407281
+LIMIT = 500500
+
+
+def main():
+    prime_list = []
+    ten = 10
+    while len(prime_list) < LIMIT:
+        ten *= 10
+        prime_list = euler.prime_list(ten)
+    prime_list = prime_list[:LIMIT]
+    lst = [1 for _ in prime_list]
+    begin = 0
+    end = len(prime_list) - 1
+    while lst[begin]:
+        power = lst[begin] + 1
+        if prime_list[begin] ** power < prime_list[end]:
+            lst[end] = 0
+            lst[begin] += power
+            end -= 1
+        else:
+            begin += 1
+    n = 1
+    for prime, power in zip(prime_list, lst):
+        n = (n * prime ** power) % 500500507
+    return n
 
 
 if __name__ == '__main__':
