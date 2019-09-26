@@ -2,13 +2,14 @@ import itertools
 
 
 ANSWER = 20313839404245
+SLOW = True
 
 
-def check(st):
-    prev_max = st[0]
-    for i in range(2, len(st)):
+def check(s):
+    prev_max = s[0]
+    for i in range(2, len(s)):
         combination_sums = set()
-        for comb in itertools.combinations(st, i):
+        for comb in itertools.combinations(s, i):
             combination_sum = sum(comb)
             if combination_sum <= prev_max:
                 return False
@@ -21,28 +22,28 @@ def check(st):
 
 def build(n):
     if n < 5:
-        st = tuple(range(n, 0, -1))
+        s = tuple(range(n, 0, -1))
     else:
         b = build(n - 1)
-        st = (b[0] + 1,) + b
-        st = tuple(a + b[-1] // 2 for a in st)
-    ars = {st}
+        s = (b[0] + 1,) + b
+        s = tuple(a + b[-1] // 2 for a in s)
+    ars = {s}
     while True:
         new_ars = set()
-        for st in ars:
-            if check(st):
-                return st
+        for s in ars:
+            if check(s):
+                return s
             add = True
             if n > 5:
                 for i in range(1, n):
-                    if st[i - 1] - st[i] >= st[-1]:
+                    if s[i - 1] - s[i] >= s[-1]:
                         add = False
                         break
             if add:
-                new_ars.add((st[0] + 1,) + st[1:])
+                new_ars.add((s[0] + 1,) + s[1:])
                 for i in range(1, n):
-                    if st[i - 1] - st[i] > 1:
-                        new_ars.add(st[:i] + (st[i] + 1,) + st[i + 1:])
+                    if s[i - 1] - s[i] > 1:
+                        new_ars.add(s[:i] + (s[i] + 1,) + s[i + 1:])
         ars = new_ars
 
 

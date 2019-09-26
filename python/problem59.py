@@ -1,6 +1,3 @@
-# TODO: use correct algorithm
-
-
 import string
 import itertools
 

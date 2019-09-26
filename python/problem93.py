@@ -47,8 +47,8 @@ def four_combination(a, b, c, d):
     return four
 
 
-def clean(st):
-    return set(round(i) for i in st if i >= 0 and abs(i - round(i)) < 1e-3)
+def clean(s):
+    return set(round(i) for i in s if i >= 0 and abs(i - round(i)) < 1e-3)
 
 
 def result(a, b, c, d):

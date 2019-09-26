@@ -1,11 +1,14 @@
 import itertools
 
 
-def check(st):
-    prev_max = st[0]
-    for i in range(2, len(st)):
+ANSWER = 73702
+
+
+def check(s):
+    prev_max = s[0]
+    for i in range(2, len(s)):
         combination_sums = set()
-        for comb in itertools.combinations(st, i):
+        for comb in itertools.combinations(s, i):
             combination_sum = sum(comb)
             if combination_sum <= prev_max:
                 return False
@@ -22,9 +25,9 @@ def main():
         for line in open('../txt/problem105.txt')
     ]
     total = 0
-    for st in lst:
-        if check(st):
-            total += sum(st)
+    for s in lst:
+        if check(s):
+            total += sum(s)
     return total
 
 

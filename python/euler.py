@@ -128,10 +128,8 @@ def max_divisors(iterable):
             for j in range(i, length, n):
                 if not lst[j] % n:
                     divisors_lst[j] = max(divisors_lst[j], n)
-                    while True:
+                    while not lst[j] % n:
                         lst[j] //= n
-                        if lst[j] % n:
-                            break
     return divisors_lst
 
 

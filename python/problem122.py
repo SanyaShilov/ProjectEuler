@@ -8,11 +8,11 @@ def main():
         lst.append([])
         for j in range(i // 2, i):
             d = i - j
-            for st in lst[j]:
-                if d in st:
-                    lst[-1].append(st.union({i}))
+            for s in lst[j]:
+                if d in s:
+                    lst[-1].append(s.union({i}))
         minimum_len = len(min(lst[-1], key=len))
-        lst[-1] = [st for st in lst[-1] if len(st) == minimum_len]
+        lst[-1] = [s for s in lst[-1] if len(s) == minimum_len]
     return sum(len(lst[i][0]) - 1 for i in range(1, LIMIT + 1))
 
 

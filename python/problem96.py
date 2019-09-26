@@ -56,12 +56,13 @@ def solve_n_in_square(sudoku, can_be, n):
             index_j = -1
             for i in range(3 * isq, 3 * (isq + 1)):
                 for j in range(3 * jsq, 3 * (jsq + 1)):
-                    if can_be[i][j]:
-                        if index_i == -1:
-                            index_i = i
-                            index_j = j
-                        else:
-                            index_i = -2
+                    if not can_be[i][j]:
+                        pass
+                    elif index_i == -1:
+                        index_i = i
+                        index_j = j
+                    else:
+                        index_i = -2
             if index_i > -1:
                 solved += 1
                 sudoku[index_i][index_j] = n

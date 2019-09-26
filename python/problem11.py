@@ -14,7 +14,7 @@ def main():
     maximum = 0
     for i in range(length - NUMBERS + 1):
         for j in range(length - NUMBERS + 1):
-            for start_i, start_j, di, dj in [
+            for start_i, start_j, d_i, d_j in [
                     (0, 0, 0, 1),
                     (0, 0, 1, 0),
                     (0, 0, 1, 1),
@@ -24,7 +24,7 @@ def main():
                     maximum,
                     euler.product(
                         (
-                            lst[i + start_i + di * n][j + start_j + dj * n]
+                            lst[i + start_i + d_i * n][j + start_j + d_j * n]
                             for n in range(NUMBERS)
                         )
                     )

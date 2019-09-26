@@ -19,19 +19,19 @@ def shortest_edge(lst):
     return shortest_i, shortest_j
 
 
-def connect(lst, st):
+def connect(lst, s):
     shortest = math.inf
     shortest_i = -1
     shortest_j = -1
-    for i in st:
+    for i in s:
         for j in range(len(lst)):
-            if j not in st:
+            if j not in s:
                 length = lst[i][j]
                 if length and length < shortest:
                     shortest = length
                     shortest_i = i
                     shortest_j = j
-    st.add(shortest_j)
+    s.add(shortest_j)
     return lst[shortest_i][shortest_j]
 
 
@@ -42,10 +42,10 @@ def main():
     ]
     leng = len(lst)
     i, j = shortest_edge(lst)
-    st = {i, j}
+    s = {i, j}
     minimal = lst[i][j]
     for i in range(leng - 2):
-        minimal += connect(lst, st)
+        minimal += connect(lst, s)
     initial = sum(lst[i][j] for i in range(leng) for j in range(leng)) // 2
     return initial - minimal
 

@@ -8,9 +8,9 @@ LIMIT = 40
 def main():
     digits = list(range(10))
     all_sets = [
-        set(st)
+        set(s)
         for i in range(1, 11)
-        for st in itertools.combinations(digits, i)
+        for s in itertools.combinations(digits, i)
     ]
     len_sets = len(all_sets)
     list_of_sets = [

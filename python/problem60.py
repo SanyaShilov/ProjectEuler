@@ -30,21 +30,22 @@ def main():
             int_lowest = int(lowest)
             if int_lowest + int_prime >= minimum:
                 sets.pop(lowest)
-            elif check(prime, lowest):
-                for lst in rest.copy():
-                    if (
-                            sum(int(n) for n in lst) + int_lowest + int_prime
-                    ) >= minimum:
+            elif not check(prime, lowest):
+                continue
+            for lst in rest.copy():
+                if (
+                        sum(int(n) for n in lst) + int_lowest + int_prime
+                ) >= minimum:
+                    rest.remove(lst)
+                elif all(check(prime, n) for n in lst):
+                    rest.append(lst.copy())
+                    lst.append(prime)
+                    if len(lst) == COUNT1:
+                        minimum = min(
+                            minimum, sum(int(n) for n in lst) + int_lowest
+                        )
                         rest.remove(lst)
-                    elif all(check(prime, n) for n in lst):
-                        rest.append(lst.copy())
-                        lst.append(prime)
-                        if len(lst) == COUNT1:
-                            minimum = min(
-                                minimum, sum(int(n) for n in lst) + int_lowest
-                            )
-                            rest.remove(lst)
-                rest.append([prime])
+            rest.append([prime])
         if int_prime < minimum // COUNT:
             sets[prime] = []
     return minimum

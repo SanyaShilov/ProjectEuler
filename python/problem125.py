@@ -6,7 +6,7 @@ LIMIT = 10 ** 8
 
 
 def main():
-    st = set()
+    s = set()
     for b in range(1, 10000):
         temp = b * (b + 1) * (2 * b + 1)
         for a in range(b - 2, -1, -1):
@@ -14,8 +14,8 @@ def main():
             if result > LIMIT:
                 break
             if euler.is_palindrome(result):
-                st.add(result)
-    return sum(st)
+                s.add(result)
+    return sum(s)
 
 
 if __name__ == '__main__':

@@ -4,7 +4,7 @@ LIMIT = 10 ** 12
 
 def main():
     squares = {i * i for i in range(1, int(LIMIT ** 0.5) + 1)}
-    st = set()
+    s = set()
     for n in range(2, int(LIMIT ** (1 / 3)) + 1):
         n_3 = n * n * n
         for a in range(1, LIMIT):
@@ -15,8 +15,8 @@ def main():
                 if q > LIMIT:
                     break
                 if q in squares:
-                    st.add(q)
-    return sum(st)
+                    s.add(q)
+    return sum(s)
 
 
 if __name__ == '__main__':
