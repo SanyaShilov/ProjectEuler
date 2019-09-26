@@ -20,11 +20,10 @@ def main():
             temp = i ** 4 + j ** 3
             if temp >= LIMIT:
                 break
-            else:
-                for k in primes_for_square:
-                    n = temp + k ** 2
-                    if n < LIMIT:
-                        numbers.add(n)
+            for k in primes_for_square:
+                n = temp + k ** 2
+                if n < LIMIT:
+                    numbers.add(n)
     return len(numbers)
 
 

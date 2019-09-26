@@ -13,7 +13,7 @@ def main():
     lst = [i for i in range(1, LIMIT) if abundant(i)]
     length = len(lst)
     half = LIMIT // 2
-    cannot_be_written = [i for i in range(LIMIT)]
+    cannot_be_written = list(range(LIMIT))
     for i in range(length):
         lst_i = lst[i]
         if lst_i >= half:

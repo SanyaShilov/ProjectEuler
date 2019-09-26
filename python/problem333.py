@@ -21,7 +21,7 @@ def main():
         for p2 in powers_of_2
     ]
     prime_list = euler.prime_list(LIMIT)
-    items: list = [(index, n) for index, n in enumerate(matrix[0])]
+    items = list(enumerate(matrix[0]))
     items.append((math.inf, 0))
     for i in range(1, len(matrix)):
         new_items = []

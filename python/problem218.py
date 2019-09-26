@@ -10,7 +10,7 @@ def main():
     for a in range(2, int(LIMIT ** 0.25) + 1):
         a_2 = a * a
         for b in range(1, a):
-            if euler.gcd1(b, a):
+            if euler.gcd1(a, b):
                 b_2 = b * b
                 a2b2m = a_2 - b_2
                 ab_2 = 2 * a * b

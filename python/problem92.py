@@ -7,7 +7,7 @@ def square(n):
 
 
 def main():
-    lst = [i for i in range(1000)]
+    lst = list(range(1000))
     total = 0
     for n in range(1, LIMIT):
         temp = n
